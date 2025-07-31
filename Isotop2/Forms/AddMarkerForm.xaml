@@ -1,0 +1,23 @@
+﻿<Window x:Class="Isotop2.Forms.AddMarkerForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Isotop2.Forms"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="Добавление" Height="150" Width="545"
+        Icon="/Resources/add.jpg"
+        KeyDown="Enter_KeyDown">
+    <Grid>
+        <Label Name="label_Name" Content="Маркер" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_MinActivity" Content="Мин.Активность" Margin="140,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_MaxActivity" Content="Макс.Активность" Margin="270,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_Name" Width="120" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_MinActivity" Width="120" PreviewTextInput="NumberValidationTextBox" Margin="145,30,0,0" Text="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_MaxActivity" Width="120" PreviewTextInput="NumberValidationTextBox" Margin="275,30,0,0" HorizontalAlignment="Left" Text="0" VerticalAlignment="Top"/>
+        <CheckBox Name="checkBox_IsNewGenerator" Content="Новый генератор" IsThreeState="False" Margin="0,30,10,0" HorizontalAlignment="Right"  VerticalAlignment="Top"/>
+        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Width="60" Margin="0,75,80,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Width="60" Margin="0,75,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
