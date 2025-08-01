@@ -259,6 +259,8 @@ namespace Isotop2.Data.Models
         public bool ExportExcel(List<string[]> dataList)
         {
             bool isCreate = false;
+            if(dataList == null)
+                return isCreate;
             ExcelDocCreater excel = new ExcelDocCreater();
             isCreate = excel.CreateDocument(dataList);
             if (isCreate)

@@ -91,7 +91,7 @@ namespace Isotop2.Data.Controllers
             List<string[]> dataList = new List<string[]>();
             dataList.Add(_model.GetHeaderList().Skip(1).ToArray()); //Список заголовков         
             dataList.AddRange(AuxiliaryFuntions.RIViewToStringList((List<RIView>)dataGrid.ItemsSource, true));  //Список данных
-            bool isExport = await Task.Run(() => _model.ExportExcel(dataList));
+            bool isExport = await Task.Run(() => _model.ExportExcel(null));
             if (!isExport)
                 MessageBox.Show("Не удалось сформировать документ", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Information);
         }
