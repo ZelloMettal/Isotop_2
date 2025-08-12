@@ -1,0 +1,50 @@
+﻿<Window x:Class="Isotop2.Forms.RIAddEditForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Isotop2.Forms"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Добавление РИ" Height="310" Width="610"
+        Icon="/Resources/add.jpg"
+        Loaded="RIAddEditForm_Load"
+        KeyDown="Enter_KeyDown">
+    <Grid>
+        <Label Name="label_Radionuclide" Content="Наименование РИ" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_PassportNumber" Content="Номер паспорта" Margin="10,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_CreateDate" Content="Дата изготовления" Margin="10,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Weight" Content="Масса, Кг" Margin="10,95,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Volume" Content="Объём, Мл" Margin="10,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_GeneratorNumber" Content="Номер генератора" Margin="10,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Activity" Content="Активность, МБк" Margin="10,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="lable_Compound" Content="Химический состав" Margin="10,195,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Manufacturer" Content="Производитель" Margin="280,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Operation" Content="Операция с РИ" Margin="280,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_OperationDate" Content="Дата операции" Margin="280,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Package" Content="Тип упаковки" Margin="280,95,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_StoragePoint" Content="Место хранения" Margin="280,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Supplier" Content="Поставщик" Margin="280,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_Recipient" Content="Получатель" Margin="280,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Name="label_AccompanyingDocument" Content="Сопроводительный документ" Margin="280,195,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_Radionuclide" SelectionChanged="comboBox_Radionuclide_SelectedChanged" Width="120" Margin="135,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_PassportNumber" Width="120" Margin="135,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <DatePicker Name="datePicker_CreateDate" Width="120" Margin="135,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_Weight" PreviewTextInput="NumberValidationTextBox" Width="120" Margin="135,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBox Name="textBox_Volume" PreviewTextInput="NumberValidationTextBoxWithDot" Width="120" Margin="135,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_GeneratorNumber" IsEnabled="False" Width="120" Margin="135,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_Activity" PreviewTextInput="NumberValidationTextBoxWithDot" Width="120" Margin="135,175,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_Compound" Width="120" Margin="135,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_Manufacturer" Width="120" Margin="0,15,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_Operation" Width="120" Margin="0,45,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <DatePicker Name="datePicker_OperationDate" Width="120" Margin="0,70,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_Package" Width="120" Margin="0,100,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_StoragePoint" Width="120" Margin="0,125,20,0"  HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_Supplier" Width="120" Margin="0,150,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBox_Recipient" Width="120" Margin="0,175,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBox Name="textBox_AccompanyingDocument" Width="120" Margin="0,200,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <CheckBox Name="checkBox_Sent" Content="Отправлен" IsThreeState="False" Margin="0,220,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Button Name="button_AddEdit" Click="button_AddEdit_Click" Content="Добавить" Width="70" Margin="0,0,100,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Button Name="button_Cancel" Click="button_Cancel_Click" Content="Отменить" Width="70" Margin="0,0,20,10" HorizontalAlignment="Right"  VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
