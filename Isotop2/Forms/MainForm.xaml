@@ -109,25 +109,30 @@
                 </Grid>
             </TabItem>
             <TabItem Name="tabItem_Iodine" Header="Йод">
-                <Grid Background="#FFE5E5E5">
-                    <Label Name="label_DateOnDayZero" Content="Дата на нулевой день" Margin="-290,5,0,0" HorizontalAlignment="Center"/>
-                    <Label Name="label_ActivityIodine" Content="Активность, МБк" Margin="-25,5,0,0" HorizontalAlignment="Center"/>
-                    <ListView Name="listView_CalculationIodine" HorizontalAlignment="Center" Width="410" Margin="0,65,0,10" >
+                <Grid Background="#FFE5E5E5" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="450"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="1" Name="label_DateOnDayZero" Content="Дата на нулевой день" Margin="15,5,0,0" HorizontalAlignment="Left"/>
+                    <DatePicker Grid.Column="1" Name="datePicker_DateOnDayZeroIodine" SelectedDateChanged="datePicker_DateOnDayZeroIodine_SelectionDataChanged" Margin="20,30,0,0" HorizontalAlignment="Left"/>
+                    <Label Grid.Column="1" Name="label_ActivityIodine" Content="Активность, МБк" Margin="155,5,0,0" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Column="1" Name="textBox_IodineActivity" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityIodine_ValueChanged" Width="120" Margin="160,32,0,0" HorizontalAlignment="Left"/>
+                    <ListView Grid.Column="1" Name="listView_CalculationIodine" HorizontalAlignment="Center" Width="410" Margin="0,65,0,10" >
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=[0]}" Width="70"/>
-                                    <GridViewColumn Header="День" DisplayMemberBinding="{Binding Path=[1]}"  Width="40"/>
-                                    <GridViewColumn Header="Процент распада" DisplayMemberBinding="{Binding Path=[2]}" Width="105"/>
-                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=[3]}" Width="100"/>
-                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=[4]}" Width="80"/>
+                                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=Date}" Width="70"/>
+                                    <GridViewColumn Header="День" DisplayMemberBinding="{Binding Path=Day}"  Width="40"/>
+                                    <GridViewColumn Header="Процент распада" DisplayMemberBinding="{Binding Path=DecayPrecent}" Width="105"/>
+                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=Activity}" Width="100"/>
+                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=Volume}" Width="80"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <DatePicker Name="datePicker_DateOnDayZeroIodine" SelectedDateChanged="datePicker_DateOnDayZeroIodine_SelectionDataChanged" Margin="325,30,0,0"/>
-                    <TextBox Name="textBox_IodineActivity" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityIodine_ValueChanged" Width="120" Margin="0,32,0,0" HorizontalAlignment="Center"/>
-                    <Button Name="button_PrintIodine" Style="{StaticResource ButtonPrint}" Click="button_PrintTechnetium_Click" Margin="380,20,0,0" HorizontalAlignment="Center">
+                    <Button Grid.Column="1" Name="button_PrintIodine" Style="{StaticResource ButtonPrint}" Click="button_PrintTechnetium_Click" Margin="0,20,20,0" HorizontalAlignment="Right">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                 </Grid>

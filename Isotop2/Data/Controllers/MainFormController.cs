@@ -41,13 +41,14 @@ namespace Isotop2.Data.Controllers
         //Метод заполнения ListView по маркера для взрослых
         static public void GetListTechnetiumPatient(ListView lv, decimal newActivity, decimal oldActivity, bool isAdults)
         {
-            List<MarkerView> markerList;
+            List<string[]> dataList;
             //Получаем соотвестввующий список данных для пациентов
             if (isAdults)
-                markerList = _model.GetListTechnetiumAdultPatient(newActivity, oldActivity);
+                dataList = _model.GetListTechnetiumAdultPatient(newActivity, oldActivity);
             else
-                markerList = _model.GetListTechnetiumChildPatient(newActivity, oldActivity);
-            lv.ItemsSource = markerList;
+                dataList = _model.GetListTechnetiumChildPatient(newActivity, oldActivity);
+            List<MarkerView> markerView = AuxiliaryFuntions.ListArrStringToMarkerView(dataList);
+            lv.ItemsSource = markerView;
         }
         //Метод вызова формы печати технеция
         static public void PrintTechnetiumForm(decimal newActivity, decimal oldActivity, string childrenAge)
@@ -68,7 +69,8 @@ namespace Isotop2.Data.Controllers
         static public void FillListViewIodine(ListView lv, decimal activity, DateTime startDate)
         {
             List<string[]> dataList = _model.GetListDataIodine(activity, startDate);
-            lv.ItemsSource = dataList;
+            List<IodineView> iodineViews = AuxiliaryFuntions.ListArrStringToIodineView(dataList);
+            lv.ItemsSource = iodineViews;
         }
         //Метод печати Йода
         static public void PrintIodine(ListView lv, decimal activity)

@@ -3,7 +3,7 @@
     class MarkerView
     {
         public string MarkerName { get; set; }
-        public int Activity {  get; set; }
-        public double Volume { get; set; }
+        public string Activity {  get; set; }
+        public string Volume { get; set; }
     }
 }

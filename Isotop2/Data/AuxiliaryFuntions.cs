@@ -138,6 +138,37 @@ namespace Isotop2.Data
             }
             return stringList;
         }
+        //Метод конвертации ListString[] в ListMarkerView
+        public static List<MarkerView> ListArrStringToMarkerView(List<string[]> list)
+        {
+            List<MarkerView> iodineData = new List<MarkerView>();
+            foreach (string[] data in list)
+            {
+                iodineData.Add(new MarkerView
+                {
+                    MarkerName = data[0],
+                    Volume = data[1],
+                    Activity = data[2]
+                });
+            }
+            return iodineData;
+        }
+        //Метод конвертации ListString[] в ListIodineView
+        public static List<IodineView> ListArrStringToIodineView(List<string[]> list)
+        { 
+            List<IodineView> iodineData = new List<IodineView>();
+            foreach (string[] data in list) 
+            {
+                iodineData.Add(new IodineView {                    
+                    Date = data[0],
+                    Day = data[1],
+                    DecayPrecent = data[2],
+                    Activity = data[3],
+                    Volume = data[4]
+                });                
+            }
+            return iodineData;
+        }
         //Метод валидации TextBox для дробных значений
         public static bool ValidationTextBox(string text)
         {
