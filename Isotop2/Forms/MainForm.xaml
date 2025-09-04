@@ -6,11 +6,30 @@
         xmlns:local="clr-namespace:Isotop2"
         mc:Ignorable="d"
         Name="MainFormName"
-        Title="Изотоп 2.0" Height="780" Width="1070"
+        Title="Изотоп 2.0" Height="780" Width="1080"
         Icon="/Resources/radiation .jpg"
         ResizeMode="CanMinimize"
         Closed="MainForm_FormClosed"
         Loaded="MainForm_Load">
+
+    <Window.Resources>
+        <Style x:Key="ButtonPrint" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
+    </Window.Resources>
+
     <Grid x:Name="GridMainForm">
         <Menu Name="menu_MainMenu" Height="20" VerticalAlignment="Top">
             <MenuItem Header="Файл">
@@ -25,9 +44,14 @@
         </Menu>
         <TabControl Name="tabControl_MainForm" Margin="0,20,0,0">
             <TabItem Name="tabItem_Technetium" Header="Технеций">
-                <Grid Background="#FFE5E5E5">
-                    <Label Name="label_ActivityNewGeneration" Content="Новый генератор, МБк" Width="140" Margin="35,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <ListView Name="listView_CalculateNewGeneration" Margin="10,80,0,10" Width="190" HorizontalAlignment="Left">
+                <Grid Background="#FFE5E5E5" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="410"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="550"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="label_ActivityNewGeneration" Content="Новый генератор, МБк" Margin="35,25,0,0" HorizontalAlignment="Left"/>
+                    <ListView Grid.Column="0" Name="listView_CalculateNewGeneration" Margin="10,80,0,10" Width="190" HorizontalAlignment="Left">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
@@ -37,8 +61,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Label Name="label_ActivityOldGeneration" Content="Старый генератор, МБк" Width="140" Margin="235,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <ListView Name="listView_CalculateOldGeneration" Width="190" Margin="210,80,0,10" HorizontalAlignment="Left">
+                    <Label Grid.Column="0" Name="label_ActivityOldGeneration" Content="Старый генератор, МБк" Margin="0,25,35,0" HorizontalAlignment="Right"/>
+                    <ListView Grid.Column="0" Name="listView_CalculateOldGeneration" Width="190" Margin="0,80,10,10" HorizontalAlignment="Right">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
@@ -48,46 +72,46 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBox Name="textBox_ActivityNewGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityNewGeneration_ValueChanged" Width="190" Margin="10,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBox Name="textBox_ActivityOldGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityOldGeneration_ValueChanged" Width="190" Margin="210,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <ListView Name="listView_EstimatedActivitybyChildren" Width="260" Margin="0,80,10,10" HorizontalAlignment="Right">
+                    <TextBox Grid.Column="0" Name="textBox_ActivityNewGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityNewGeneration_ValueChanged" Width="190" Margin="10,50,0,0" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Column="0" Name="textBox_ActivityOldGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityOldGeneration_ValueChanged" Width="190" Margin="0,50,10,0" HorizontalAlignment="Right"/>
+                    <Label Grid.Column="1" Name="label_TimeOfDecay" Content="Время распада:" Margin="0,25,0,0" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Name ="textBlock_Hour" Text="0 час." Margin="0,55,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Slider Grid.Column="1" Name="slider_TimeOfDecay" ValueChanged="slider_TimeOfDecay_ValueChanged" Maximum="12" Minimum="0" SmallChange="0.5" LargeChange="0.5" TickFrequency="0.5" Width="35" Height="300" Margin="0,80,0,0" Orientation="Vertical" IsSnapToTickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" TickPlacement="BottomRight" Foreground="#FF646464"/>
+                    <ListView Grid.Column="2" Name="listView_EstimatedActivitybyAdults" Width="260" Margin="5,80,0,10" HorizontalAlignment="Left">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Header="Маркер" DisplayMemberBinding="{Binding Path=[0]}" Width="80"/>
-                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=[1]}" Width="70"/>
-                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=[2]}" Width="100"/>
+                                    <GridViewColumn Header="Маркер" DisplayMemberBinding="{Binding Path=MarkerName}" Width="80"/>
+                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=Volume}" Width="70"/>
+                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=Activity}" Width="100"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView Name="listView_EstimatedActivitybyAdults" Width="260" Margin="0,80,280,10" HorizontalAlignment="Right">
+                    <ListView Grid.Column="2" Name="listView_EstimatedActivitybyChildren" Width="260" Margin="0,80,5,10" HorizontalAlignment="Right">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Header="Маркер" DisplayMemberBinding="{Binding Path=[0]}" Width="80"/>
-                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=[1]}" Width="70"/>
-                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=[2]}" Width="100"/>
+                                    <GridViewColumn Header="Маркер" DisplayMemberBinding="{Binding Path=MarkerName}" Width="80"/>
+                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=Volume}" Width="70"/>
+                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=Activity}" Width="100"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Slider Name="slider_TimeOfDecay" ValueChanged="slider_TimeOfDecay_ValueChanged" Maximum="12" Minimum="0" SmallChange="0.5" LargeChange="0.5" TickFrequency="0.5" Width="35" Height="300" Margin="445,80,0,0" Orientation="Vertical" IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" TickPlacement="BottomRight" Foreground="#FF646464"/>
-                    <Label Name="label_Adults" Content="Дети" Margin="0,45,240,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                    <Label Name="label_Children" Content="Взрослые" Margin="0,45,480,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                    <Label Name="label_EstimatedActivity" Content="Расчёт активность по маркерам" Margin="0,19,180,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                    <ComboBox Name="comboBox_ChildrenAge" SelectionChanged="comboBox_ChildrenAge_SelectedChanged" Width="120" Margin="0,45,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                    <Button Name="button_PrintTechnetium" Click="button_PrintTechnetium_Click" Width="30" Height="30" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Label Grid.Column="2" Name="label_Adults" Content="Дети" Margin="40,45,0,0" HorizontalAlignment="Center"/>
+                    <Label Grid.Column="2" Name="label_Children" Content="Взрослые" Margin="0,45,48,0" HorizontalAlignment="Left"/>
+                    <Label Grid.Column="2" Name="label_EstimatedActivity" Content="Расчёт активность по маркерам" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+                    <ComboBox Grid.Column="2" Name="comboBox_ChildrenAge" SelectionChanged="comboBox_ChildrenAge_SelectedChanged" Width="120" Margin="0,45,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    <Button Grid.Column="2" Name="button_PrintTechnetium" Style="{StaticResource ButtonPrint}"  Click="button_PrintTechnetium_Click" Margin="0,5,10,0">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
-                    <Label Name="label_TimeOfDecay" Content="Время распада:" Margin="415,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBlock Name ="textBlock_Hour" Text="0 час." Margin="450,55,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Name="tabItem_Iodine" Header="Йод">
                 <Grid Background="#FFE5E5E5">
-                    <Label Name="label_DateOnDayZero" Content="Дата на нулевой день" Margin="320,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Label Name="label_ActivityIodine" Content="Активность, МБк" Margin="470,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Name="label_DateOnDayZero" Content="Дата на нулевой день" Margin="-290,5,0,0" HorizontalAlignment="Center"/>
+                    <Label Name="label_ActivityIodine" Content="Активность, МБк" Margin="-25,5,0,0" HorizontalAlignment="Center"/>
                     <ListView Name="listView_CalculationIodine" HorizontalAlignment="Center" Width="410" Margin="0,65,0,10" >
                         <ListView.View>
                             <GridView>
@@ -101,21 +125,21 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <DatePicker Name="datePicker_DateOnDayZeroIodine" SelectedDateChanged="datePicker_DateOnDayZeroIodine_SelectionDataChanged" Width="130" Margin="325,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBox Name="textBox_IodineActivity" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityIodine_ValueChanged" Width="120" Margin="0,32,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                    <Button Name="button_PrintIodune" Click="button_PrintIodune_Click" Width="30" Height="30" Margin="380,35,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <DatePicker Name="datePicker_DateOnDayZeroIodine" SelectedDateChanged="datePicker_DateOnDayZeroIodine_SelectionDataChanged" Margin="325,30,0,0"/>
+                    <TextBox Name="textBox_IodineActivity" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityIodine_ValueChanged" Width="120" Margin="0,32,0,0" HorizontalAlignment="Center"/>
+                    <Button Name="button_PrintIodine" Style="{StaticResource ButtonPrint}" Click="button_PrintTechnetium_Click" Margin="380,20,0,0" HorizontalAlignment="Center">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                 </Grid>
             </TabItem>
             <TabItem Name="tabItem_Radium" Header="Радий" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <Label Name="label_ActivityRadium" Content="Активность, МБк" HorizontalAlignment="Left" Margin="90,5,0,0" VerticalAlignment="Top"/>
-                    <Label Name="label_CreateDate" Content="Дата изготовления" Margin="335,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Label Name="label_CurrentDate" Content="Текущая дата" HorizontalAlignment="Left" Margin="475,5,0,0" VerticalAlignment="Top" Height="26" Width="83"/>
-                    <Label Name="label_PatientWeight" Content="Вес пациента, Кг" HorizontalAlignment="Left" Margin="615,5,0,0" VerticalAlignment="Top" Height="26" Width="100"/>
-                    <TextBox Name="textBox_ActivityRadium" HorizontalAlignment="Left" Margin="95,30,0,0" VerticalAlignment="Top" Width="120" TextChanged="textBox_ActivityRadium_TextChanged" PreviewTextInput="NumberValidationTextBoxWithDot" Height="18"/>
-                    <TextBox Name="textBox_PatientWeightRadium" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_PatientWeightRadium_ValueChanged" Width="120" Margin="620,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Name="label_ActivityRadium" Content="Активность, МБк" Margin="90,5,0,0" HorizontalAlignment="Left"/>
+                    <Label Name="label_CreateDate" Content="Дата изготовления" Margin="335,5,0,0" HorizontalAlignment="Left"/>
+                    <Label Name="label_CurrentDate" Content="Текущая дата" Margin="475,5,0,0" HorizontalAlignment="Left"/>
+                    <Label Name="label_PatientWeight" Content="Вес пациента, Кг" Margin="615,5,0,0" HorizontalAlignment="Left"/>
+                    <TextBox Name="textBox_ActivityRadium" PreviewTextInput="NumberValidationTextBoxWithDot" TextChanged="textBox_ActivityRadium_TextChanged" Width="120" Height="18" Margin="95,30,0,0"/>
+                    <TextBox Name="textBox_PatientWeightRadium" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_PatientWeightRadium_ValueChanged" Width="120" Margin="620,30,0,0"/>
                     <ListView Name="listView_CalculationRadium" Width="230" Margin="95,60,0,10" HorizontalAlignment="Left" >
                         <ListView.View>
                             <GridView>
@@ -127,8 +151,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <DatePicker Name="datePicker_CreateDateRadium" SelectedDateChanged="datePicker_CreateDateRadium_SelectionDataChanged" Width="120" Margin="340,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <DatePicker Name="datePicker_CurrentDateRadium" SelectedDateChanged="datePicker_CurrentDateRadium_SelectionDataChanged" Width="120" Margin="480,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <DatePicker Name="datePicker_CreateDateRadium" SelectedDateChanged="datePicker_CreateDateRadium_SelectionDataChanged" Margin="340,30,0,0"/>
+                    <DatePicker Name="datePicker_CurrentDateRadium" SelectedDateChanged="datePicker_CurrentDateRadium_SelectionDataChanged" Margin="480,30,0,0"/>
                     <ListView Name="listView_CalculationActivityRadium" Width="620" Height="80" Margin="338,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <ListView.View>
                             <GridView>
@@ -144,7 +168,7 @@
                     </ListView>
                     <Button Name="button_AddPatient" Content="Добавить пациента" Click="button_AddPatient_Click" Width="120" Margin="480,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Button Name="button_DeletePatient" Content="Удалить пациента" Click="button_DeletePatient_Click" Width="110" Margin="610,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button Name="button_PrintRadium" Click="button_PrintRadium_Click" Height="30" Width="30" Margin="770,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Button Name="button_Printadium" Style="{StaticResource ButtonPrint}" Click="button_PrintTechnetium_Click" Margin="0,150,265,0">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                     <ListView Name="listView_RadiumPatientList" KeyDown="listView_RadiumPatientList_KeyDown" Width="320" Margin="480,190,0,10" HorizontalAlignment="Left">

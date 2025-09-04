@@ -11,8 +11,8 @@ namespace Isotop2
 {
     internal static class Program
     {
-        [STAThread]
-        static void Main()
+        [STAThreadAttribute]
+        public static void Main()
         {   
             //Создаём хост приложения
             IHost host = Host.CreateDefaultBuilder()

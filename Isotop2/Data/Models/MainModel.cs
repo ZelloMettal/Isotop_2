@@ -38,28 +38,28 @@ namespace Isotop2.Data.Models
         ///////// Часть для Технеция /////////
         
         //Метод падсчёт данных для пациентов по маркерам
-        private List<string[]> DataPatientList(Dictionary<Marker, ActivityByVolume> newGenerator, Dictionary<Marker, ActivityByVolume> oldGenerator, Dictionary<Marker, ActivityByVolume> printList)
+        private List<MarkerView> DataPatientList(Dictionary<Marker, ActivityByVolume> newGenerator, Dictionary<Marker, ActivityByVolume> oldGenerator, Dictionary<Marker, ActivityByVolume> printList)
         {
-            List<string[]> dataListPatient = new List<string[]>();
+            List<MarkerView> dataListPatient = new List<MarkerView>();
             for (int i = 0; i < newGenerator.Count; i++)
             {
                 if (newGenerator.ElementAt(i).Key.NewGenerator)
                 {
-                    dataListPatient.Add(new string[]
+                    dataListPatient.Add(new MarkerView
                     {
-                        newGenerator.ElementAt(i).Key.MarkerName,
-                        newGenerator.ElementAt(i).Value.Volume.ToString(),
-                        newGenerator.ElementAt(i).Value.Activity.ToString()
-                    });
+                        MarkerName = newGenerator.ElementAt(i).Key.MarkerName,
+                        Volume = newGenerator.ElementAt(i).Value.Volume,
+                        Activity = newGenerator.ElementAt(i).Value.Activity
+                    }                        );
                     printList.Add(newGenerator.ElementAt(i).Key, newGenerator.ElementAt(i).Value);
                 }
                 else
                 {
-                    dataListPatient.Add(new string[]
+                    dataListPatient.Add(new MarkerView
                     {
-                        oldGenerator.ElementAt(i).Key.MarkerName,
-                        oldGenerator.ElementAt(i).Value.Volume.ToString(),
-                        oldGenerator.ElementAt(i).Value.Activity.ToString()
+                        MarkerName = oldGenerator.ElementAt(i).Key.MarkerName,
+                        Volume = oldGenerator.ElementAt(i).Value.Volume,
+                        Activity = oldGenerator.ElementAt(i).Value.Activity
                     });
                     printList.Add(oldGenerator.ElementAt(i).Key, oldGenerator.ElementAt(i).Value);
                 }
@@ -97,7 +97,7 @@ namespace Isotop2.Data.Models
             return _childrenPrintList;
         }
         //Метод получения списка расчётных данных для взрослых
-        public List<string[]> GetListTechnetiumAdultPatient(decimal newActivity, decimal oldActivity)
+        public List<MarkerView> GetListTechnetiumAdultPatient(decimal newActivity, decimal oldActivity)
         {
             _adultPrintList.Clear();
             Dictionary<Marker, ActivityByVolume> newGenerator = _technetium.CreateListActivityForAdults(newActivity);
@@ -105,7 +105,7 @@ namespace Isotop2.Data.Models
             return DataPatientList(newGenerator, oldGenerator, _adultPrintList);
         }
         //Метод получения списка расчётных данных для детей
-        public List<string[]> GetListTechnetiumChildPatient(decimal newActivity, decimal old_Activity)
+        public List<MarkerView> GetListTechnetiumChildPatient(decimal newActivity, decimal old_Activity)
         {
             _childrenPrintList.Clear();
             Dictionary<Marker, ActivityByVolume> newGenerator = _technetium.CreateListActivityForChildren(newActivity);

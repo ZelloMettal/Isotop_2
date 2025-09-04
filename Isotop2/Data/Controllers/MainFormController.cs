@@ -41,7 +41,7 @@ namespace Isotop2.Data.Controllers
         //Метод заполнения ListView по маркера для взрослых
         static public void GetListTechnetiumPatient(ListView lv, decimal newActivity, decimal oldActivity, bool isAdults)
         {
-            List<string[]> markerList;
+            List<MarkerView> markerList;
             //Получаем соотвестввующий список данных для пациентов
             if (isAdults)
                 markerList = _model.GetListTechnetiumAdultPatient(newActivity, oldActivity);
