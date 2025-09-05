@@ -7,7 +7,7 @@ namespace Isotop2.Data.Controllers
     {
         static private IodinePrintModel _model = null; //Обект формирования данных для печати
         //Метод задания источника данных
-        static public void SetPrintData(List<string> dataList, int countRow, decimal activity)
+        static public void SetPrintData(List<string> dataList, int countRow, double activity)
         {
             _model = new IodinePrintModel(dataList, countRow, activity);
         }

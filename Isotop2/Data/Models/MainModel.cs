@@ -82,7 +82,7 @@ namespace Isotop2.Data.Models
             _technetium.SetCurrentChildrenCoefficent(range);
         }
         //Метод получения активности по объёмам
-        public List<ActivityByVolume> GetListActivityByVolume(decimal activity)
+        public List<ActivityByVolume> GetListActivityByVolume(double activity)
         {
             return _technetium.CreateListActivityByVolume(activity).OrderByDescending(x => x.Volume).ToList();
         }
@@ -97,7 +97,7 @@ namespace Isotop2.Data.Models
             return _childrenPrintList;
         }
         //Метод получения списка расчётных данных для взрослых
-        public List<string[]> GetListTechnetiumAdultPatient(decimal newActivity, decimal oldActivity)
+        public List<string[]> GetListTechnetiumAdultPatient(double newActivity, double oldActivity)
         {
             _adultPrintList.Clear();
             Dictionary<Marker, ActivityByVolume> newGenerator = _technetium.CreateListActivityForAdults(newActivity);
@@ -105,7 +105,7 @@ namespace Isotop2.Data.Models
             return DataPatientList(newGenerator, oldGenerator, _adultPrintList);
         }
         //Метод получения списка расчётных данных для детей
-        public List<string[]> GetListTechnetiumChildPatient(decimal newActivity, decimal old_Activity)
+        public List<string[]> GetListTechnetiumChildPatient(double newActivity, double old_Activity)
         {
             _childrenPrintList.Clear();
             Dictionary<Marker, ActivityByVolume> newGenerator = _technetium.CreateListActivityForChildren(newActivity);
@@ -125,7 +125,7 @@ namespace Isotop2.Data.Models
         ///////// Часть для Йода /////////
 
         //Метод получения расчётных данных для Йода
-        public List<string[]> GetListDataIodine(decimal activity, DateTime startDate)
+        public List<string[]> GetListDataIodine(double activity, DateTime startDate)
         {
             List<string[]> dataList = new List<string[]>();
             Dictionary<Iodine, ActivityByVolume> iodine = _iodine.CreateListActivityIodine(activity);
@@ -180,7 +180,7 @@ namespace Isotop2.Data.Models
             return dataList;
         }
         //Получение данных для Радия на пациентов
-        public List<string[]> GetRadiumForPatient(decimal weightPatient, double activity)
+        public List<string[]> GetRadiumForPatient(double weightPatient, double activity)
         {
             (Radium radium, ActivityByVolume activity_volume, double current_activity) radium = _radium.CreateRadiumForPatient(weightPatient, activity);
             string[] dataPatient = new string[]

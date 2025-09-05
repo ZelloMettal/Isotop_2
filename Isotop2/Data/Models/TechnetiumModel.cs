@@ -25,9 +25,9 @@ namespace Isotop2.Data.Models
             _currentChildrenCoefficent = _coefficentForChildrenList.FirstOrDefault().Coefficient; //Получаем текущий коэффицент для детей
         }
         //Метод расчёта генераторов
-        private int CalculationActivityGeneration(double volume, decimal activity, double firstVolume, double currentDecay)
+        private int CalculationActivityGeneration(double volume, double activity, double firstVolume, double currentDecay)
         {
-            double result = Math.Round((double)activity * volume / firstVolume * currentDecay / 100, 0);
+            double result = Math.Round(activity * volume / firstVolume * currentDecay / 100, 0);
             return (int)result;
         }
         //Метод получения текущего распада
@@ -53,7 +53,7 @@ namespace Isotop2.Data.Models
             _currentChildrenCoefficent = coefficent;
         }
         //Метод расчёта активности генераторов по объёмам
-        public List<ActivityByVolume> CreateListActivityByVolume(decimal activity)
+        public List<ActivityByVolume> CreateListActivityByVolume(double activity)
         {
             List<ActivityByVolume> list = new List<ActivityByVolume>();
             foreach (var volume in _volumeList)
@@ -66,7 +66,7 @@ namespace Isotop2.Data.Models
             return list;
         }        
         //Расчёт активности по маркерам для взрослых
-        public Dictionary<Marker, ActivityByVolume> CreateListActivityForAdults(decimal activity)
+        public Dictionary<Marker, ActivityByVolume> CreateListActivityForAdults(double activity)
         {
             Dictionary<Marker, ActivityByVolume> dict = new Dictionary<Marker, ActivityByVolume>();
             List<ActivityByVolume> list = CreateListActivityByVolume(activity);
@@ -82,7 +82,7 @@ namespace Isotop2.Data.Models
             return dict;
         }
         //Расчёт активности по маркерам для детей
-        public Dictionary<Marker, ActivityByVolume> CreateListActivityForChildren(decimal activity)
+        public Dictionary<Marker, ActivityByVolume> CreateListActivityForChildren(double activity)
         {
             Dictionary<Marker, ActivityByVolume> activityForAdult = CreateListActivityForAdults(activity);
             Dictionary<Marker, ActivityByVolume> activityForChildren = new Dictionary<Marker, ActivityByVolume>();

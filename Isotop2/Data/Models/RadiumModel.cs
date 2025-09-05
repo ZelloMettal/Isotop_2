@@ -48,10 +48,10 @@ namespace Isotop2.Data.Models
             return dict;
         }        
         //Метод расчёта ативности Радия для пациента
-        public (Radium, ActivityByVolume, double) CreateRadiumForPatient(decimal weightPatient, double activity)
+        public (Radium, ActivityByVolume, double) CreateRadiumForPatient(double weightPatient, double activity)
         {
             //Получаем соответствующий Радий
-            Radium radium = _radiumList.FirstOrDefault(r => r.Day == _differenceDay);
+            Radium? radium = _radiumList.FirstOrDefault(r => r.Day == _differenceDay);
             if (radium == null)
                 radium = _radiumList.Last();
             //Получаем текущую активность Радия

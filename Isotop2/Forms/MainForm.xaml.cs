@@ -34,14 +34,14 @@ namespace Isotop2
         {
             MainFormController.SaveSettings
                 (
-                    Convert.ToDecimal(textBox_ActivityNewGeneration.Text),
-                    Convert.ToDecimal(textBox_ActivityOldGeneration.Text),
-                    (int)slider_TimeOfDecay.Value,
-                    Convert.ToDateTime(datePicker_DateOnDayZeroIodine.Text),
-                    Convert.ToDecimal(textBox_IodineActivity.Text),
-                    Convert.ToDecimal(textBox_ActivityRadium.Text),
-                    Convert.ToDateTime(datePicker_CreateDateRadium.Text),
-                    Convert.ToDecimal(textBox_PatientWeightRadium.Text)
+                    textBox_ActivityNewGeneration.Text,
+                    textBox_ActivityOldGeneration.Text,
+                    slider_TimeOfDecay.Value,
+                    datePicker_DateOnDayZeroIodine.Text,
+                    textBox_IodineActivity.Text,
+                    textBox_ActivityRadium.Text,
+                    datePicker_CreateDateRadium.Text,
+                    textBox_PatientWeightRadium.Text
                 );
         }
         //Событие смены пользователя
@@ -97,11 +97,7 @@ namespace Isotop2
 
             //Устанавливаем разность дней для Радия
             datePicker_CurrentDateRadium.Text = DateTime.Now.ToString();
-            MainFormController.SetDifferenceDayRadium
-                (
-                    Convert.ToDateTime(datePicker_CreateDateRadium.Text), 
-                    Convert.ToDateTime(datePicker_CurrentDateRadium.Text)
-                );
+            MainFormController.SetDifferenceDayRadium(datePicker_CreateDateRadium.Text, datePicker_CurrentDateRadium.Text);
 
             RefrashListViewRadium();
             RefrashListViewPatient();
@@ -129,42 +125,22 @@ namespace Isotop2
         //Метод обновление ListView нового генератора
         private void RefrashListViewNewGeneration()
         {
-            MainFormController.FillListViewGeneration
-                (
-                    listView_CalculateNewGeneration, 
-                    Convert.ToDecimal(textBox_ActivityNewGeneration.Text)
-                );
+            MainFormController.FillListViewGeneration(listView_CalculateNewGeneration, textBox_ActivityNewGeneration.Text);
         }
         //Метод обновление ListView старого генератора
         private void RefrashListViewOldGeneration()
         {
-            MainFormController.FillListViewGeneration
-                (
-                    listView_CalculateOldGeneration, 
-                    Convert.ToDecimal(textBox_ActivityOldGeneration.Text)
-                );
+            MainFormController.FillListViewGeneration(listView_CalculateOldGeneration, textBox_ActivityOldGeneration.Text);
         }
         //Метод обновление ListView по маркерам для взрослых
         private void RefrashListViewAdults()
         {
-            MainFormController.GetListTechnetiumPatient
-                (
-                    listView_EstimatedActivitybyAdults, 
-                    Convert.ToDecimal(textBox_ActivityNewGeneration.Text), 
-                    Convert.ToDecimal(textBox_ActivityOldGeneration.Text), 
-                    true
-                );
+            MainFormController.GetListTechnetiumPatient(listView_EstimatedActivitybyAdults, textBox_ActivityNewGeneration.Text, textBox_ActivityOldGeneration.Text, true);
         }
         //Метод обновление ListView по маркерам для детей
         private void RefrashListViewChildrens()
         {
-            MainFormController.GetListTechnetiumPatient
-                (
-                    listView_EstimatedActivitybyChildren, 
-                    Convert.ToDecimal(textBox_ActivityNewGeneration.Text), 
-                    Convert.ToDecimal(textBox_ActivityOldGeneration.Text), 
-                    false
-                );
+            MainFormController.GetListTechnetiumPatient(listView_EstimatedActivitybyChildren, textBox_ActivityNewGeneration.Text, textBox_ActivityOldGeneration.Text, false);
         }
         //Метод полного обновления
         private void RefreshAllData()
@@ -215,12 +191,7 @@ namespace Isotop2
         //Событие печати Технеция
         private void button_PrintTechnetium_Click(object sender, RoutedEventArgs e)
         {
-            MainFormController.PrintTechnetiumForm
-                (   
-                    Convert.ToDecimal(textBox_ActivityNewGeneration.Text), 
-                    Convert.ToDecimal(textBox_ActivityOldGeneration.Text), 
-                    comboBox_ChildrenAge.Text
-                );
+            MainFormController.PrintTechnetiumForm(textBox_ActivityNewGeneration.Text, textBox_ActivityOldGeneration.Text, comboBox_ChildrenAge.Text);
         }
 
         ///////// ******************** /////////
@@ -231,12 +202,7 @@ namespace Isotop2
         private void RefrashListViewIodine()
         {
             if (textBox_IodineActivity.Text != "" && datePicker_DateOnDayZeroIodine.Text != "")
-                MainFormController.FillListViewIodine
-                    (
-                        listView_CalculationIodine, 
-                        Convert.ToDecimal(textBox_IodineActivity.Text), 
-                        Convert.ToDateTime(datePicker_DateOnDayZeroIodine.Text)
-                    );
+                MainFormController.FillListViewIodine(listView_CalculationIodine, textBox_IodineActivity.Text, datePicker_DateOnDayZeroIodine.Text);
         }
         //Событие изменения стартовой даты Йода
         private void datePicker_DateOnDayZeroIodine_SelectionDataChanged(object sender, SelectionChangedEventArgs e)
@@ -251,7 +217,7 @@ namespace Isotop2
         //Событие печати Йода
         private void button_PrintIodune_Click(object sender, RoutedEventArgs e)
         {
-            MainFormController.PrintIodine(listView_CalculationIodine, Convert.ToDecimal(textBox_IodineActivity.Text));
+            MainFormController.PrintIodine(listView_CalculationIodine, textBox_IodineActivity.Text);
         }
 
         ///////// ******************** /////////
@@ -262,7 +228,7 @@ namespace Isotop2
         private void RefrashListViewRadium()
         {
             if(textBox_PatientWeightRadium.Text != "" && textBox_ActivityRadium.Text != "")
-                MainFormController.FillListViewRadium(listView_CalculationRadium, Convert.ToDouble(textBox_ActivityRadium.Text));
+                MainFormController.FillListViewRadium(listView_CalculationRadium, textBox_ActivityRadium.Text);
         }
         //Метод расчёта данных на пациента
         private void RefrashListViewPatient()
@@ -276,12 +242,7 @@ namespace Isotop2
                     textBlock_Warning.Text = "СРОК ГОДНОСТИ ИСТЁК!";
                 if(MainFormController.GetDefferenceDayRadiun() < 0)
                     textBlock_Warning.Text = "НЕ КОРРЕКТНО УКАЗАНЫ ДАТЫ!";
-                MainFormController.FillListViewRadiumForPatient
-                    (
-                        listView_CalculationActivityRadium, 
-                        Convert.ToDecimal(textBox_PatientWeightRadium.Text), 
-                        Convert.ToDouble(textBox_ActivityRadium.Text)
-                    );
+                MainFormController.FillListViewRadiumForPatient(listView_CalculationActivityRadium, textBox_PatientWeightRadium.Text, textBox_ActivityRadium.Text);
             }
         }
         //Событие для изменения значение TextBox
@@ -298,11 +259,7 @@ namespace Isotop2
         {
             if (datePicker_CreateDateRadium.Text != "" && datePicker_CurrentDateRadium.Text != "")
             { 
-                MainFormController.SetDifferenceDayRadium
-                    (
-                        Convert.ToDateTime(datePicker_CreateDateRadium.Text), 
-                        Convert.ToDateTime(datePicker_CurrentDateRadium.Text)
-                    );
+                MainFormController.SetDifferenceDayRadium(datePicker_CreateDateRadium.Text, datePicker_CurrentDateRadium.Text);
                 RefrashListViewPatient();
             }
         }
@@ -311,11 +268,7 @@ namespace Isotop2
         {
             if (datePicker_CreateDateRadium.Text != "" && datePicker_CurrentDateRadium.Text != "")
             { 
-                MainFormController.SetDifferenceDayRadium
-                    (
-                        Convert.ToDateTime(datePicker_CreateDateRadium.Text), 
-                        Convert.ToDateTime(datePicker_CurrentDateRadium.Text)
-                    );
+                MainFormController.SetDifferenceDayRadium(datePicker_CreateDateRadium.Text, datePicker_CurrentDateRadium.Text);
                 RefrashListViewPatient();
             }
         }
@@ -327,12 +280,7 @@ namespace Isotop2
         //Событие добавления пациента в список Радия
         private void button_AddPatient_Click(object sender, RoutedEventArgs e)
         {
-            MainFormController.AddRadiumPatientList
-                (
-                    listView_RadiumPatientList, 
-                    Convert.ToDecimal(textBox_PatientWeightRadium.Text), 
-                    Convert.ToDouble(textBox_ActivityRadium.Text)
-                );
+            MainFormController.AddRadiumPatientList(listView_RadiumPatientList, listView_CalculationActivityRadium, textBox_PatientWeightRadium.Text, textBox_ActivityRadium.Text);
         }
         //Событие удаления пациента из списка Радия
         private void button_DeletePatient_Click(object sender, RoutedEventArgs e)
@@ -345,9 +293,10 @@ namespace Isotop2
             MainFormController.PrintRadium
                 (
                     listView_RadiumPatientList, 
-                    Convert.ToDateTime(datePicker_CurrentDateRadium.Text), 
-                    Convert.ToDecimal(textBox_PatientWeightRadium.Text), 
-                    Convert.ToDouble(textBox_ActivityRadium.Text)
+                    listView_CalculationActivityRadium, 
+                    datePicker_CurrentDateRadium.Text, 
+                    textBox_PatientWeightRadium.Text, 
+                    textBox_ActivityRadium.Text
                 );
         }
         //Метод нажатия Delete

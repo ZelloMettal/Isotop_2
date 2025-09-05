@@ -15,15 +15,15 @@ namespace Isotop2.Data.Models
             _iodineList = _dataStorage.GetAll();
         }
         //Метод расчёта активности и объёма Йода
-        private ActivityByVolume CalculationActivityAndVolume(double decayPrecent, decimal startActivity)
+        private ActivityByVolume CalculationActivityAndVolume(double decayPrecent, double startActivity)
         {
-            int activity = (int)Math.Round((double)startActivity * decayPrecent / 100, 0);
+            int activity = (int)Math.Round(startActivity * decayPrecent / 100, 0);
             double volume = Math.Round((double)10 * 3 / activity, 1);
             ActivityByVolume activityByVolume = new ActivityByVolume() { Activity = activity, Volume = volume };
             return activityByVolume;
         }
         //Формирование списка активности и объёма Йода
-        public Dictionary<Iodine, ActivityByVolume> CreateListActivityIodine(decimal activity)
+        public Dictionary<Iodine, ActivityByVolume> CreateListActivityIodine(double activity)
         {
             Dictionary<Iodine, ActivityByVolume> dict = new Dictionary<Iodine, ActivityByVolume>();
             foreach (var item in _iodineList)

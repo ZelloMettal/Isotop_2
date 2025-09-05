@@ -26,7 +26,7 @@
         <Style TargetType="DatePicker">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Width" Value="120"/>
+            <Setter Property="Width" Value="130"/>
         </Style>
     </Window.Resources>
 
@@ -132,63 +132,69 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Column="1" Name="button_PrintIodine" Style="{StaticResource ButtonPrint}" Click="button_PrintTechnetium_Click" Margin="0,20,20,0" HorizontalAlignment="Right">
+                    <Button Grid.Column="1" Name="button_PrintIodine" Style="{StaticResource ButtonPrint}" Click="button_PrintIodune_Click" Margin="0,20,20,0" HorizontalAlignment="Right">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                 </Grid>
             </TabItem>
             <TabItem Name="tabItem_Radium" Header="Радий" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <Label Name="label_ActivityRadium" Content="Активность, МБк" Margin="90,5,0,0" HorizontalAlignment="Left"/>
-                    <Label Name="label_CreateDate" Content="Дата изготовления" Margin="335,5,0,0" HorizontalAlignment="Left"/>
-                    <Label Name="label_CurrentDate" Content="Текущая дата" Margin="475,5,0,0" HorizontalAlignment="Left"/>
-                    <Label Name="label_PatientWeight" Content="Вес пациента, Кг" Margin="615,5,0,0" HorizontalAlignment="Left"/>
-                    <TextBox Name="textBox_ActivityRadium" PreviewTextInput="NumberValidationTextBoxWithDot" TextChanged="textBox_ActivityRadium_TextChanged" Width="120" Height="18" Margin="95,30,0,0"/>
-                    <TextBox Name="textBox_PatientWeightRadium" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_PatientWeightRadium_ValueChanged" Width="120" Margin="620,30,0,0"/>
-                    <ListView Name="listView_CalculationRadium" Width="230" Margin="95,60,0,10" HorizontalAlignment="Left" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="190"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="label_ActivityRadium" Content="Активность, МБк" Margin="85,5,0,0" />
+                    <TextBox Grid.Column="0" Name="textBox_ActivityRadium" PreviewTextInput="NumberValidationTextBoxWithDot" TextChanged="textBox_ActivityRadium_TextChanged" Width="120" Margin="90,30,0,0"/>
+                    <ListView Grid.Column="0" Name="listView_CalculationRadium" Width="230" Margin="0,60,0,10" HorizontalAlignment="Right" >
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Header="День" DisplayMemberBinding="{Binding Path=[0]}" Width="40"/>
-                                    <GridViewColumn Header="Коэффицент" DisplayMemberBinding="{Binding Path=[1]}" Width="80"/>
-                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=[2]}" Width="100"/>
+                                    <GridViewColumn Header="День" DisplayMemberBinding="{Binding Path=Day}" Width="40"/>
+                                    <GridViewColumn Header="Коэффицент" DisplayMemberBinding="{Binding Path=Coefficent}" Width="80"/>
+                                    <GridViewColumn Header="Активность, МБк" DisplayMemberBinding="{Binding Path=Activity}" Width="100"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <DatePicker Name="datePicker_CreateDateRadium" SelectedDateChanged="datePicker_CreateDateRadium_SelectionDataChanged" Margin="340,30,0,0"/>
-                    <DatePicker Name="datePicker_CurrentDateRadium" SelectedDateChanged="datePicker_CurrentDateRadium_SelectionDataChanged" Margin="480,30,0,0"/>
-                    <ListView Name="listView_CalculationActivityRadium" Width="620" Height="80" Margin="338,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Name="textBlock_Warning" Height="20" Width="190" Margin="0,20,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FFFD0000"/>
+                    <Label Grid.Column="1" Name="label_CreateDate" Content="Дата изготовления" Margin="15,5,0,0"/>
+                    <DatePicker Grid.Column="1" Name="datePicker_CreateDateRadium" SelectedDateChanged="datePicker_CreateDateRadium_SelectionDataChanged" Margin="20,30,0,0"/>
+                    <Label Grid.Column="2" Name="label_CurrentDate" Content="Текущая дата" Margin="-5,5,0,0" HorizontalAlignment="Left"/>
+                    <DatePicker Grid.Column="2" Name="datePicker_CurrentDateRadium" SelectedDateChanged="datePicker_CurrentDateRadium_SelectionDataChanged" Margin="0,30,0,0"/>
+                    <Label Grid.Column="2" Name="label_PatientWeight" Content="Вес пациента, Кг" Margin="0,5,75,0" HorizontalAlignment="Right"/>
+                    <TextBox Grid.Column="2" Name="textBox_PatientWeightRadium" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_PatientWeightRadium_ValueChanged" Width="120" Margin="0,30,50,0" HorizontalAlignment="Right"/>
+                    <ListView Grid.Column="1" Grid.ColumnSpan="3" Name="listView_CalculationActivityRadium" Height="80" Margin="20,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Header="Разность в датах" DisplayMemberBinding="{Binding Path=[0]}" Width="100"/>
-                                    <GridViewColumn Header="Текущий коэффицент" DisplayMemberBinding="{Binding Path=[1]}" Width="130"/>
-                                    <GridViewColumn Header="Текущая активность, МБк" DisplayMemberBinding="{Binding Path=[2]}" Width="150"/>
-                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=[3]}" Width="70"/>
-                                    <GridViewColumn Header="Активность в объёме, КБк" DisplayMemberBinding="{Binding Path=[4]}" Width="160"/>
+                                    <GridViewColumn Header="Разность в датах" DisplayMemberBinding="{Binding Path=DifferenceDays}" Width="100"/>
+                                    <GridViewColumn Header="Текущий коэффицент" DisplayMemberBinding="{Binding Path=CurrentCoefficent}" Width="130"/>
+                                    <GridViewColumn Header="Текущая активность, МБк" DisplayMemberBinding="{Binding Path=CurrentActivity}" Width="150"/>
+                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=Volume}" Width="70"/>
+                                    <GridViewColumn Header="Активность в объёме, КБк" DisplayMemberBinding="{Binding Path=ActivityInVolume}" Width="160"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Name="button_AddPatient" Content="Добавить пациента" Click="button_AddPatient_Click" Width="120" Margin="480,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button Name="button_DeletePatient" Content="Удалить пациента" Click="button_DeletePatient_Click" Width="110" Margin="610,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button Name="button_Printadium" Style="{StaticResource ButtonPrint}" Click="button_PrintTechnetium_Click" Margin="0,150,265,0">
+                    <Button Grid.Column="2" Name="button_AddPatient" Content="Добавить пациента" Click="button_AddPatient_Click" Width="120" Margin="0,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Button Grid.Column="2" Name="button_DeletePatient" Content="Удалить пациента" Click="button_DeletePatient_Click" Width="110" Margin="130,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Button Grid.Column="2" Name="button_Printadium" Style="{StaticResource ButtonPrint}" Click="button_PrintRadium_Click" Margin="0,150,0,0">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
-                    <ListView Name="listView_RadiumPatientList" KeyDown="listView_RadiumPatientList_KeyDown" Width="320" Margin="480,190,0,10" HorizontalAlignment="Left">
+                    <ListView Grid.Column="2" Name="listView_RadiumPatientList" KeyDown="listView_RadiumPatientList_KeyDown" Width="320" Margin="0,190,0,10" HorizontalAlignment="Left">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
-                                    <GridViewColumn Header="Имя пациента" DisplayMemberBinding="{Binding Path=[0]}" Width="90"/>
-                                    <GridViewColumn Header="Вес, Кг" DisplayMemberBinding="{Binding Path=[1]}" Width="50"/>
-                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=[2]}" Width="70"/>
-                                    <GridViewColumn Header="Активность, КБк" DisplayMemberBinding="{Binding Path=[3]}" Width="100"/>
+                                    <GridViewColumn Header="Имя пациента" DisplayMemberBinding="{Binding Path=PatientName}" Width="90"/>
+                                    <GridViewColumn Header="Вес, Кг" DisplayMemberBinding="{Binding Path=Weight}" Width="50"/>
+                                    <GridViewColumn Header="Объём, Мл" DisplayMemberBinding="{Binding Path=Volume}" Width="70"/>
+                                    <GridViewColumn Header="Активность, КБк" DisplayMemberBinding="{Binding Path=Activity}" Width="100"/>
                                 </GridView.Columns>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBlock Name="textBlock_Warning" Height="20" Width="190" Margin="760,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFFD0000"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -6,8 +6,8 @@ namespace Isotop2.Data.Models
     {
         private Dictionary<Marker, ActivityByVolume> _adultList = null; //Список взрослых
         private Dictionary<Marker, ActivityByVolume> _childrenList = null; //Список детей
-        private decimal _newActivity = 0; //Активность нового генератора
-        private decimal _oldActivity = 0; //Активность старого генератора
+        private double _newActivity = 0; //Активность нового генератора
+        private double _oldActivity = 0; //Активность старого генератора
         private Dictionary<string, string> _dayWeekRusName = new Dictionary<string, string>()
         {
             { "Monday", "Понидельник"},
@@ -19,7 +19,7 @@ namespace Isotop2.Data.Models
             { "Sunday", "Воскресенье"}
         };
 
-        public TechnetiumPrintModel(Dictionary<Marker, ActivityByVolume> adult_list, Dictionary<Marker, ActivityByVolume> Children_list, decimal new_activity, decimal old_activity)
+        public TechnetiumPrintModel(Dictionary<Marker, ActivityByVolume> adult_list, Dictionary<Marker, ActivityByVolume> Children_list, double new_activity, double old_activity)
         {
             _adultList = adult_list;
             _childrenList = Children_list;
@@ -37,12 +37,12 @@ namespace Isotop2.Data.Models
             return _childrenList;
         }
         //Получение полуение активности нового генератора
-        public decimal GetNewActivity()
+        public double GetNewActivity()
         {
             return _newActivity;
         }
         //Получение получение активности старого генератора
-        public decimal GetOldActivity()
+        public double GetOldActivity()
         {
             return _oldActivity;
         }

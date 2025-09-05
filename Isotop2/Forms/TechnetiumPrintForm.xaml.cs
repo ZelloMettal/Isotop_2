@@ -12,7 +12,7 @@ namespace Isotop2.Forms
             InitializeComponent();
         }
         //Конструктор с параметром
-        public TechnetiumPrintForm(Dictionary<Marker, ActivityByVolume> adultList, Dictionary<Marker, ActivityByVolume> childrenList, decimal newActivity, decimal oldActivity, string childrenAge)
+        public TechnetiumPrintForm(Dictionary<Marker, ActivityByVolume> adultList, Dictionary<Marker, ActivityByVolume> childrenList, double newActivity, double oldActivity, string childrenAge)
         {
             InitializeComponent();
             TechnetiumPrintController.SetPrintData(adultList, childrenList, newActivity, oldActivity);

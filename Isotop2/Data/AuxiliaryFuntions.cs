@@ -13,6 +13,19 @@ namespace Isotop2.Data
             for (int i = 0; i < dataGrid.Columns.Count; i++)            
                 dataGrid.Columns[i].Header = headers[i];            
         }
+        //Метод конвертации List<object> в List<string>
+        static public List<string> ConvertListObjectToListString(IEnumerable<object> list)
+        {
+            List<string> dataList = new List<string>();
+            Type t = list.ElementAt(0).GetType();
+            PropertyInfo[] propt = t.GetProperties();
+            foreach (var pi in list)
+            {
+                for (int i = 0; i < propt.Length; i++)                
+                    dataList.Add(propt[i].GetValue(pi).ToString());                
+            }
+            return dataList;
+        }
         //Метод получение данных из ListView
         static public List<string> ConvertListItemsToList(List<string[]> list)
         {
@@ -168,6 +181,38 @@ namespace Isotop2.Data
                 });                
             }
             return iodineData;
+        }
+        //Метод конвертации ListString[] в ListRadiumView
+        public static List<RadiumView> ListArrStringToRadiumView(List<string[]> list)
+        {
+            List<RadiumView> radiumData = new List<RadiumView>();
+            foreach (string[] data in list)
+            {
+                radiumData.Add(new RadiumView
+                {
+                    Day = data[0],
+                    Coefficent = data[1],
+                    Activity = data[2],
+                });
+            }
+            return radiumData;
+        }
+        //Метод конвертации ListString[] в ListRadiumPatient
+        public static List<RadiumCalculationView> ListArrStringToRadiumCalculationView(List<string[]> list)
+        {
+            List<RadiumCalculationView> radiumData = new List<RadiumCalculationView>();
+            foreach (string[] data in list)
+            {
+                radiumData.Add(new RadiumCalculationView
+                {
+                    DifferenceDays = data[0],
+                    CurrentCoefficent = data[1],
+                    CurrentActivity = data[2],
+                    Volume = data[3],
+                    ActivityInVolume = data[4]
+                });
+            }
+            return radiumData;
         }
         //Метод валидации TextBox для дробных значений
         public static bool ValidationTextBox(string text)

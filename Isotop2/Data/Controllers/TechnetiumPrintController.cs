@@ -9,7 +9,7 @@ namespace Isotop2.Data.Controllers
         static private TechnetiumPrintModel _model = null;
 
         //Метод установки данных для печати
-        static public void SetPrintData(Dictionary<Marker, ActivityByVolume> adultList, Dictionary<Marker, ActivityByVolume> childList, decimal newActivity, decimal oldActivity)
+        static public void SetPrintData(Dictionary<Marker, ActivityByVolume> adultList, Dictionary<Marker, ActivityByVolume> childList, double newActivity, double oldActivity)
         {
             _model = new TechnetiumPrintModel(adultList, childList, newActivity, oldActivity);
         }
@@ -24,12 +24,12 @@ namespace Isotop2.Data.Controllers
             return _model.GetChildrenList();
         }
         //Получение получение активности нового генератора
-        static public decimal GetNewActivity()
+        static public double GetNewActivity()
         {
             return _model.GetNewActivity();
         }
         //Получение активности старого генератора
-        static public decimal GetOldActivity()
+        static public double GetOldActivity()
         {
             return _model.GetOldActivity();
         }

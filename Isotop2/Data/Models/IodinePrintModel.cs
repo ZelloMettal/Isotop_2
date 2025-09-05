@@ -5,7 +5,7 @@
         private List<string> _dataListView = new List<string>(); //Список с данными для заполнения ячеек
         private int _rowCount = 0; //Колиество строк
 
-        public IodinePrintModel(List<string> data, int countRow, decimal currentActivity)
+        public IodinePrintModel(List<string> data, int countRow, double currentActivity)
         {
             _rowCount = countRow;
             _dataListView.AddRange(new string[] { $"Активность - {currentActivity} МБк", "Дата", "День", "Процент распада", "Активность, МБк", "Объём, Мл" });

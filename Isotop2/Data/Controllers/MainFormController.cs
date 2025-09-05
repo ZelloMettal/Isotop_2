@@ -3,6 +3,7 @@ using Isotop2.Data.Entities;
 using Isotop2.Forms;
 using System.Windows.Controls;
 using System.Windows;
+using System.Reflection;
 
 namespace Isotop2.Data.Controllers
 {
@@ -33,29 +34,29 @@ namespace Isotop2.Data.Controllers
             _model.SetChildrenCoefficent(range);
         }
         //Метод заполнения ListView генератора
-        static public void FillListViewGeneration(ListView lv, decimal activity)
+        static public void FillListViewGeneration(ListView lv, string activity)
         {
-            List<ActivityByVolume> volumeActivity = _model.GetListActivityByVolume(activity);
+            List<ActivityByVolume> volumeActivity = _model.GetListActivityByVolume(Convert.ToDouble(activity));
             lv.ItemsSource = volumeActivity;
         }
         //Метод заполнения ListView по маркера для взрослых
-        static public void GetListTechnetiumPatient(ListView lv, decimal newActivity, decimal oldActivity, bool isAdults)
+        static public void GetListTechnetiumPatient(ListView lv, string newActivity, string oldActivity, bool isAdults)
         {
             List<string[]> dataList;
             //Получаем соотвестввующий список данных для пациентов
             if (isAdults)
-                dataList = _model.GetListTechnetiumAdultPatient(newActivity, oldActivity);
+                dataList = _model.GetListTechnetiumAdultPatient(Convert.ToDouble(newActivity), Convert.ToDouble(oldActivity));
             else
-                dataList = _model.GetListTechnetiumChildPatient(newActivity, oldActivity);
+                dataList = _model.GetListTechnetiumChildPatient(Convert.ToDouble(newActivity), Convert.ToDouble(oldActivity));
             List<MarkerView> markerView = AuxiliaryFuntions.ListArrStringToMarkerView(dataList);
             lv.ItemsSource = markerView;
         }
         //Метод вызова формы печати технеция
-        static public void PrintTechnetiumForm(decimal newActivity, decimal oldActivity, string childrenAge)
+        static public void PrintTechnetiumForm(string newActivity, string oldActivity, string childrenAge)
         {
             Dictionary<Marker, ActivityByVolume> adultPrint = _model.GetAdultPrintList();
             Dictionary<Marker, ActivityByVolume> childrenPrint = _model.GetChildrenPrintList();
-            TechnetiumPrintForm TPF = new TechnetiumPrintForm(adultPrint, childrenPrint, newActivity, oldActivity, childrenAge);
+            TechnetiumPrintForm TPF = new TechnetiumPrintForm(adultPrint, childrenPrint, Convert.ToDouble(newActivity), Convert.ToDouble(oldActivity), childrenAge);
             TPF.Owner = App.Current.MainWindow;
             TPF.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             TPF.ShowDialog();
@@ -66,18 +67,19 @@ namespace Isotop2.Data.Controllers
         ///////// Часть для Йода /////////
 
         //Метод заполнения ListView Йодна
-        static public void FillListViewIodine(ListView lv, decimal activity, DateTime startDate)
+        static public void FillListViewIodine(ListView lv, string activity, string startDate)
         {
-            List<string[]> dataList = _model.GetListDataIodine(activity, startDate);
+            List<string[]> dataList = _model.GetListDataIodine(Convert.ToDouble(activity), Convert.ToDateTime(startDate));
             List<IodineView> iodineViews = AuxiliaryFuntions.ListArrStringToIodineView(dataList);
             lv.ItemsSource = iodineViews;
         }
         //Метод печати Йода
-        static public void PrintIodine(ListView lv, decimal activity)
+        static public void PrintIodine(ListView lv, string activity)
         {
-            List<string> dataList = AuxiliaryFuntions.ConvertListItemsToList((List<string[]>)lv.ItemsSource);
-            int countRow = ((List<string[]>)lv.ItemsSource).Count();
-            IodinePrintController.SetPrintData(dataList, countRow, activity);
+            List<IodineView> view = lv.ItemsSource.Cast<IodineView>().ToList();
+            List<string> dataList = AuxiliaryFuntions.ConvertListObjectToListString(view);       
+            int countRow = (view).Count();
+            IodinePrintController.SetPrintData(dataList, countRow, Convert.ToDouble(activity));
             IodinePrintController.ExpotrToPDF();
         }
 
@@ -95,34 +97,42 @@ namespace Isotop2.Data.Controllers
             return _model.GetDefferenceDay();
         }
         //Установка нового значения разности дней Радия
-        static public void SetDifferenceDayRadium(DateTime createDate, DateTime currentDate)
+        static public void SetDifferenceDayRadium(string createDate, string currentDate)
         {
-            _model.SetDifferenceDayRadium(createDate, currentDate);
+            _model.SetDifferenceDayRadium(Convert.ToDateTime(createDate), Convert.ToDateTime(currentDate));
         }
         //Метод заполнения списка распада Радия
-        static public void FillListViewRadium(ListView lv, double activity)
+        static public void FillListViewRadium(ListView lv, string activity)
         {
-            List<string[]> dataList = _model.GetListDataRadium(activity);
-            lv.ItemsSource = dataList;
+            List<string[]> dataList = _model.GetListDataRadium(Convert.ToDouble(activity));
+            List<RadiumView> radiumViews = AuxiliaryFuntions.ListArrStringToRadiumView(dataList);
+            lv.ItemsSource = radiumViews;
         }
         //Метод заполнения ListView Радия для пациента
-        static public void FillListViewRadiumForPatient(ListView lv, decimal weightPatient, double activity)
+        static public void FillListViewRadiumForPatient(ListView lv, string weightPatient, string activity)
         {
-            List<string[]> dataList = _model.GetRadiumForPatient(weightPatient, activity);
-            lv.ItemsSource = dataList;
+            List<string[]> dataList = _model.GetRadiumForPatient(Convert.ToDouble(weightPatient), Convert.ToDouble(activity));
+            List<RadiumCalculationView> radiumCalculationViews = AuxiliaryFuntions.ListArrStringToRadiumCalculationView(dataList);
+            lv.ItemsSource = radiumCalculationViews;
         }
         //Метод добавления пациентов в список Радия
-        static public void AddRadiumPatientList(ListView lv, decimal weightPatient, double activity)
+        static public void AddRadiumPatientList(ListView lvPatientList, ListView lvCalculationRadium, string weightPatient, string activity)
         {
-            List<string[]> dataList = _model.GetRadiumForPatient(weightPatient, activity);
+            RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().FirstOrDefault();
             AddNameRadiumPatient ANRP = new AddNameRadiumPatient();
             ANRP.Owner = App.Current.MainWindow;
             ANRP.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             if (ANRP.ShowDialog() == true)
             {
                 string patientName = ANRP.GetEnteredData();
-                ANRP.Close();                
-                lv.Items.Add(new string[] { patientName, weightPatient.ToString(), dataList.First()[3], dataList.First()[4] });
+                ANRP.Close();
+                lvPatientList.Items.Add(new RadiumPatientView 
+                    { 
+                        PatientName = patientName, 
+                        Weight = weightPatient.ToString(), 
+                        Volume = calculationView.Volume, 
+                        Activity = calculationView.ActivityInVolume
+                    });
             }
         }
         //Метод удаления пациента из списка радия
@@ -137,28 +147,39 @@ namespace Isotop2.Data.Controllers
                 MessageBox.Show("Выберите строку", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         //Метод печати Радия
-        static public void PrintRadium(ListView patientList, DateTime currentDate, decimal weightPatient, double activity)
+        static public void PrintRadium(ListView lvPatientList, ListView lvCalculationRadium, string currentDate, string weightPatient, string activity)
         {
-            List<string[]> dataList = _model.GetRadiumForPatient(weightPatient, activity);
-            RadiumPrintController.SetPrintData(patientList, currentDate, dataList.First()[0], dataList.First()[1], dataList.First()[2]);
+            RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().FirstOrDefault();
+            List<RadiumPatientView> patientView = lvPatientList.Items.Cast<RadiumPatientView>().ToList();
+            List<string> dataList = AuxiliaryFuntions.ConvertListObjectToListString(patientView);
+            int countRow = (patientView).Count();
+            RadiumPrintController.SetPrintData
+                (
+                    dataList,
+                    countRow,
+                    Convert.ToDateTime(currentDate),
+                    calculationView.DifferenceDays,
+                    calculationView.CurrentCoefficent,
+                    calculationView.CurrentActivity
+                );
             RadiumPrintController.ExportToPDF();
         }
 
         ///////// ******************** /////////
 
         //Метод сохранения настроек
-        static public void SaveSettings(decimal activityNewGenerator, decimal activityOldGenerator, int timeDecay, DateTime dateZeroDay, decimal activityIodine, decimal activityRadium, DateTime createDate, decimal weihget)
+        static public void SaveSettings(string activityNewGenerator, string activityOldGenerator, double timeDecay, string dateZeroDay, string activityIodine, string activityRadium, string createDate, string weihget)
         {
             ProgramSettings settings = new ProgramSettings
             {
-                NewGenerationActivity = activityNewGenerator,
-                OldGenerationActivity = activityOldGenerator,
-                TimeDecay = timeDecay,
-                DateOnZeroDay = dateZeroDay,
-                IodineActivity = activityIodine,
-                RadiumActivity = activityRadium,
-                CreateDateRadium = createDate,
-                PatientWeighet = weihget
+                NewGenerationActivity = Convert.ToDouble(activityNewGenerator),
+                OldGenerationActivity = Convert.ToDouble(activityOldGenerator),
+                TimeDecay = (int)timeDecay,
+                DateOnZeroDay = Convert.ToDateTime(dateZeroDay),
+                IodineActivity = Convert.ToDouble(activityIodine),
+                RadiumActivity = Convert.ToDouble(activityRadium),
+                CreateDateRadium = Convert.ToDateTime(createDate),
+                PatientWeighet = Convert.ToInt32(weihget)
             };
 
             SaveLoadSettings newSettings = new SaveLoadSettings(settings);
