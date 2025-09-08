@@ -4,8 +4,8 @@ namespace Isotop2.Data.Models
 {
     internal class TechnetiumPrintModel
     {
-        private Dictionary<Marker, ActivityByVolume> _adultList = null; //Список взрослых
-        private Dictionary<Marker, ActivityByVolume> _childrenList = null; //Список детей
+        private Dictionary<Marker, ActivityByVolume> _adultList; //Список взрослых
+        private Dictionary<Marker, ActivityByVolume> _childrenList; //Список детей
         private double _newActivity = 0; //Активность нового генератора
         private double _oldActivity = 0; //Активность старого генератора
         private Dictionary<string, string> _dayWeekRusName = new Dictionary<string, string>()
@@ -73,7 +73,15 @@ namespace Isotop2.Data.Models
             dataCells.AddRange(new string[] { typePatient, "Маркер", "Объём, Мл", "Активность, МБк" });
             if (countRow > 0)
                 dataCells.AddRange(data);
-            WordDocument.FillTable(dataCells.ToArray());
+
+            try 
+            {
+                WordDocument.FillTable(dataCells.ToArray());
+            }
+            catch (Exception ex)
+            {
+                new Logger($"WT:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
+            }
 
             //Вывод документа
             WordDocument.PreviewDocument();
@@ -108,8 +116,14 @@ namespace Isotop2.Data.Models
             //Данные детей
             if (countRowsChildren > 0)
                 dataCells.AddRange(dataChildren);
-
-            WordDocument.FillTable(dataCells.ToArray());
+            try 
+            { 
+                WordDocument.FillTable(dataCells.ToArray());
+            }
+            catch (Exception ex)
+            {
+                new Logger($"WT:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
+            }
 
             //Вывод документа
             WordDocument.PreviewDocument();

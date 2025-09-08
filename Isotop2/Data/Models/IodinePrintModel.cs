@@ -22,8 +22,14 @@
             WordDocument.AddRow(_rowCount, 5, true, 15, 0, 15, 15);
 
             //Заполняем таблицу
-            WordDocument.FillTable(_dataListView.ToArray());
-
+            try 
+            {
+                WordDocument.FillTable(_dataListView.ToArray());
+            }
+            catch (Exception ex)
+            {
+                new Logger($"WI:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
+            }
             //Вывод документа
             WordDocument.PreviewDocument();
         }

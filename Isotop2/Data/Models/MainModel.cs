@@ -74,7 +74,7 @@ namespace Isotop2.Data.Models
         //Метод получения списка детских коэффицентов
         public List<CoefficientsForChildren> GetСoefficentСhildrenList()
         {
-            return _technetium.GetСoefficentСhildrenList();
+            return _technetium.GetСoefficentСhildrenList().OrderByDescending(x => x.Coefficient).ToList();
         }
         //Метод установки текущего детского коэффицента
         public void SetChildrenCoefficent(string range)
@@ -197,4 +197,3 @@ namespace Isotop2.Data.Models
         //////////////////////////////////////////////////////
     }
 }
-

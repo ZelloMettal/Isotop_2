@@ -3,7 +3,6 @@ using Isotop2.Data.Entities;
 using Isotop2.Forms;
 using System.Windows.Controls;
 using System.Windows;
-using System.Reflection;
 
 namespace Isotop2.Data.Controllers
 {
@@ -23,7 +22,7 @@ namespace Isotop2.Data.Controllers
         static public void FillTechnetiumCoefficientChildren(ComboBox cb)
         {
             cb.Items.Clear();
-            List<CoefficientsForChildren> childrenCoeff = _model.GetСoefficentСhildrenList().OrderByDescending(x => x.Coefficient).ToList();
+            List<CoefficientsForChildren> childrenCoeff = _model.GetСoefficentСhildrenList();
             foreach (var item in childrenCoeff)
                 cb.Items.Add(item.AgeRange);
             cb.SelectedIndex = 0;
@@ -118,7 +117,7 @@ namespace Isotop2.Data.Controllers
         //Метод добавления пациентов в список Радия
         static public void AddRadiumPatientList(ListView lvPatientList, ListView lvCalculationRadium, string weightPatient, string activity)
         {
-            RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().FirstOrDefault();
+            RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().First();
             AddNameRadiumPatient ANRP = new AddNameRadiumPatient();
             ANRP.Owner = App.Current.MainWindow;
             ANRP.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -149,7 +148,7 @@ namespace Isotop2.Data.Controllers
         //Метод печати Радия
         static public void PrintRadium(ListView lvPatientList, ListView lvCalculationRadium, string currentDate, string weightPatient, string activity)
         {
-            RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().FirstOrDefault();
+            RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().First();
             List<RadiumPatientView> patientView = lvPatientList.Items.Cast<RadiumPatientView>().ToList();
             List<string> dataList = AuxiliaryFuntions.ConvertListObjectToListString(patientView);
             int countRow = (patientView).Count();
@@ -170,6 +169,9 @@ namespace Isotop2.Data.Controllers
         //Метод сохранения настроек
         static public void SaveSettings(string activityNewGenerator, string activityOldGenerator, double timeDecay, string dateZeroDay, string activityIodine, string activityRadium, string createDate, string weihget)
         {
+            if (activityNewGenerator == "" || activityNewGenerator == null)
+                return;
+
             ProgramSettings settings = new ProgramSettings
             {
                 NewGenerationActivity = Convert.ToDouble(activityNewGenerator),

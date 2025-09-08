@@ -19,10 +19,10 @@ namespace Isotop2.Data.Models
 
             _technetiumList = _dataStorage.GetAll(); //Получаем список объектов Технеция
             _coefficentForChildrenList = new DataStorage<CoefficientsForChildren>().GetAll(); //Получаем список коэффицентов детей
-            LoadVolumeList();
+            _currentDecay = _technetiumList.First().DecayPrecent; //Получаем текущий процент распада
+            _currentChildrenCoefficent = _coefficentForChildrenList.First().Coefficient; //Получаем текущий коэффицент для детей
             LoadMarkerList();
-            _currentDecay = _technetiumList.FirstOrDefault().DecayPrecent; //Получаем текущий процент распада
-            _currentChildrenCoefficent = _coefficentForChildrenList.FirstOrDefault().Coefficient; //Получаем текущий коэффицент для детей
+            LoadVolumeList();
         }
         //Метод расчёта генераторов
         private int CalculationActivityGeneration(double volume, double activity, double firstVolume, double currentDecay)

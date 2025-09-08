@@ -1,4 +1,4 @@
-﻿//#pragma checksum "..\..\..\App.xaml" "{ff1816ec-aa5e-4d10-87f7-6f4963833460}" "9DF010FCDFFCCFBAC91C795AD0CA71C702212291"
+﻿using Isotop2.Data;
 using System.Windows;
 
 namespace Isotop2
@@ -15,8 +15,18 @@ namespace Isotop2
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _mainForm.Show();
-            base.OnStartup(e);
+            //Пытаемся отобрать главное окно
+            try
+            {
+                MainWindow.Show();
+                base.OnStartup(e);
+            }
+            catch(Exception ex)
+            {
+                //Завершаем приложение при неудачи
+                new Logger($"App:Не удалось отобразить окно. {ex.Message}" + DateTime.Now.ToString());
+                App.Current.Shutdown(); 
+            }
         }
     }
 }

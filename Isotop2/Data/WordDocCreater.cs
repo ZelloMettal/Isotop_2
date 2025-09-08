@@ -1,19 +1,27 @@
 ﻿using Word = Microsoft.Office.Interop.Word;
 using Microsoft.Office.Interop.Word;
+using System.Windows;
 
 namespace Isotop2.Data
 {
     internal class WordDocCreater
     {
-        Word.Application _application = null; //Объект Word-приложения
-        Word.Document _document = null; //Объект документа
+        Word.Application _application; //Объект Word-приложения
+        Word.Document _document; //Объект документа
         TableConstructor _table = new TableConstructor(); //Объект таблицы
 
         public WordDocCreater()
         {
-            //Инициальзация Word-документа
-            _application = new Word.Application();
-            _document = _application.Documents.Add();
+            try
+            { 
+                //Инициальзация Word-документа
+                _application = new Word.Application();
+                _document = _application.Documents.Add();
+            }
+            catch (Exception ex) 
+            {
+                new Logger($"W:Не удалось запустить Word. {ex.Message}; {DateTime.Now.ToString()}");
+            }
         }
         //Метод создание строк таблицы
         public void AddRow(int rows, int columns, bool centerText, double marginTop = 56.7, double marginBottom = 56.7, double marginLeft = 85.05, double marginRight = 42.55)
@@ -65,32 +73,43 @@ namespace Isotop2.Data
         public void PreviewDocument()
         {
             string tempDocument = $"Temp document {DateTime.Now.ToString().Replace(":", "-")}.pdf";
-            _application.ActiveDocument.ExportAsFixedFormat
-                (
-                    tempDocument,
-                    WdExportFormat.wdExportFormatPDF,
-                    true,
-                    WdExportOptimizeFor.wdExportOptimizeForOnScreen,
-                    WdExportRange.wdExportAllDocument,
-                    1,
-                    1,
-                    WdExportItem.wdExportDocumentContent,
-                    true,
-                    true,
-                    WdExportCreateBookmarks.wdExportCreateHeadingBookmarks,
-                    true,
-                    true,
-                    false
-                );
-            object save = Word.WdSaveOptions.wdDoNotSaveChanges;
-            object format = Word.WdOriginalFormat.wdOriginalDocumentFormat;
-            object route = false;
-            _document.Close(ref save, ref format, ref route);
-            _application.DisplayAlerts = Word.WdAlertLevel.wdAlertsNone;
-            _application.Quit();
-            _document = null;
-            _application = null;
-            GC.Collect();
+            try
+            {
+                _application.ActiveDocument.ExportAsFixedFormat
+                    (
+                        tempDocument,
+                        WdExportFormat.wdExportFormatPDF,
+                        true,
+                        WdExportOptimizeFor.wdExportOptimizeForOnScreen,
+                        WdExportRange.wdExportAllDocument,
+                        1,
+                        1,
+                        WdExportItem.wdExportDocumentContent,
+                        true,
+                        true,
+                        WdExportCreateBookmarks.wdExportCreateHeadingBookmarks,
+                        true,
+                        true,
+                        false
+                    );                
+            }
+            catch (Exception ex)
+            {
+                new Logger($"W:Не удалось запустить PDF. {ex.Message}; {DateTime.Now.ToString()}");
+                MessageBox.Show("Не удалось запустить PDF", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                object save = Word.WdSaveOptions.wdDoNotSaveChanges;
+                object format = Word.WdOriginalFormat.wdOriginalDocumentFormat;
+                object route = false;
+                _document.Close(ref save, ref format, ref route);
+                _application.DisplayAlerts = Word.WdAlertLevel.wdAlertsNone;
+                _application.Quit();
+                _document = null;
+                _application = null;
+                GC.Collect();
+            }
         }
     }
 }

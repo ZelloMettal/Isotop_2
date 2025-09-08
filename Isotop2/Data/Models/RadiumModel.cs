@@ -12,7 +12,6 @@ namespace Isotop2.Data.Models
         public RadiumModel(IDataStorage<Radium> dataStorage)
         {
             _dataStorage = dataStorage;
-
             _radiumList = _dataStorage.GetAll();
         }
         //Метод расчёта активности распада Радия
@@ -46,7 +45,7 @@ namespace Isotop2.Data.Models
                 dict.Add(item, newActivity);
             }
             return dict;
-        }        
+        }
         //Метод расчёта ативности Радия для пациента
         public (Radium, ActivityByVolume, double) CreateRadiumForPatient(double weightPatient, double activity)
         {

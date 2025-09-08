@@ -11,11 +11,12 @@ namespace Isotop2
     {
                                             //////////  МЕТОДЫ/СОБЫТИЯ ОСНОВНОЙ ФОРМЫ  ///////////
         public MainForm()
-        {            
+        {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            if (!MainFormController.Authorization())
-                this.Close();
+            //Авторизация
+            if (!MainFormController.Authorization())             
+                this.Close();            
         }
         //Событие открытия формы FormData
         private void menuItem_OpenFormData_Click(object sender, RoutedEventArgs e)
