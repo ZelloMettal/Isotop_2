@@ -51,7 +51,7 @@ namespace Isotop2.Forms
         {
             this.Close();
         }
-        //Событие нажатие Enter/Esc
+        //Событие нажатие Esc
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)

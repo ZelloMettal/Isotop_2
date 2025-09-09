@@ -10,8 +10,28 @@
         Icon="/Resources/radiation .jpg"
         Loaded="FormData_Load"
         KeyDown="PressHotKey">
+
+    <Window.Resources>
+        <Style x:Key="BaseButton">
+            <Setter Property="ItemsControl.Width" Value="60"/>
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Bottom"/>            
+        </Style>
+        <Style x:Key="ButtonLeft" BasedOn="{StaticResource ResourceKey=BaseButton}">
+            <Setter Property="ItemsControl.Width" Value="60"/>
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="ButtonRight" BasedOn="{StaticResource ResourceKey=BaseButton}">
+            <Setter Property="ItemsControl.Width" Value="60"/>
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
-        <ListView Name="listView_Tables" SelectionMode="Single" SelectionChanged="listView_Tables_ItemSelectionChanged" Width="140" Margin="10,10,0,10" HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" Name="listView_Tables" SelectionMode="Single" SelectionChanged="listView_Tables_ItemSelectionChanged" Width="140" Margin="10,10,0,10" HorizontalAlignment="Left">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -20,9 +40,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DataGrid Name="dataGrid_DataTables" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" SelectedCellsChanged="dataGrid_DataTables_CellClick" Margin="160,10,10,40"/>
-        <Button Name="button_Add" Content="Добавить" IsEnabled="False" Click="button_Add_Click" Width="60" Margin="160,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <Button Name="button_Delete" Content="Удалить" IsEnabled="False" Click="button_Delete_Click" Width="60" Margin="225,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <Button Name="button_Cancel" Content="Закрыть" Click="button_Cancel_Click" Width="60" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <DataGrid Grid.Column="1" Name="dataGrid_DataTables" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" SelectedCellsChanged="dataGrid_DataTables_CellClick" Margin="10,10,10,40"/>
+        <Button Grid.Column="1" Style="{StaticResource ResourceKey=ButtonLeft}" Name="button_Add" Content="Добавить" IsEnabled="False" Click="button_Add_Click" Margin="10,0,0,10"/>
+        <Button Grid.Column="1" Style="{StaticResource ResourceKey=ButtonLeft}" Name="button_Delete" Content="Удалить" IsEnabled="False" Click="button_Delete_Click" Margin="80,0,0,10"/>
+        <Button Grid.Column="1" Style="{StaticResource ResourceKey=ButtonRight}" Name="button_Cancel" Content="Закрыть" Click="button_Cancel_Click" Margin="0,0,10,10"/>
     </Grid>
 </Window>
