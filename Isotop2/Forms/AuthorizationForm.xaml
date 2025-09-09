@@ -11,30 +11,38 @@
         KeyDown="PressHotKey">
     
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Width" Value="50"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Style x:Key="BaseButton">
+            <Setter Property="ItemsControl.Width" Value="50"/>
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Bottom"/>
         </Style>
-        <Style TargetType="Label">
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Style x:Key="ButtonRight" BasedOn="{StaticResource ResourceKey=BaseButton}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Right"/>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="VerticalAlignment" Value="Top"/>
+        <Style x:Key="ButtonLeft" BasedOn="{StaticResource ResourceKey=BaseButton}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
         </Style>
-        <Style TargetType="PasswordBox">
-            <Setter Property="VerticalAlignment" Value="Top"/>
+        <Style x:Key="Top">
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style x:Key="TopRight" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="TopLeft" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="TopLeftWidht250" BasedOn="{StaticResource ResourceKey=TopLeft}">
+            <Setter Property="ItemsControl.Width" Value="235"/>
         </Style>
     </Window.Resources>    
     
     <Grid>
-        <Label Name="label_UserName" Content="Имя пользователя" Margin="5,5,0,0"/>
-        <TextBox Name="textBox_UserName" TabIndex="0" Margin="10,30,10,0"/>
-        <Label Name="label_Password" Content="Пароль" Margin="5,50,0,0"/>
-        <TextBox Name="textBox_UserPassword" Visibility="Hidden" Margin="10,75,10,0"/>
-        <PasswordBox Name="passwordBox_UserPassword" TabIndex="1" Margin="10,75,10,0"/>
-        <CheckBox Name="checkBox_ShowPassword" Content="Показать пароль" Checked="checkBox_ShowPassword_Checked" Unchecked="checkBox_ShowPassword_Uncheked" Margin="0,55,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Button Name="button_OK" TabIndex="2" Click="button_OK_Click" Content="Войти" Margin="10,0,0,10" HorizontalAlignment="Left"/>
-        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,10,10" HorizontalAlignment="Right"/>
+        <Label Style="{StaticResource ResourceKey=TopLeft}" Name="label_UserName" Content="Имя пользователя" Margin="5,5,0,0"/>
+        <TextBox Style="{StaticResource ResourceKey=TopLeftWidht250}" Name="textBox_UserName" TabIndex="0" Margin="10,30,10,0"/>
+        <Label Style="{StaticResource ResourceKey=TopLeft}" Name="label_Password" Content="Пароль" Margin="5,50,0,0"/>
+        <TextBox Style="{StaticResource ResourceKey=TopLeftWidht250}" Name="textBox_UserPassword" Visibility="Hidden" Margin="10,75,10,0"/>
+        <PasswordBox Style="{StaticResource ResourceKey=TopLeftWidht250}" Name="passwordBox_UserPassword" TabIndex="1" Margin="10,75,10,0"/>
+        <CheckBox Style="{StaticResource ResourceKey=TopRight}" Name="checkBox_ShowPassword" Content="Показать пароль" Checked="checkBox_ShowPassword_Checked" Unchecked="checkBox_ShowPassword_Uncheked" Margin="0,55,10,0"/>
+        <Button Style="{StaticResource ResourceKey=ButtonLeft}" Name="button_OK" TabIndex="2" Click="button_OK_Click" Content="Войти" Margin="10,0,0,10"/>
+        <Button Style="{StaticResource ResourceKey=ButtonRight}" Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,10,10"/>
     </Grid>
 </Window>
