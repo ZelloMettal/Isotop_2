@@ -81,9 +81,12 @@ namespace Isotop2.Data.Controllers
             _model.SetCurrenRI(-1);
         }
         //Метод установки выбранного РИ в DataGrid
-        static public void SetCurrenRI(int id)
+        static public void SetCurrenRI(string id)
         {
-            _model.SetCurrenRI(id);
+            if (id == "" || id == null)
+                _model.SetCurrenRI(-1);
+            else
+                _model.SetCurrenRI(Convert.ToInt32(id));
         }
         //Метод экспорта данных из DataGrid в Excel
         static public void ExportExcel(DataGrid dataGrid)

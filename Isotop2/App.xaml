@@ -4,5 +4,6 @@
              xmlns:local="clr-namespace:Isotop2"
              StartupUri="MainForm.xaml">
     <Application.Resources>
+        
     </Application.Resources>
 </Application>

@@ -9,19 +9,35 @@
         Title="РИ" Height="450" Width="800"
         Icon="/Resources/radiation .jpg"
         Loaded="RIForm_Load">
-    <Grid>
-        <Button Name="button_Search" Click="button_Search_Click" Width="30" Height="30" Background="White" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image Source="/Resources/find.jpg"/>
-        </Button>
-        <Button Name="button_DropSearch" Click="button_DropSearch_Click" Width="30" Height="30" Background="White" Margin="50,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image Source="/Resources/drop_find.jpg"/>
-        </Button>
-        <Button Name="button_Add" Click="button_Add_Click" Content="Добавить" Width="60" Margin="0,20,150,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Button Name="button_Edit" Click="button_Edit_Click" Content="Изменить" Width="60" Margin="0,20,80,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Button Name="button_Delete" Click="button_Delete_Click" Content="Удалить" Width="60" Margin="0,20,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <DataGrid Name="dataGrid_RIList" SelectedCellsChanged="dataGrid_RIList_CellClick" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" Margin="10,45,10,10"/>
-        <Button Name="button_ExportToExcel" Click="button_ExportToExcel_Click" Width="30" Height="30" Background="White" Margin="90,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image Source="/Resources/excel.jpg"/>
-        </Button>
-    </Grid>
+
+    <Window.Resources>
+        <Style x:Key="ButtonSearchAndExpotr" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>        
+    </Window.Resources>
+        
+        <Grid>
+        <Button Style="{StaticResource ButtonSearchAndExpotr}" Name="button_Search" Click="button_Search_Click" Margin="10,10,0,0">
+                <Image Source="/Resources/find.jpg"/>
+            </Button>
+            <Button Style="{StaticResource ButtonSearchAndExpotr}" Name="button_DropSearch" Click="button_DropSearch_Click" Margin="50,10,0,0">
+                <Image Source="/Resources/drop_find.jpg"/>
+            </Button>
+            <Button Style="{StaticResource ButtonSearchAndExpotr}" Name="button_ExportToExcel" Click="button_ExportToExcel_Click" Margin="90,10,0,0">
+                <Image Source="/Resources/excel.jpg"/>
+            </Button>
+            <Button Name="button_Add" Click="button_Add_Click" Content="Добавить" Margin="0,20,150,0"/>
+            <Button Name="button_Edit" Click="button_Edit_Click" Content="Изменить" Margin="0,20,80,0"/>
+            <Button Name="button_Delete" Click="button_Delete_Click" Content="Удалить" Margin="0,20,10,0"/>
+            <DataGrid Name="dataGrid_RIList" SelectedCellsChanged="dataGrid_RIList_CellClick" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" Margin="10,45,10,10"/>
+        </Grid>
 </Window>

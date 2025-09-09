@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
-using Excel = Microsoft.Office.Interop.Excel;
+﻿using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Isotop2.Data
 {
@@ -11,12 +10,19 @@ namespace Isotop2.Data
         Excel.Range _range = null;
 
         public ExcelDocCreater()
-        { 
+        {
             //Инициализация Excel-документа
-            _excelApplication = new Excel.Application();
-            _excelBook = _excelApplication.Workbooks.Add();
-            _excelSheet = (Excel.Worksheet)_excelBook.ActiveSheet;
-            _excelSheet.Columns.AutoFit();
+            try 
+            {
+                _excelApplication = new Excel.Application();
+                _excelBook = _excelApplication.Workbooks.Add();
+                _excelSheet = (Excel.Worksheet)_excelBook.ActiveSheet;
+                _excelSheet.Columns.AutoFit();
+            }
+            catch (Exception ex) 
+            {
+                new Logger($"E:Не удалось запустить Excel. {ex.Message}; {DateTime.Now.ToString()}");
+            }
         }
         //Метод заполнения докуммента данными
         public void CreateDocument(List<string[]> dataList, int columnWidth = 20)
@@ -33,14 +39,24 @@ namespace Isotop2.Data
         public void VisibleDocument()
         {
             //Отображаем документ
-            _excelApplication.Visible = true;
-            _excelBook.Activate();
-            //Очищаем память
-            _excelApplication = null;
-            _excelBook = null;
-            _excelSheet = null;
-            _range = null;
-            GC.Collect();
+            try
+            {
+                _excelApplication.Visible = true;
+                _excelBook.Activate();
+            }
+            catch (Exception ex)
+            {
+                new Logger($"E:Не удалось запустить Excel. {ex.Message}; {DateTime.Now.ToString()}");
+            }
+            finally
+            { 
+                //Очищаем память
+                _excelApplication = null;
+                _excelBook = null;
+                _excelSheet = null;
+                _range = null;
+                GC.Collect();
+            }
         }
     }
 }

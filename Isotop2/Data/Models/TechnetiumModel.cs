@@ -74,7 +74,7 @@ namespace Isotop2.Data.Models
             {
                 ActivityByVolume? newActivity = list.Where(a => a.Activity >= marker.MinActivity && a.Activity <= marker.MaxActivity).LastOrDefault();
                 if (newActivity == null)
-                    newActivity = list.LastOrDefault(a => marker.MaxActivity >= a.Activity);
+                    newActivity = list.Where(a => marker.MaxActivity >= a.Activity).FirstOrDefault();
                 if (newActivity == null)
                     newActivity = list.Last();
                 dict.Add(marker, newActivity);

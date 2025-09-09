@@ -12,9 +12,9 @@ namespace Isotop2.Data
 
         public WordDocCreater()
         {
+            //Инициальзация Word-документа
             try
             { 
-                //Инициальзация Word-документа
                 _application = new Word.Application();
                 _document = _application.Documents.Add();
             }

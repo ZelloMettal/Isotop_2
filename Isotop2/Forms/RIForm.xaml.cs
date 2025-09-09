@@ -40,11 +40,10 @@ namespace Isotop2.Forms
         //Событие выбранной строки в DataGrid
         private void dataGrid_RIList_CellClick(object sender, SelectedCellsChangedEventArgs e)
         {
-            int id = -1;
-            var dataItem = dataGrid_RIList.SelectedItem;
+            object dataItem = dataGrid_RIList.SelectedItem;
             if (dataItem != null)
             { 
-                id = Convert.ToInt32(((TextBlock)dataGrid_RIList.SelectedCells[0].Column.GetCellContent(dataItem)).Text);
+                string id = ((TextBlock)dataGrid_RIList.SelectedCells[0].Column.GetCellContent(dataItem)).Text;
                 RIController.SetCurrenRI(id);
             }
         }
