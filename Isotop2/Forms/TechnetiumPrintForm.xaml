@@ -6,15 +6,46 @@
         xmlns:local="clr-namespace:Isotop2.Forms"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Печать" Height="460" Width="260"
+        Title="Печать" Height="470" Width="260"
         Icon="/Resources/print.jpg"
         Loaded="TechnetiumPrintForm_Load"
         KeyDown="PressHotKey">
+
+    <Window.Resources>
+        <Style TargetType="ListView">
+            <Setter Property="Height" Value="150"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style x:Key="BaseButton">
+            <Setter Property="ItemsControl.Width" Value="50"/>
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style x:Key="ButtonRight" BasedOn="{StaticResource ResourceKey=BaseButton}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="ButtonLeft" BasedOn="{StaticResource ResourceKey=BaseButton}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="Top">
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style x:Key="TopLeft" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="TopRight" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
-        <Label Name="label_CurrentData" Content="Текущая дата :" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label Name="label_Adult" Content="Взрослые" Margin="5,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <CheckBox Name="checkBox_PrintAdult" Content="Добавить в печать" IsThreeState="False" IsChecked="True" Margin="110,35,10,0" VerticalAlignment="Top"/>
-        <ListView Name="listView_Adult" Margin="10,55,10,0" Height="150" VerticalAlignment="Top" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Style="{StaticResource ResourceKey=TopLeft}" Name="label_CurrentData" Content="Текущая дата :" Margin="5,0,0,0"/>
+        <Label Grid.Row="0" Style="{StaticResource ResourceKey=TopLeft}" Name="label_Adult" Content="Взрослые" Margin="5,30,0,0"/>
+        <CheckBox Grid.Row="0" Style="{StaticResource ResourceKey=TopRight}" Name="checkBox_PrintAdult" Content="Добавить в печать" IsThreeState="False" IsChecked="True" Margin="0,35,10,0"/>
+        <ListView Grid.Row="0" Name="listView_Adult" Margin="10,55,10,0">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -31,9 +62,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Name="label_Children" Content="Дети" Margin="5,210,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <CheckBox Name="checkBox_PrintChildren" Content="Добавить в печать" IsThreeState="False" Margin="110,215,10,0" VerticalAlignment="Top"/>
-        <ListView Name="listView_Children" Margin="10,235,10,0" Height="150" VerticalAlignment="Top" >
+        <Label Grid.Row="1" Style="{StaticResource ResourceKey=TopLeft}" Name="label_Children" Content="Дети" Margin="5,0,0,0"/>
+        <CheckBox Grid.Row="1" Style="{StaticResource ResourceKey=TopRight}" Name="checkBox_PrintChildren" Content="Добавить в печать" IsThreeState="False" Margin="0,5,10,0"/>
+        <ListView Grid.Row="1" Name="listView_Children" Margin="10,30,10,0">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -50,7 +81,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="button_Print" Content="Печать" Click="button_Print_Click" Width="50" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Width="50" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Button Grid.Row="1" Style="{StaticResource ResourceKey=ButtonLeft}" Name="button_Print" Content="Печать" Click="button_Print_Click" Margin="10,0,0,10"/>
+        <Button Grid.Row="1" Style="{StaticResource ResourceKey=ButtonRight}" Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,10,10"/>
     </Grid>
 </Window>
