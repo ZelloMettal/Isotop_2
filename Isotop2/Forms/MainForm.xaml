@@ -19,9 +19,17 @@
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Style x:Key="Top">
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style x:Key="TopLeft" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="TopRight" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="TopCenter" BasedOn="{StaticResource ResourceKey=Top}">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="DatePicker">
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -50,7 +58,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="550"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Name="label_ActivityNewGeneration" Content="Новый генератор, МБк" Margin="35,25,0,0" HorizontalAlignment="Left"/>
+                    <Label Grid.Column="0" Style="{StaticResource ResourceKey=TopLeft}" Name="label_ActivityNewGeneration" Content="Новый генератор, МБк" Margin="35,25,0,0"/>
                     <ListView Grid.Column="0" Name="listView_CalculateNewGeneration" Margin="10,80,0,10" Width="190" HorizontalAlignment="Left">
                         <ListView.View>
                             <GridView>
@@ -61,7 +69,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Label Grid.Column="0" Name="label_ActivityOldGeneration" Content="Старый генератор, МБк" Margin="0,25,35,0" HorizontalAlignment="Right"/>
+                    <Label Grid.Column="0" Style="{StaticResource ResourceKey=TopRight}" Name="label_ActivityOldGeneration" Content="Старый генератор, МБк" Margin="0,25,35,0"/>
                     <ListView Grid.Column="0" Name="listView_CalculateOldGeneration" Width="190" Margin="0,80,10,10" HorizontalAlignment="Right">
                         <ListView.View>
                             <GridView>
@@ -72,11 +80,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBox Grid.Column="0" Name="textBox_ActivityNewGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityNewGeneration_ValueChanged" Width="190" Margin="10,50,0,0" HorizontalAlignment="Left"/>
-                    <TextBox Grid.Column="0" Name="textBox_ActivityOldGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityOldGeneration_ValueChanged" Width="190" Margin="0,50,10,0" HorizontalAlignment="Right"/>
-                    <Label Grid.Column="1" Name="label_TimeOfDecay" Content="Время распада:" Margin="0,25,0,0" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="1" Name ="textBlock_Hour" Text="0 час." Margin="0,55,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                    <Slider Grid.Column="1" Name="slider_TimeOfDecay" ValueChanged="slider_TimeOfDecay_ValueChanged" Maximum="12" Minimum="0" SmallChange="0.5" LargeChange="0.5" TickFrequency="0.5" Width="35" Height="300" Margin="0,80,0,0" Orientation="Vertical" IsSnapToTickEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Top" TickPlacement="BottomRight" Foreground="#FF646464"/>
+                    <TextBox Grid.Column="0" Style="{StaticResource ResourceKey=TopLeft}" Name="textBox_ActivityNewGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityNewGeneration_ValueChanged" Width="190" Margin="10,50,0,0"/>
+                    <TextBox Grid.Column="0" Style="{StaticResource ResourceKey=TopRight}" Name="textBox_ActivityOldGeneration" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityOldGeneration_ValueChanged" Width="190" Margin="0,50,10,0"/>
+                    <Label Grid.Column="1" Style="{StaticResource ResourceKey=TopCenter}" Name="label_TimeOfDecay" Content="Время распада:" Margin="0,25,0,0"/>
+                    <TextBlock Grid.Column="1" Style="{StaticResource ResourceKey=TopCenter}" Name ="textBlock_Hour" Text="0 час." Margin="0,55,0,0"/>
+                    <Slider Grid.Column="1" Style="{StaticResource ResourceKey=TopCenter}" Name="slider_TimeOfDecay" ValueChanged="slider_TimeOfDecay_ValueChanged" Maximum="12" Minimum="0" SmallChange="0.5" LargeChange="0.5" TickFrequency="0.5" Width="35" Height="300" Margin="0,80,0,0" Orientation="Vertical" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Foreground="#FF646464"/>
                     <ListView Grid.Column="2" Name="listView_EstimatedActivitybyAdults" Width="260" Margin="5,80,0,10" HorizontalAlignment="Left">
                         <ListView.View>
                             <GridView>
@@ -99,11 +107,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Label Grid.Column="2" Name="label_Adults" Content="Дети" Margin="40,45,0,0" HorizontalAlignment="Center"/>
-                    <Label Grid.Column="2" Name="label_Children" Content="Взрослые" Margin="0,45,48,0" HorizontalAlignment="Left"/>
-                    <Label Grid.Column="2" Name="label_EstimatedActivity" Content="Расчёт активность по маркерам" Margin="0,20,0,0" HorizontalAlignment="Center"/>
-                    <ComboBox Grid.Column="2" Name="comboBox_ChildrenAge" SelectionChanged="comboBox_ChildrenAge_SelectedChanged" Width="120" Margin="0,45,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                    <Button Grid.Column="2" Name="button_PrintTechnetium" Style="{StaticResource ButtonPrint}"  Click="button_PrintTechnetium_Click" Margin="0,5,10,0">
+                    <Label Grid.Column="2" Style="{StaticResource ResourceKey=TopCenter}" Name="label_EstimatedActivity" Content="Расчёт активность по маркерам" Margin="0,20,0,0"/>
+                    <Label Grid.Column="2" Style="{StaticResource ResourceKey=TopLeft}" Name="label_Adults" Content="Взрослые" Margin="0,45,0,0"/>
+                    <Label Grid.Column="2" Style="{StaticResource ResourceKey=TopCenter}" Name="label_Children" Content="Дети" Margin="50,45,0,0"/>
+                    <ComboBox Grid.Column="2" Style="{StaticResource ResourceKey=TopRight}" Name="comboBox_ChildrenAge" SelectionChanged="comboBox_ChildrenAge_SelectedChanged" Width="120" Margin="0,45,10,0"/>
+                    <Button Grid.Column="2" Style="{StaticResource ButtonPrint}" Name="button_PrintTechnetium" Click="button_PrintTechnetium_Click" Margin="0,5,10,0">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                 </Grid>
@@ -115,10 +123,10 @@
                         <ColumnDefinition Width="450"/>
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="1" Name="label_DateOnDayZero" Content="Дата на нулевой день" Margin="15,5,0,0" HorizontalAlignment="Left"/>
-                    <DatePicker Grid.Column="1" Name="datePicker_DateOnDayZeroIodine" SelectedDateChanged="datePicker_DateOnDayZeroIodine_SelectionDataChanged" Margin="20,30,0,0" HorizontalAlignment="Left"/>
-                    <Label Grid.Column="1" Name="label_ActivityIodine" Content="Активность, МБк" Margin="155,5,0,0" HorizontalAlignment="Left"/>
-                    <TextBox Grid.Column="1" Name="textBox_IodineActivity" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityIodine_ValueChanged" Width="120" Margin="160,32,0,0" HorizontalAlignment="Left"/>
+                    <Label Grid.Column="1" Style="{StaticResource ResourceKey=TopLeft}" Name="label_DateOnDayZero" Content="Дата на нулевой день" Margin="15,5,0,0" HorizontalAlignment="Left"/>
+                    <DatePicker Grid.Column="1" Name="datePicker_DateOnDayZeroIodine" SelectedDateChanged="datePicker_DateOnDayZeroIodine_SelectionDataChanged" Margin="20,30,0,0"/>
+                    <Label Grid.Column="1" Style="{StaticResource ResourceKey=TopCenter}" Name="label_ActivityIodine" Content="Активность, МБк" Margin="-35,5,0,0"/>
+                    <TextBox Grid.Column="1" Style="{StaticResource ResourceKey=TopCenter}" Name="textBox_IodineActivity" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_ActivityIodine_ValueChanged" Width="120" Margin="-10,32,0,0"/>
                     <ListView Grid.Column="1" Name="listView_CalculationIodine" HorizontalAlignment="Center" Width="410" Margin="0,65,0,10" >
                         <ListView.View>
                             <GridView>
@@ -132,7 +140,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Column="1" Name="button_PrintIodine" Style="{StaticResource ButtonPrint}" Click="button_PrintIodune_Click" Margin="0,20,20,0" HorizontalAlignment="Right">
+                    <Button Grid.Column="1" Style="{StaticResource ButtonPrint}" Name="button_PrintIodine" Click="button_PrintIodune_Click" Margin="0,20,20,0" HorizontalAlignment="Right">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                 </Grid>
@@ -145,8 +153,8 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="190"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Name="label_ActivityRadium" Content="Активность, МБк" Margin="85,5,0,0" />
-                    <TextBox Grid.Column="0" Name="textBox_ActivityRadium" PreviewTextInput="NumberValidationTextBoxWithDot" TextChanged="textBox_ActivityRadium_TextChanged" Width="120" Margin="90,30,0,0"/>
+                    <Label Grid.Column="0" Style="{StaticResource ResourceKey=TopLeft}" Name="label_ActivityRadium" Content="Активность, МБк" Margin="85,5,0,0" />
+                    <TextBox Grid.Column="0" Style="{StaticResource ResourceKey=TopLeft}" Name="textBox_ActivityRadium" PreviewTextInput="NumberValidationTextBoxWithDot" TextChanged="textBox_ActivityRadium_TextChanged" Width="120" Margin="90,30,0,0"/>
                     <ListView Grid.Column="0" Name="listView_CalculationRadium" Width="230" Margin="0,60,0,10" HorizontalAlignment="Right" >
                         <ListView.View>
                             <GridView>
@@ -158,14 +166,14 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Name="textBlock_Warning" Height="20" Width="190" Margin="0,20,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FFFD0000"/>
                     <Label Grid.Column="1" Name="label_CreateDate" Content="Дата изготовления" Margin="15,5,0,0"/>
                     <DatePicker Grid.Column="1" Name="datePicker_CreateDateRadium" SelectedDateChanged="datePicker_CreateDateRadium_SelectionDataChanged" Margin="20,30,0,0"/>
-                    <Label Grid.Column="2" Name="label_CurrentDate" Content="Текущая дата" Margin="-5,5,0,0" HorizontalAlignment="Left"/>
-                    <DatePicker Grid.Column="2" Name="datePicker_CurrentDateRadium" SelectedDateChanged="datePicker_CurrentDateRadium_SelectionDataChanged" Margin="0,30,0,0"/>
-                    <Label Grid.Column="2" Name="label_PatientWeight" Content="Вес пациента, Кг" Margin="0,5,75,0" HorizontalAlignment="Right"/>
-                    <TextBox Grid.Column="2" Name="textBox_PatientWeightRadium" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_PatientWeightRadium_ValueChanged" Width="120" Margin="0,30,50,0" HorizontalAlignment="Right"/>
-                    <ListView Grid.Column="1" Grid.ColumnSpan="3" Name="listView_CalculationActivityRadium" Height="80" Margin="20,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Label Grid.Column="2" Style="{StaticResource ResourceKey=TopLeft}" Name="label_CurrentDate" Content="Текущая дата" Margin="0,5,0,0"/>
+                    <DatePicker Grid.Column="2" Name="datePicker_CurrentDateRadium" SelectedDateChanged="datePicker_CurrentDateRadium_SelectionDataChanged" Margin="5,30,0,0"/>
+                    <Label Grid.Column="2" Style="{StaticResource ResourceKey=TopRight}" Name="label_PatientWeight" Content="Вес пациента, Кг" Margin="0,5,65,0"/>
+                    <TextBox Grid.Column="2" Style="{StaticResource ResourceKey=TopRight}" Name="textBox_PatientWeightRadium" PreviewTextInput="NumberValidationTextBox" TextChanged="textBox_PatientWeightRadium_ValueChanged" Width="120" Margin="0,30,40,0"/>
+                    <TextBlock Style="{StaticResource ResourceKey=TopRight}" Grid.Column="2" Grid.ColumnSpan="2" Name="textBlock_Warning" Height="20" Width="190" Margin="0,20,20,0" Foreground="#FFFD0000"/>
+                    <ListView Grid.Column="1" Style="{StaticResource ResourceKey=TopLeft}" Grid.ColumnSpan="3" Name="listView_CalculationActivityRadium" Height="80" Margin="20,60,0,0">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
@@ -178,9 +186,9 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Column="2" Name="button_AddPatient" Content="Добавить пациента" Click="button_AddPatient_Click" Width="120" Margin="0,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button Grid.Column="2" Name="button_DeletePatient" Content="Удалить пациента" Click="button_DeletePatient_Click" Width="110" Margin="130,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button Grid.Column="2" Name="button_Printadium" Style="{StaticResource ButtonPrint}" Click="button_PrintRadium_Click" Margin="0,150,0,0">
+                    <Button Grid.Column="2" Style="{StaticResource ResourceKey=TopLeft}" Name="button_AddPatient" Content="Добавить пациента" Click="button_AddPatient_Click" Width="120" Margin="0,160,0,0"/>
+                    <Button Grid.Column="2" Style="{StaticResource ResourceKey=TopLeft}" Name="button_DeletePatient" Content="Удалить пациента" Click="button_DeletePatient_Click" Width="120" Margin="130,160,0,0"/>
+                    <Button Grid.Column="2" Style="{StaticResource ButtonPrint}" Name="button_Printadium" Click="button_PrintRadium_Click" Margin="0,150,0,0">
                         <Image Source="/Resources/print.jpg"/>
                     </Button>
                     <ListView Grid.Column="2" Name="listView_RadiumPatientList" KeyDown="listView_RadiumPatientList_KeyDown" Width="320" Margin="0,190,0,10" HorizontalAlignment="Left">
