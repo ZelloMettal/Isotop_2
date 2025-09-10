@@ -6,18 +6,42 @@
         xmlns:local="clr-namespace:Isotop2.Forms"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Добавление" Height="150" Width="545"
+        Title="Добавление" Height="150" Width="580"
         Icon="/Resources/add.jpg"
         KeyDown="PressHotKey">
+    
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Top"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Label Name="label_Name" Content="Маркер" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label Name="label_MaxActivity" Content="Макс.Активность" Margin="140,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label Name="label_MinActivity" Content="Мин.Активность" Margin="270,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="textBox_Name" Width="120" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="textBox_MaxActivity" Width="120" PreviewTextInput="NumberValidationTextBox" Margin="145,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="textBox_MinActivity" Width="120" PreviewTextInput="NumberValidationTextBox" Margin="275,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <CheckBox Name="checkBox_IsNewGenerator" Content="Новый генератор" IsThreeState="False" Margin="0,30,10,0" HorizontalAlignment="Right"  VerticalAlignment="Top"/>
-        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Width="60" Margin="0,75,80,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Width="60" Margin="0,75,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>        
+        <Label Grid.Column="0" Name="label_Name" Content="Маркер" Margin="5,5,0,0"/>
+        <TextBox Grid.Column="0" Name="textBox_Name" Margin="10,30,0,0"/>
+        <Label Grid.Column="1" Name="label_MaxActivity" Content="Макс.Активность" Margin="5,5,0,0"/>
+        <TextBox Grid.Column="1" Name="textBox_MaxActivity" PreviewTextInput="NumberValidationTextBox" Margin="10,30,0,0"/>
+        <Label Grid.Column="2" Name="label_MinActivity" Content="Мин.Активность" Margin="5,5,0,0"/>
+        <TextBox Grid.Column="2" Name="textBox_MinActivity" PreviewTextInput="NumberValidationTextBox" Margin="10,30,0,0"/>
+        <CheckBox Grid.Column="3" Name="checkBox_IsNewGenerator" Content="Новый генератор" IsThreeState="False" Margin="5,30,10,0"/>
+        <Button Grid.Column="3" Name="button_OK" Content="Добавить" Click="button_OK_Click" Margin="0,0,80,10"/>
+        <Button Grid.Column="3" Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,10,10"/>
     </Grid>
 </Window>

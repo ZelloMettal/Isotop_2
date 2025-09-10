@@ -6,13 +6,22 @@
         xmlns:local="clr-namespace:Isotop2.Forms"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Добавить пациента" Height="120" Width="300" 
+        Title="Добавить пациента" Height="120" Width="250" 
         Icon="/Resources/add.jpg"
         KeyDown="PressHotKey">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Label Name="label_PatientName" Content="Имя пациента" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="textBox_PatientName" Margin="10,25,10,0" VerticalAlignment="Top"/>
-        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Width="70" Margin="10,50,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Width="60" Margin="0,50,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <TextBox Name="textBox_PatientName" Margin="10,20,10,0" VerticalAlignment="Top"/>
+        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Margin="0,0,80,10"/>
+        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,10,10"/>
     </Grid>
 </Window>

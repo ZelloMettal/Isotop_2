@@ -8,11 +8,20 @@
         ResizeMode="NoResize"
         Title="Добавление" Height="120" Width="260"
         Icon="/Resources/add.jpg"
-        KeyDown="PressHotKey">    
+        KeyDown="PressHotKey">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Label Name="label_Volume" Content="Объём" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox Name="textBox_Volume" PreviewTextInput="NumberValidationTextBox" Margin="10,25,10,0" VerticalAlignment="Top"/>
-        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Width="60" Margin="0,0,80,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Width="60" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Margin="0,0,80,10"/>
+        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,10,10"/>
     </Grid>
 </Window>

@@ -6,15 +6,37 @@
         xmlns:local="clr-namespace:Isotop2.Forms"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Добавление" Height="130" Width="300"
+        Title="Добавление" Height="130" Width="320"
         Icon="/Resources/add.jpg"
         KeyDown="PressHotKey">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="130"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Left"/>
+            <Setter Property="ItemsControl.VerticalAlignment" Value="Top"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
-        <Label Name="label_Age" Content="Возраст" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label Name="label_Coefficent" Content="Коэффицент" Margin="155,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="textBox_Age" Width="130" Margin="10,30,10,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="textBox_Coefficent" PreviewTextInput="NumberWithDotValidationTextBox" Width="130" Margin="10,30,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Button Name="button_OK" Content="Добавить" Click="button_OK_Click" Width="60" Margin="0,0,80,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-        <Button Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Width="60" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Name="label_Age" Content="Возраст" Margin="5,5,0,0"/>
+        <TextBox Grid.Column="0" Name="textBox_Age" Margin="10,30,10,0"/>
+        <Label Grid.Column="1" Name="label_Coefficent" Content="Коэффицент" Margin="5,5,0,0"/>
+        <TextBox Grid.Column="1" Name="textBox_Coefficent" PreviewTextInput="NumberWithDotValidationTextBox" Margin="10,30,10,0"/>
+        <Button Grid.Column="1" Name="button_OK" Content="Добавить" Click="button_OK_Click" Margin="0,0,80,10"/>
+        <Button Grid.Column="1" Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,15,10"/>
     </Grid>
 </Window>
