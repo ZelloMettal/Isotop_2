@@ -4,8 +4,11 @@ using Isotop2.Data.Entities;
 using Isotop2.Data;
 using Isotop2.Services;
 using System.Windows;
+using System.IO;
 using Isotop2.Data.Models;
 using Isotop2.Data.Interfaces;
+using System.Windows.Xps.Serialization;
+using System.Resources;
 
 namespace Isotop2
 {
@@ -30,7 +33,8 @@ namespace Isotop2
             }).Build();
             //Проверяем существование базы данных
             if(CheckDateBase())
-                MessageBox.Show("Не удалось загрузить базу данных. Была создана новаыя база данных!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Не удалось загрузить базу данных. Была создана новаыя база данных!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
+            LoadResouses();
             //Получем объект приложение
             App application = host.Services.GetService<App>();
             //Запускаем приложение
@@ -58,6 +62,13 @@ namespace Isotop2
             }
             new Logger($"\nБаза данных существует: {(!isСreate).ToString()}; {DateTime.Now.ToString()}");
             return isСreate;
+        }
+        private static void LoadResouses()
+        {
+            Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Fonts");
+            Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp");
+            File.Create($"{Directory.GetCurrentDirectory()}\\Fonts\\arial.ttf").Close();
+            File.WriteAllBytes($"{Directory.GetCurrentDirectory()}\\Fonts\\arial.ttf", Properties.Resources.arial);
         }
     }
 }

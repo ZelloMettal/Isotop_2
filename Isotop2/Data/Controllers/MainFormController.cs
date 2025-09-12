@@ -76,9 +76,8 @@ namespace Isotop2.Data.Controllers
         static public void PrintIodine(ListView lv, string activity)
         {
             List<IodineView> view = lv.ItemsSource.Cast<IodineView>().ToList();
-            List<string> dataList = AuxiliaryFuntions.ConvertListObjectToListString(view);       
-            int countRow = (view).Count();
-            IodinePrintController.SetPrintData(dataList, countRow, Convert.ToDouble(activity));
+            List<string> dataList = AuxiliaryFuntions.ConvertListObjectToListString(view);
+            IodinePrintController.SetPrintData(dataList, Convert.ToDouble(activity));
             IodinePrintController.ExpotrToPDF();
         }
 
@@ -146,16 +145,16 @@ namespace Isotop2.Data.Controllers
                 MessageBox.Show("Выберите строку", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         //Метод печати Радия
-        static public void PrintRadium(ListView lvPatientList, ListView lvCalculationRadium, string currentDate, string weightPatient, string activity)
+        static public void PrintRadium(ListView lvPatientList, ListView lvCalculationRadium, string currentDate)
         {
+            List<string> dataList = new List<string>();
             RadiumCalculationView calculationView = lvCalculationRadium.ItemsSource.Cast<RadiumCalculationView>().First();
             List<RadiumPatientView> patientView = lvPatientList.Items.Cast<RadiumPatientView>().ToList();
-            List<string> dataList = AuxiliaryFuntions.ConvertListObjectToListString(patientView);
-            int countRow = (patientView).Count();
+            if(patientView.Count != 0)
+                dataList = AuxiliaryFuntions.ConvertListObjectToListString(patientView);
             RadiumPrintController.SetPrintData
                 (
                     dataList,
-                    countRow,
                     Convert.ToDateTime(currentDate),
                     calculationView.DifferenceDays,
                     calculationView.CurrentCoefficent,

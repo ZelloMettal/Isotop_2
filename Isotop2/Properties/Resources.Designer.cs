@@ -73,6 +73,16 @@ namespace Isotop2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] arial {
+            get {
+                object obj = ResourceManager.GetObject("arial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] drop_find {
             get {
                 object obj = ResourceManager.GetObject("drop_find", resourceCulture);

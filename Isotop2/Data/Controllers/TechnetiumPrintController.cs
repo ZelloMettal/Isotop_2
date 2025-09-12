@@ -51,27 +51,20 @@ namespace Isotop2.Data.Controllers
             {
                 //Получаем саписок данных для печати
                 List<string> data = AuxiliaryFuntions.ConvertListItemsToList((List<CheckedMarkerForPrint>)lv_Adult.ItemsSource);
-                //Получаем число строк для печати
-                int countRows = lv_Adult.Items.Cast<CheckedMarkerForPrint>().Where(item => item.IsChecked == true).Count();
-                _model.ExportToPDFAsync(data, countRows, "Взрослые");
+                _model.ExportToPDFAsync(data, "Взрослые");
             }
             else if (!isPrintAdult && isPrintChildren)
             {
                 //Получаем саписок данных для печати
                 List<string> data = AuxiliaryFuntions.ConvertListItemsToList((List<CheckedMarkerForPrint>)lv_Children.ItemsSource);
-                //Получаем число строк для печати
-                int countRows = lv_Children.Items.Cast<CheckedMarkerForPrint>().Where(item => item.IsChecked == true).Count();
-                _model.ExportToPDFAsync(data, countRows, "Дети");
+                _model.ExportToPDFAsync(data, "Дети");
             }
             else if (isPrintAdult && isPrintChildren)
             {
                 //Получаем саписок данных для печати
                 List<string> dataAdult = AuxiliaryFuntions.ConvertListItemsToList((List<CheckedMarkerForPrint>)lv_Adult.ItemsSource);
                 List<string> dataChildren = AuxiliaryFuntions.ConvertListItemsToList((List<CheckedMarkerForPrint>)lv_Children.ItemsSource);
-                //Получаем число строк для печати
-                int countRowsAdult = lv_Adult.Items.Cast<CheckedMarkerForPrint>().Where(item => item.IsChecked == true).Count();
-                int countRowsChildren = lv_Children.Items.Cast<CheckedMarkerForPrint>().Where(item => item.IsChecked == true).Count();
-                _model.ExportToPDFAsync(dataAdult, countRowsAdult, dataChildren, countRowsChildren);
+                _model.ExportToPDFAsync(dataAdult, dataChildren);
             }
         }
     }

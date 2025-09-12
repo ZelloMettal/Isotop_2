@@ -295,9 +295,7 @@ namespace Isotop2
                 (
                     listView_RadiumPatientList, 
                     listView_CalculationActivityRadium, 
-                    datePicker_CurrentDateRadium.Text, 
-                    textBox_PatientWeightRadium.Text, 
-                    textBox_ActivityRadium.Text
+                    datePicker_CurrentDateRadium.Text                    
                 );
         }
         //Метод нажатия Delete

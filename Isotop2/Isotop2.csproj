@@ -16,6 +16,7 @@
     <None Remove="Resources\drop_find.jpg" />
     <None Remove="Resources\excel.jpg" />
     <None Remove="Resources\find.jpg" />
+    <None Remove="Resources\Fonts\arial.ttf" />
     <None Remove="Resources\print.jpg" />
     <None Remove="Resources\radiation .jpg" />
   </ItemGroup>
@@ -46,6 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="9.3.0" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.3.0" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
@@ -60,6 +63,9 @@
     <Resource Include="Resources\drop_find.jpg" />
     <Resource Include="Resources\excel.jpg" />
     <Resource Include="Resources\find.jpg" />
+    <Resource Include="Resources\Fonts\arial.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\print.jpg" />
     <Resource Include="Resources\radiation .jpg" />
   </ItemGroup>

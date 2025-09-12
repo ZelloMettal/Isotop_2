@@ -3,35 +3,26 @@
     internal class IodinePrintModel
     {
         private List<string> _dataListView = new List<string>(); //Список с данными для заполнения ячеек
-        private int _rowCount = 0; //Колиество строк
+        private double _currentActivity;
 
-        public IodinePrintModel(List<string> data, int countRow, double currentActivity)
+        public IodinePrintModel(List<string> data, double currentActivity)
         {
-            _rowCount = countRow;
-            _dataListView.AddRange(new string[] { $"Активность - {currentActivity} МБк", "Дата", "День", "Процент распада", "Активность, МБк", "Объём, Мл" });
-            _dataListView.AddRange(data);
+            _currentActivity = currentActivity;
+            _dataListView = data;
         }
         //Метод формирования таблицы данных и передачи в PDF
         private void CreateTable()
         {
-            WordDocCreater WordDocument = new WordDocCreater(); //Объект работы с Word-докумментом
-
-            //Создаём таблицу
-            WordDocument.AddRow(1, 1, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 5, true, 15, 0, 15, 15);
-            WordDocument.AddRow(_rowCount, 5, true, 15, 0, 15, 15);
-
-            //Заполняем таблицу
-            try 
+            using (PdfDocCreater pdf = new PdfDocCreater())
             {
-                WordDocument.FillTable(_dataListView.ToArray());
+                pdf.CreateTable(1);
+                pdf.AddRow(new List<string> { $"Активность {_currentActivity}МБК"});
+                pdf.CreateTable(5);
+                List<string> headerDataList = new List<string>() { "Дата", "День", "Процент распада", "Активность, МБк", "Объём, Мл"};
+                _dataListView.InsertRange(0, headerDataList);
+                pdf.AddRow(_dataListView);
+                pdf.RunDocument();
             }
-            catch (Exception ex)
-            {
-                new Logger($"WI:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
-            }
-            //Вывод документа
-            WordDocument.PreviewDocument();
         }
         //Метод формирования таблици на печать
         public async Task ExpotrToPDFAsync()

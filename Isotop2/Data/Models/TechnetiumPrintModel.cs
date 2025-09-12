@@ -1,4 +1,11 @@
 ﻿using Isotop2.Data.Entities;
+using System.IO;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Kernel.Font;
+using iText.Layout.Properties;
+using System.Diagnostics;
 
 namespace Isotop2.Data.Models
 {
@@ -47,86 +54,50 @@ namespace Isotop2.Data.Models
             return _oldActivity;
         }
         //Методы методы отправки данных в PDF
-        public async Task ExportToPDFAsync(List<string> data, int countRow, string typePatient = "")
-        { 
-            await Task.Run(() => CreateOneTable(data, countRow, typePatient));
+        public async Task ExportToPDFAsync(List<string> dataList, string typePatient = "")
+        {            
+            await Task.Run(() => CreateOneTable(dataList, typePatient));
         }
-        public async Task ExportToPDFAsync(List<string> dataAdult, int countRowsAdult, List<string> dataChildren, int countRowsChildren)
+        public async Task ExportToPDFAsync(List<string> dataAdult, List<string> dataChildren)
         {
-            await Task.Run(() => CreateTwoTable(dataAdult, countRowsAdult, dataChildren, countRowsChildren));
+            await Task.Run(() => CreateTwoTable(dataAdult, dataChildren));
         }
         //Метод формирование одной таблицы с данными 
-        private void CreateOneTable(List<string> data, int countRow, string typePatient = "")
+        private void CreateOneTable(List<string> dataList, string typePatient = "")
         {
-            WordDocCreater WordDocument = new WordDocCreater(); //Объект работы с Word-докумментом
-            List<string> dataCells = new List<string>(); //Создаём список данных  
-
-            //Создаём таблицу
-            WordDocument.AddRow(1, 2, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 1, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 3, true, 15, 0, 15, 15);
-            if (countRow > 0)
-                WordDocument.AddRow(countRow, 3, true, 15, 0, 15, 15);
-
-            //Заполняем таблицу
-            dataCells.AddRange(new string[] { "Новый генератор - " + _newActivity.ToString() + "МБк", "Старый генератор - " + _oldActivity.ToString() + "МБк" });
-            dataCells.AddRange(new string[] { typePatient, "Маркер", "Объём, Мл", "Активность, МБк" });
-            if (countRow > 0)
-                dataCells.AddRange(data);
-
-            try 
+            using (PdfDocCreater pdf = new PdfDocCreater())
             {
-                WordDocument.FillTable(dataCells.ToArray());
+                pdf.CreateTable(2);
+                pdf.AddRow(new List<string> { $"Новый генератор {_newActivity}МБК", $"Старый генератор {_oldActivity}МБк" });
+                pdf.CreateTable(1);
+                pdf.AddRow(new List<string> { typePatient });
+                pdf.CreateTable(3);
+                List<string> headerDataList = new List<string>() { "Маркер", "Объём, Мл", "Активность, МБк" };
+                dataList.InsertRange(0, headerDataList);
+                pdf.AddRow(dataList);
+                pdf.RunDocument();
             }
-            catch (Exception ex)
-            {
-                new Logger($"WT:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
-            }
-
-            //Вывод документа
-            WordDocument.PreviewDocument();
         }
         //Метод формирование двух таблиц с данными 
-        private void CreateTwoTable(List<string> dataAdult, int countRowsAdult, List<string> dataChildren, int countRowsChildren)
+        private void CreateTwoTable(List<string> dataAdult, List<string> dataChildren)
         {
-            WordDocCreater WordDocument = new WordDocCreater(); //Объект работы с Word-докумментом
-            List<string> dataCells = new List<string>(); //Создаём список данных 
-
-            //Создаём таблицу
-            WordDocument.AddRow(1, 2, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 1, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 3, true, 15, 0, 15, 15);
-            if (countRowsAdult > 0)
-                WordDocument.AddRow(countRowsAdult, 3, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 1, true, 15, 0, 15, 15);
-            WordDocument.AddRow(1, 3, true, 15, 0, 15, 15);
-            if (countRowsChildren > 0)
-                WordDocument.AddRow(countRowsChildren, 3, true, 15, 0, 15, 15);
-
-            //Заполняем таблицу
-            //Шапка с активностями
-            dataCells.AddRange(new string[] { "Новый генератор - " + _newActivity.ToString() + "МБк", "Старый генератор - " + _oldActivity.ToString() + "МБк" });
-            //Шапка для взрослых
-            dataCells.AddRange(new string[] { "Взрослые", "Маркер", "Объём, Мл", "Активность, МБк" });
-            //Данные взрослых
-            if (countRowsAdult > 0)
-                dataCells.AddRange(dataAdult);
-            //Шапка для детей
-            dataCells.AddRange(new string[] { "Дети", "Маркер", "Объём, Мл", "Активность, МБк" });
-            //Данные детей
-            if (countRowsChildren > 0)
-                dataCells.AddRange(dataChildren);
-            try 
-            { 
-                WordDocument.FillTable(dataCells.ToArray());
-            }
-            catch (Exception ex)
+            using (PdfDocCreater pdf = new PdfDocCreater())
             {
-                new Logger($"WT:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
+                pdf.CreateTable(2);
+                pdf.AddRow(new List<string> { $"Новый генератор {_newActivity}МБК", $"Старый генератор {_oldActivity}МБк" });
+                pdf.CreateTable(1);
+                pdf.AddRow(new List<string> { "Взрослые" });
+                List<string> headerDataList = new List<string>() { "Маркер", "Объём, Мл", "Активность, МБк" };
+                pdf.CreateTable(3);
+                dataAdult.InsertRange(0, headerDataList);
+                pdf.AddRow(dataAdult);
+                pdf.CreateTable(1);
+                pdf.AddRow(new List<string> { "Дети" });
+                pdf.CreateTable(3);
+                dataChildren.InsertRange(0, headerDataList);
+                pdf.AddRow(dataChildren);
+                pdf.RunDocument();
             }
-
-            //Вывод документа
-            WordDocument.PreviewDocument();
         }
         //Метод получения дня недели 
         public string GetRusNameDayWeek(string weekDay)
