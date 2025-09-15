@@ -7,8 +7,6 @@ using System.Windows;
 using System.IO;
 using Isotop2.Data.Models;
 using Isotop2.Data.Interfaces;
-using System.Windows.Xps.Serialization;
-using System.Resources;
 
 namespace Isotop2
 {
@@ -33,14 +31,15 @@ namespace Isotop2
             }).Build();
             //Проверяем существование базы данных
             if(CheckDateBase())
-                MessageBox.Show("Не удалось загрузить базу данных. Была создана новаыя база данных!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
-            LoadResouses();
+                MessageBox.Show("Не удалось загрузить базу данных. Была создана новаыя база данных!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            //Создаём необходимые ресурсы
+            CreateResouses();
             //Получем объект приложение
             App application = host.Services.GetService<App>();
             //Запускаем приложение
             application?.Run();
         }
-        //Настройка сервисов создание типа синглтон
+        //Настройка сервисов создание
         private static void Services(IServiceCollection services)
         {
             services.AddScoped<IDataStorage<Technetium>, DataStorage<Technetium>>();
@@ -63,12 +62,33 @@ namespace Isotop2
             new Logger($"\nБаза данных существует: {(!isСreate).ToString()}; {DateTime.Now.ToString()}");
             return isСreate;
         }
-        private static void LoadResouses()
+        //Создание необходимых ресурсов
+        private static void CreateResouses()
         {
-            Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Fonts");
-            Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp");
-            File.Create($"{Directory.GetCurrentDirectory()}\\Fonts\\arial.ttf").Close();
-            File.WriteAllBytes($"{Directory.GetCurrentDirectory()}\\Fonts\\arial.ttf", Properties.Resources.arial);
+            string currentPath = Directory.GetCurrentDirectory();
+            try 
+            {
+                if (!Directory.Exists($"{currentPath}\\Temp"))
+                {
+                    Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp");
+                }
+                if(!Directory.Exists($"{currentPath}\\Temp\\PDF"))
+                    Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp\\PDF");
+                if (!Directory.Exists($"{currentPath}\\Temp\\CSV"))
+                    Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp\\CSV");
+                if (!Directory.Exists($"{currentPath}\\Fonts"))
+                    Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Fonts");
+                if (!File.Exists($"{currentPath}\\Fonts\\arial.ttf"))
+                { 
+                    File.Create($"{Directory.GetCurrentDirectory()}\\Fonts\\arial.ttf").Close();
+                    File.WriteAllBytes($"{Directory.GetCurrentDirectory()}\\Fonts\\arial.ttf", Properties.Resources.arial);
+                }
+            }
+            catch(Exception ex)
+            {
+                new Logger($"LD:Не удалось создать необходимые каталоги {ex.Message} {DateTime.Now.ToString()}");
+                MessageBox.Show("Не удалось создать необходимые каталоги для работы", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
