@@ -7,33 +7,39 @@ using System.IO;
 
 namespace Isotop2.Data
 {
+    //Класс записи данных в PDF
     internal class PdfDocCreater :IDisposable
     {
-        PdfWriter _pdfWriter;
-        PdfDocument _pdf;
-        Document _pdfDocument;
-        PdfFont _pdfFont;
-        Table? _table;
-        int _defaultColumns = 1;
-        string _pathFile = String.Empty;
-        string _pathFont = "\\Fonts\\arial.ttf";
+        PdfWriter _pdfWriter; //Объект записи в PDF
+        PdfDocument _pdf; //Объект для работы с PDF документом
+        Document _pdfDocument; //Объект корневого элемента PDF документа
+        PdfFont _pdfFont; //Объект шрифтов
+        Table? _table; //Объект таблиц
+        int _defaultColumns = 1; //Количество столбцов в таблице по умолчанию
+        string _pathFile = String.Empty; //Путь к PDF файлу
+        string _pathFont = "\\Fonts\\arial.ttf"; //Путь к шрифтам
 
         public PdfDocCreater()
         {
+            //Получаем пути к рабочему файлу PDF
             string currentDirectory = Directory.GetCurrentDirectory();
-            _pathFile = $"{currentDirectory}\\Temp\\Temp_{DateTime.Now.ToShortDateString()}_{DateTime.Now.Hour.ToString()}-{DateTime.Now.Minute.ToString()}-{DateTime.Now.Second.ToString()}.pdf";
+            _pathFile = $"{currentDirectory}\\Temp\\PDF\\TempPDF_{DateTime.Now.ToShortDateString()}_{DateTime.Now.Hour.ToString()}-{DateTime.Now.Minute.ToString()}-{DateTime.Now.Second.ToString()}.pdf";
+            //Инициальзация объектов
             _pdfWriter = new PdfWriter(_pathFile);
             _pdf = new PdfDocument(_pdfWriter);
             _pdfDocument = new Document(_pdf);
+            //Настраеваем и подключаем шрифты(для поддержки кириллицы)
             _pdfFont = PdfFontFactory.CreateFont($"{currentDirectory}{_pathFont}", "Identity-H");
             _pdfDocument.SetFont(_pdfFont);
         }
+        //Метод создания новой таблицы
         public void CreateTable(int columns)
         {
             _table = null;
             _table = new Table(columns).UseAllAvailableWidth();
         }
-        public void AddRow(List<string> dataList, bool bolt = false)
+        //Метод добавления строк к таблице
+        public void AddRow(List<string> dataList)
         {
             if (_table == null) 
                 CreateTable(_defaultColumns);
@@ -43,6 +49,7 @@ namespace Isotop2.Data
             }
             _pdfDocument.Add(_table);
         }
+        //Запуск PDF файла
         public void RunDocument()
         {
             try
@@ -59,6 +66,7 @@ namespace Isotop2.Data
                 new Logger($"P:Не удалось открыть PDF-файл. {ex.Message}; {DateTime.Now.ToString()}");
             }
         }
+        //Очистка ресурсов
         public void Dispose()
         {
             _pdfDocument.Close();

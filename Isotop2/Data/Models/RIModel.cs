@@ -131,12 +131,12 @@ namespace Isotop2.Data.Models
             }
             return ri;
         }
-        //Метод создания таблицы Excel
-        private void CreateExcelTable(List<string[]> dataList)
+        //Метод создания CSV файла
+        private void CreateCSV(List<RIView> dataList)
         {
-            ExcelDocCreater excel = new ExcelDocCreater();
-            excel.CreateDocument(dataList);
-            excel.VisibleDocument();
+            CSVDocCreater csv = new CSVDocCreater();
+            csv.CreateFile(dataList);
+            csv.RunDocument();
         }
         //Получаем состояние
         public bool IsRICreated()
@@ -322,10 +322,10 @@ namespace Isotop2.Data.Models
         { 
             return _columnNameToSearch; 
         }
-        //Метод экспорта данных в Excel
-        public async Task ExportToExcelAsync(List<string[]> dataList)
+        //Метод экспорта данных в CSV
+        public async Task ExportToCSVAsync(List<RIView> dataList)
         {
-            await Task.Run(()=>CreateExcelTable(dataList));
+            await Task.Run(()=> CreateCSV(dataList));
         }
     }
 }

@@ -88,13 +88,10 @@ namespace Isotop2.Data.Controllers
             else
                 _model.SetCurrenRI(Convert.ToInt32(id));
         }
-        //Метод экспорта данных из DataGrid в Excel
-        static public void ExportExcel(DataGrid dataGrid)
-        {
-            List<string[]> dataList = new List<string[]>();
-            dataList.Add(_model.GetHeaderList().Skip(1).ToArray()); //Список заголовков         
-            dataList.AddRange(AuxiliaryFuntions.RIViewToStringList((List<RIView>)dataGrid.ItemsSource, true));  //Список данных
-            _model.ExportToExcelAsync(dataList);
+        //Метод экспорта данных из DataGrid в CSV
+        static public void ExportToCSV(DataGrid dataGrid)
+        {         
+            _model.ExportToCSVAsync((List<RIView>)dataGrid.ItemsSource);
         }
     }
 }

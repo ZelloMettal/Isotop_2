@@ -62,7 +62,7 @@ namespace Isotop2.Forms
         //Событие экспорта в Excel
         private void button_ExportToExcel_Click(object sender, RoutedEventArgs e)
         {
-            RIController.ExportExcel(dataGrid_RIList);
+            RIController.ExportToCSV(dataGrid_RIList);
         }   
     }
 }
