@@ -31,26 +31,6 @@
                 pdf.AddRow(_dataListView);
                 pdf.RunDocument();
             }
-            //WordDocCreater WordDocument = new WordDocCreater(); //Объект работы с Word-докумментом
-            //
-            ////Создаём таблицу
-            //WordDocument.AddRow(1, 4, true, 15, 0, 15, 15);
-            //WordDocument.AddRow(1, 4, true, 15, 0, 15, 15);
-            //if (_rowCount > 0)
-            //    WordDocument.AddRow(_rowCount, 4, true, 15, 0, 15, 15);
-            //
-            ////Заполняем таблицу
-            //try
-            //{ 
-            //    WordDocument.FillTable(_dataListView.ToArray());
-            //}
-            //catch (Exception ex)
-            //{
-            //    new Logger($"WR:Не удалось добавить данные в таблицу. {ex.Message}; {DateTime.Now.ToString()}");
-            //}
-            //
-            ////Вывод документа
-            //WordDocument.PreviewDocument();
         }
         //Метод формирования таблици на печать
         public async Task ExportToPDFAsync()

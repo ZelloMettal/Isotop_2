@@ -18,7 +18,7 @@
     <None Remove="Resources\find.jpg" />
     <None Remove="Resources\Fonts\arial.ttf" />
     <None Remove="Resources\print.jpg" />
-    <None Remove="Resources\radiation .jpg" />
+    <None Remove="Resources\radiation.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,7 +47,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\print.jpg" />
-    <Resource Include="Resources\radiation .jpg" />
+    <Resource Include="Resources\radiation.jpg" />
   </ItemGroup>
 
   <ItemGroup>

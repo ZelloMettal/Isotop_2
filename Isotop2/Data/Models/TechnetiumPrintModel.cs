@@ -1,11 +1,4 @@
 ﻿using Isotop2.Data.Entities;
-using System.IO;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using iText.Kernel.Font;
-using iText.Layout.Properties;
-using System.Diagnostics;
 
 namespace Isotop2.Data.Models
 {

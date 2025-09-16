@@ -44,7 +44,7 @@
         <TextBox Grid.Row="2" Style="{StaticResource ResourceKey=StyleBoxes}" Name="textBox_ConfirmPassword" TabIndex="3" Visibility="Hidden" Margin="10,25,0,0"/>
         <PasswordBox Grid.Row="2" Style="{StaticResource ResourceKey=StyleBoxes}" Name="passworBox_ConfirmPassword" TabIndex="2" Margin="10,25,0,0"/>
         <CheckBox Grid.Row="2" Name="checkBox_Administrator" Content="Администартор" IsThreeState="False" TabIndex="3" Margin="10,50,0,0"/>
-        <Button Grid.Row="2" Style="{StaticResource ResourceKey=ButtonLeft}" Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="10,0,0,0"/>
-        <Button Grid.Row="2" Style="{StaticResource ResourceKey=ButtonRight}" Name="button_OK" Content="Добавить" Click="button_OK_Click" Margin="0,0,15,0"/>
+        <Button Grid.Row="2" Style="{StaticResource ResourceKey=ButtonRight}" Name="button_Cancel" Content="Отмена" Click="button_Cancel_Click" Margin="0,0,15,5"/>
+        <Button Grid.Row="2" Style="{StaticResource ResourceKey=ButtonLeft}" Name="button_OK" Content="Добавить" Click="button_OK_Click" Margin="10,0,0,5"/>
     </Grid>
 </Window>

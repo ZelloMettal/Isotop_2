@@ -6,7 +6,7 @@ namespace Isotop2.Data.Controllers
 {
     internal class TechnetiumPrintController
     {
-        static private TechnetiumPrintModel _model = null;
+        static private TechnetiumPrintModel _model;
 
         //Метод установки данных для печати
         static public void SetPrintData(Dictionary<Marker, ActivityByVolume> adultList, Dictionary<Marker, ActivityByVolume> childList, double newActivity, double oldActivity)

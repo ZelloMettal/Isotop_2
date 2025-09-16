@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Name="FormDataName"
         Title="База данных" Height="450" Width="800"
-        Icon="/Resources/radiation .jpg"
+        Icon="/Resources/radiation.jpg"
         Loaded="FormData_Load"
         KeyDown="PressHotKey">
 

@@ -22,7 +22,7 @@ namespace Isotop2.Forms
                     MessageBox.Show("Пароли не совпадают!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);                
             }
             else            
-                MessageBox.Show("Введите значение!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
+                MessageBox.Show("Заполнены не все поля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
         }
         //Событие закрытия формы
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
@@ -41,7 +41,9 @@ namespace Isotop2.Forms
         private void checkBox_ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
             textBox_Password.Text = passworBox_Password.Password;
+            passworBox_Password.Password = "";
             textBox_ConfirmPassword.Text = passworBox_ConfirmPassword.Password;
+            passworBox_ConfirmPassword.Password = "";
             textBox_Password.Visibility = Visibility.Visible;
             textBox_ConfirmPassword.Visibility = Visibility.Visible;
             passworBox_Password.Visibility = Visibility.Hidden;
@@ -51,7 +53,9 @@ namespace Isotop2.Forms
         private void checkBox_ShowPassword_Unchecked(object sender, RoutedEventArgs e)
         {
             passworBox_Password.Password = textBox_Password.Text;
+            textBox_Password.Text = "";
             passworBox_ConfirmPassword.Password = textBox_ConfirmPassword.Text;
+            textBox_ConfirmPassword.Text = "";
             textBox_Password.Visibility = Visibility.Hidden;
             textBox_ConfirmPassword.Visibility = Visibility.Hidden;
             passworBox_Password.Visibility = Visibility.Visible;

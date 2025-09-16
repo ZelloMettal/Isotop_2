@@ -11,7 +11,7 @@ namespace Isotop2.Data.Controllers
     {
         static private RIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<RIModel>(); //Объект РИ
 
-        //Метод заполнения combobox в форме
+        //Метод заполнения Combobox в форме
         static public void FillComboboxes(ComboBox radionuclide, ComboBox compound, ComboBox manufacturer, ComboBox package, ComboBox storage, ComboBox supplier, ComboBox recipient)
         {
             _model.RefrashData();
@@ -99,8 +99,12 @@ namespace Isotop2.Data.Controllers
                                         TextBox generatorNumber, TextBox activity, ComboBox compound, ComboBox manufacturer, TextBox operation, 
                                         DatePicker operationDate, ComboBox package, ComboBox storage, ComboBox supplier, ComboBox recipient, TextBox document, CheckBox sent)
         {
+            //Если ID меньше нуля, значит РИ создаётся
+            if (riId < 0) return;
+
             //Устанавлеваем id выбранного РИ
             _model.SetCurrenRI(riId);
+
             //Получаем необходимый РИ
             RI? ri = _model.GetRIbyId(riId);
             if (ri == null)

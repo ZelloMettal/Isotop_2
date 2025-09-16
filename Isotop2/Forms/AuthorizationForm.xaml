@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="Авторизация" Height="170" Width="270"
-        Icon="/Resources/radiation .jpg"
+        Icon="/Resources/radiation.jpg"
         KeyDown="PressHotKey">
     
     <Window.Resources>

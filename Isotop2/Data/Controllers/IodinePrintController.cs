@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using Isotop2.Data.Models;
+﻿using Isotop2.Data.Models;
 
 namespace Isotop2.Data.Controllers
 {

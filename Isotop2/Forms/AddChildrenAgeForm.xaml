@@ -26,7 +26,7 @@
             <Setter Property="ItemsControl.VerticalAlignment" Value="Top"/>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

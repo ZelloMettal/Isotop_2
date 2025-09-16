@@ -210,7 +210,7 @@ namespace Isotop2.Data.Controllers
             FD.ShowDialog();
             _model.RefrashDataTechnetium();
         }
-        //Метод открытия формы RAOForm
+        //Метод открытия формы RIForm
         static public void OpenRIForm()
         {
             RIForm RF = new RIForm();

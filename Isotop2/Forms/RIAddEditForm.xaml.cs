@@ -44,7 +44,6 @@ namespace Isotop2.Forms
             datePicker_OperationDate.Text = DateTime.Now.ToString();
 
             //Заполняем контролы при редактирования сущности РИ
-            if(RIAddEditController.GetCurrenRI() > 0)
                 RIAddEditController.FillRIData
                     (
                         RIAddEditController.GetCurrenRI(), 

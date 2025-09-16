@@ -35,8 +35,6 @@ namespace Isotop2.Forms
         public string GetEnteredData()
         {
             return textBox_PatientName.Text;
-        }
-
-        
+        }        
     }
 }

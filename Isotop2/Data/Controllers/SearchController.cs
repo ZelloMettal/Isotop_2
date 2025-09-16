@@ -1,7 +1,6 @@
 ﻿using System.Windows.Controls;
 using Isotop2.Data.Models;
 using Isotop2.Services;
-using Isotop2.Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Isotop2.Data.Controllers
@@ -44,7 +43,7 @@ namespace Isotop2.Data.Controllers
         {
             (string searchItem1, string searchItem2, string searchItem3) data = ("", "", "");
             data.searchItem1 = findPlace;
-            data.searchItem2 = (findPlace == "Дата изготовления" && dataSearch == "")? DateTime.Now.ToShortDateString() : dataSearch;
+            data.searchItem2 = (findPlace == "Дата изготовления" && dataSearch == "") ? DateTime.Now.ToShortDateString() : dataSearch;
             data.searchItem3 = (findPlace == "Дата изготовления" && dataAdditionalSearch == "") ? DateTime.Now.ToShortDateString() : dataAdditionalSearch;
             return data;
         }

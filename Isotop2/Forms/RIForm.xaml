@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Name="RIFormName"
         Title="РИ" Height="450" Width="800"
-        Icon="/Resources/radiation .jpg"
+        Icon="/Resources/radiation.jpg"
         Loaded="RIForm_Load">
 
     <Window.Resources>

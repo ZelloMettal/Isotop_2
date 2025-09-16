@@ -12,14 +12,14 @@ namespace Isotop2.Data.Controllers
     {        
         static private RIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<RIModel>(); //Объект РИ
 
-        //Метод установки заголовков DataGridView
+        //Метод установки заголовков DataGrid
         static private void SetColumnNameForDataGrid(DataGrid dgv)
         {
             string[] headerList = _model.GetHeaderList();
             AuxiliaryFuntions.SetHeaderDataGrid(dgv, headerList);
             dgv.Columns[0].MaxWidth = 0;
         }
-        //Метод заполенения DataGridView списком РИ
+        //Метод заполенения DataGrid списком РИ
         static public async Task FillRIAsync(DataGrid dgv)
         {
             dgv.ItemsSource = await Task.Run(()=>_model.GetAllRI());
@@ -77,8 +77,11 @@ namespace Isotop2.Data.Controllers
                 MessageBox.Show("Выберите строку", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            _model.DeleteRI(_model.GetCurrentRI());
-            _model.SetCurrenRI(-1);
+            if (MessageBox.Show("Удалить?", "Удаление", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+            {
+                _model.DeleteRI(_model.GetCurrentRI());
+                _model.SetCurrenRI(-1);
+            }
         }
         //Метод установки выбранного РИ в DataGrid
         static public void SetCurrenRI(string id)

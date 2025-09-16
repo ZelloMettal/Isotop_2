@@ -29,11 +29,14 @@ namespace Isotop2
                 ServiceProvider serviceProvider = services.BuildServiceProvider();
                 ServiceProviderHolder.ServiceProvider = serviceProvider;
             }).Build();
+
             //Проверяем существование базы данных
             if(CheckDateBase())
                 MessageBox.Show("Не удалось загрузить базу данных. Была создана новаыя база данных!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+
             //Создаём необходимые ресурсы
             CreateResouses();
+
             //Получем объект приложение
             App application = host.Services.GetService<App>();
             //Запускаем приложение

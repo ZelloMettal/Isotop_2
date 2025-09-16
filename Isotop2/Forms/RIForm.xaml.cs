@@ -31,11 +31,8 @@ namespace Isotop2.Forms
         //Событие удаления РИ
         private void button_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Удалить?", "Удаление", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
-            {
-                RIController.DeleteRI();
-                RIController.FillRIAsync(dataGrid_RIList);
-            }
+            RIController.DeleteRI();
+            RIController.FillRIAsync(dataGrid_RIList);            
         }
         //Событие выбранной строки в DataGrid
         private void dataGrid_RIList_CellClick(object sender, SelectedCellsChangedEventArgs e)

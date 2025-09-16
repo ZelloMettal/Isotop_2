@@ -26,20 +26,6 @@ namespace Isotop2.Data
             }
             return dataList;
         }
-        //Метод получение данных из ListView
-        static public List<string> ConvertListItemsToList(List<string[]> list)
-        {
-            List<string> _dataList = new List<string>();
-            if (list != null)
-            {
-                foreach (var data in list)
-                {
-                    for (int i = 0; i < data.Length; i++)
-                        _dataList.Add(data[i]);                    
-                }
-            }
-            return _dataList;
-        }
         //Метод конвертации списка отмеченных маркеров для печатив список строк
         static public List<string> ConvertListItemsToList(List<CheckedMarkerForPrint> list)
         {
@@ -130,26 +116,6 @@ namespace Isotop2.Data
             Array.ForEach(str.ToArray(), secureString.AppendChar);
             secureString.MakeReadOnly();
             return secureString;
-        }
-        //Метод конвертации ListRIView в ListString[]
-        public static List<string[]> RIViewToStringList(List<RIView> dataList, bool isShowFirsColumn = false)
-        {
-            List<string[]> stringList = new List<string[]>();
-            int j = isShowFirsColumn? 1 : 0;    //Если нужно пропустить первый столбец
-
-            for(int i = 0; i < dataList.Count; i++)
-            {
-                //Получаем список свойст объекта
-                PropertyInfo[] propInfo = new RIView().GetType().GetProperties();
-                string[] tempData = new string[propInfo.Length];
-                for (int p = 0; p < propInfo.Length - 1; p++, j++)
-                {
-                    tempData[p] = propInfo[j].GetValue(dataList[i], null)?.ToString();
-                }
-                stringList.Add(tempData);
-                j = isShowFirsColumn? 1 : 0;
-            }
-            return stringList;
         }
         //Метод конвертации ListString[] в ListMarkerView
         public static List<MarkerView> ListArrStringToMarkerView(List<string[]> list)
