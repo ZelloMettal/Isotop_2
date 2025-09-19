@@ -3,7 +3,7 @@ using Isotop2.Data.Interfaces;
 
 namespace Isotop2.Data.Models
 {
-    internal class TechnetiumModel
+    internal class TechnetiumModel : ITechnetiumModel
     {
         private List<Technetium> _technetiumList; //Список технеция
         private List<CoefficientsForChildren> _coefficentForChildrenList; //Список коэффицентов для детей

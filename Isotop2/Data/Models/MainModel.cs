@@ -2,16 +2,18 @@
 using Isotop2.Services;
 using Microsoft.Extensions.DependencyInjection;
 
+using Isotop2.Data.Interfaces;
+
 namespace Isotop2.Data.Models
 {
-    internal class MainModel
+    internal class MainModel : IMainModel
     {
         //Свойства модели
         private bool _isCurrentUserRoleAdmin = false;
         private string _currentUserName = "Unknown";
-        static private TechnetiumModel _technetium = ServiceProviderHolder.ServiceProvider.GetRequiredService<TechnetiumModel>();
-        static private IodineModel _iodine = ServiceProviderHolder.ServiceProvider.GetRequiredService<IodineModel>();
-        static private RadiumModel _radium = ServiceProviderHolder.ServiceProvider.GetRequiredService<RadiumModel>();
+        static private ITechnetiumModel _technetium = ServiceProviderHolder.ServiceProvider.GetRequiredService<ITechnetiumModel>();
+        static private IIodineModel _iodine = ServiceProviderHolder.ServiceProvider.GetRequiredService<IIodineModel>();
+        static private IRadiumModel _radium = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRadiumModel>();
         static private Dictionary<Marker, ActivityByVolume> _childrenPrintList = new Dictionary<Marker, ActivityByVolume>();
         static private Dictionary<Marker, ActivityByVolume> _adultPrintList = new Dictionary<Marker, ActivityByVolume>();
 

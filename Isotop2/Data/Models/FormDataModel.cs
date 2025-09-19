@@ -1,10 +1,11 @@
 ﻿using Isotop2.Data.Entities;
+using Isotop2.Data.Interfaces;
 using System.Collections;
 using System.Security;
 
 namespace Isotop2.Data.Models
 {
-    public class FormDataModel
+    public class FormDataModel : IFormDataModel
     {
         private string _currentTable = string.Empty; //Выбранная таблица
         private int _currentItemTable = -1; //Выбранный элемент в таблице
@@ -96,99 +97,123 @@ namespace Isotop2.Data.Models
             _currentItemTable = id;
         }
         //Метод получения данных из БД
-        public IList? GetDataFromTable()
+        public List<object> GetDataFromTable()
         {
-            switch (_currentTable)
+            List<object> data = new List<object>();
+            try
+            { 
+                switch (_currentTable)
+                {
+                    case "Маркер":
+                        {
+                            List<Marker>? list = new DataStorage<Marker>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Рабочие объёмы":
+                        {
+                            List<Volume>? list = new DataStorage<Volume>().GetAll();
+                            data.AddRange(list.OrderByDescending(x => x.Value).ToList());
+                            return data;
+                        }
+                    case "Молибден":
+                        {
+                            List<Molybdenum>? list = new DataStorage<Molybdenum>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Технеций":
+                        {
+                            List<Technetium>? list = new DataStorage<Technetium>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Йод":
+                        {
+                            List<Iodine>? list = new DataStorage<Iodine>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Радий":
+                        {
+                            List<Radium>? list = new DataStorage<Radium>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Органы":
+                        {
+                            List<Organ>? list = new DataStorage<Organ>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Нагрузка на органы":
+                        {
+                            List<RadiationExposureToOrgan>? list = new DataStorage<RadiationExposureToOrgan>().GetAllIcluded(x => x.Marker, x => x.Organ);
+                            List<RadiationExposureView> listView = AuxiliaryFuntions.ConvertRadiationExposureToRadiationExposureView(list);
+                            data.AddRange(listView);
+                            return data;
+                        }
+                    case "Детский коэффицент":
+                        {
+                            List<CoefficientsForChildren>? list = new DataStorage<CoefficientsForChildren>().GetAll();
+                            data.AddRange(list.OrderByDescending(x => x.Coefficient).ToList());
+                            return data;
+                        }
+                    case "Изотоп":
+                        {
+                            List<Radionuclide>? list = new DataStorage<Radionuclide>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Изотопный состав":
+                        {
+                            List<RadionuclideCompound>? list = new DataStorage<RadionuclideCompound>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Производитель":
+                        {
+                            List<Manufacturer>? list = new DataStorage<Manufacturer>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Тип упаковки":
+                        {
+                            List<Package>? list = new DataStorage<Package>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Место хранения":
+                        {
+                            List<StoragePoint>? list = new DataStorage<StoragePoint>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Поставщик":
+                        {
+                            List<Supplier>? list = new DataStorage<Supplier>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Получатель":
+                        {
+                            List<Recipient>? list = new DataStorage<Recipient>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    case "Пользователи":
+                        {
+                            List<User>? list = new DataStorage<User>().GetAll();
+                            data.AddRange(list);
+                            return data;
+                        }
+                    default: return null;
+                }            
+            }
+            catch 
             {
-                case "Маркер":
-                    {
-                        List<Marker>? list = new DataStorage<Marker>().GetAll();
-                        return list;
-                    }
-                case "Рабочие объёмы":
-                    {
-                        List<Volume>? list = new DataStorage<Volume>().GetAll();
-                        return list.OrderByDescending(x => x.Value).ToList();
-                    }
-                case "Молибден":
-                    {
-                        List<Molybdenum>? list = new DataStorage<Molybdenum>().GetAll();
-                        return list;
-                    }
-                case "Технеций":
-                    {
-                        List<Technetium>? list = new DataStorage<Technetium>().GetAll();
-                        return list;
-                    }
-                case "Йод":
-                    {
-                        List<Iodine>? list = new DataStorage<Iodine>().GetAll();
-                        return list;
-                    }
-                case "Радий":
-                    {
-                        List<Radium>? list = new DataStorage<Radium>().GetAll();
-                        return list;
-                    }
-                case "Органы":
-                    {
-                        List<Organ>? list = new DataStorage<Organ>().GetAll();
-                        return list;
-                    }
-                case "Нагрузка на органы":
-                    {
-                        List<RadiationExposureToOrgan>? list = new DataStorage<RadiationExposureToOrgan>().GetAllIcluded(x => x.Marker, x => x.Organ);
-                        List<RadiationExposureView> listView = AuxiliaryFuntions.ConvertRadiationExposureToRadiationExposureView(list);
-                        return listView;
-                    }
-                case "Детский коэффицент":
-                    {
-                        List<CoefficientsForChildren>? list = new DataStorage<CoefficientsForChildren>().GetAll();
-                        return list.OrderByDescending(x => x.Coefficient).ToList();
-                    }
-                case "Изотоп":
-                    {
-                        List<Radionuclide>? list = new DataStorage<Radionuclide>().GetAll();
-                        return list;
-                    }
-                case "Изотопный состав":
-                    {
-                        List<RadionuclideCompound>? list = new DataStorage<RadionuclideCompound>().GetAll();
-                        return list;
-                    }
-                case "Производитель":
-                    {
-                        List<Manufacturer>? list = new DataStorage<Manufacturer>().GetAll();
-                        return list;
-                    }
-                case "Тип упаковки":
-                    {
-                        List<Package>? list = new DataStorage<Package>().GetAll();
-                        return list;
-                    }
-                case "Место хранения":
-                    {
-                        List<StoragePoint>? list = new DataStorage<StoragePoint>().GetAll();
-                        return list;
-                    }
-                case "Поставщик":
-                    {
-                        List<Supplier>? list = new DataStorage<Supplier>().GetAll();
-                        return list;
-                    }
-                case "Получатель":
-                    {
-                        List<Recipient>? list = new DataStorage<Recipient>().GetAll();
-                        return list;
-                    }
-                case "Пользователи":
-                    {
-                        List<User>? list = new DataStorage<User>().GetAll();
-                        return list;
-                    }
-                default: break;
-            }            
-            return null;
+                return null;
+            }
         }
         //Метод добавления сущности 
         public bool Add(params string[] entityProps)

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows;
-using Isotop2.Data.Models;
+using Isotop2.Data.Interfaces;
 using Isotop2.Forms;
 using Isotop2.Data.Entities;
 using System.Security;
@@ -12,7 +12,7 @@ namespace Isotop2.Data.Controllers
     //Класс-контроллер FormData
     public static class FormDataController
     {
-        private static readonly FormDataModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<FormDataModel>(); //Модель данных
+        private static readonly IFormDataModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IFormDataModel>(); //Модель данных
 
         //Метод добавления Рабочих объёмов
         private static bool AddVolume()

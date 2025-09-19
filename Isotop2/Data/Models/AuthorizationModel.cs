@@ -1,9 +1,10 @@
 ﻿using Isotop2.Data.Entities;
+using Isotop2.Data.Interfaces;
 using System.Security;
 
 namespace Isotop2.Data.Models
 {
-    internal class AuthorizationModel
+    internal class AuthorizationModel : IAuthorizationModel
     {
         private bool _currentUserRole = false; //Роль текущего пользователя Администратор
         private string _currentUserName = string.Empty; //Текущего пользователь

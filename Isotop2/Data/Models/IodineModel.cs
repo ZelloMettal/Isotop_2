@@ -3,7 +3,7 @@ using Isotop2.Data.Interfaces;
 
 namespace Isotop2.Data.Models
 {
-    internal class IodineModel
+    internal class IodineModel : IIodineModel
     {
         private List<Iodine> _iodineList; //Список распада Йода
 
@@ -26,7 +26,7 @@ namespace Isotop2.Data.Models
         public Dictionary<Iodine, ActivityByVolume> CreateListActivityIodine(double activity)
         {
             Dictionary<Iodine, ActivityByVolume> dict = new Dictionary<Iodine, ActivityByVolume>();
-            foreach (var item in _iodineList)
+            foreach (Iodine item in _iodineList)
             {
                 ActivityByVolume activity_by_volume = CalculationActivityAndVolume(item.DecayPrecent, activity);
                 dict.Add(item, activity_by_volume);

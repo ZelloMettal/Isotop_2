@@ -3,7 +3,7 @@ using Isotop2.Data.Interfaces;
 
 namespace Isotop2.Data.Models
 {
-    internal class RadiumModel
+    internal class RadiumModel : IRadiumModel
     {
         private List<Radium> _radiumList; //Список распада Радия
         private int _differenceDay = 0; //Разность дней между датой изготовления и текущей датой

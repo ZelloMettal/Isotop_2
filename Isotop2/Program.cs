@@ -45,17 +45,17 @@ namespace Isotop2
         //Настройка сервисов создание
         private static void Services(IServiceCollection services)
         {
-            services.AddSingleton<MainModel>();
+            services.AddSingleton<IMainModel, MainModel>();
             services.AddScoped<IDataStorage<Technetium>, DataStorage<Technetium>>();
             services.AddScoped<IDataStorage<Iodine>, DataStorage<Iodine>>();
             services.AddScoped<IDataStorage<Radium>, DataStorage<Radium>>();
             services.AddScoped<IDataStorage<RI>, DataStorage<RI>>();
-            services.AddScoped<TechnetiumModel>();
-            services.AddScoped<IodineModel>();
-            services.AddScoped<RadiumModel>();
-            services.AddScoped<RIModel>();
-            services.AddScoped<AuthorizationModel>();
-            services.AddScoped<FormDataModel>();
+            services.AddScoped<ITechnetiumModel, TechnetiumModel>();
+            services.AddScoped<IIodineModel, IodineModel>();
+            services.AddScoped<IRadiumModel, RadiumModel>();
+            services.AddScoped<IAuthorizationModel, AuthorizationModel>();
+            services.AddScoped<IRIModel, RIModel>();
+            services.AddScoped<IFormDataModel, FormDataModel>();
         }
         //Проверка наличия базы
         private static bool CheckDateBase()

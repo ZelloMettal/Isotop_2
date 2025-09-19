@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Isotop2.Data.Models
 {
-    internal class RIModel
+    internal class RIModel : IRIModel
     {
         Expression<Func<RI, object>>[] _RIIncludes = { r => r.Radionuclide, c => c.RadionuclideCompound, m => m.Manufacturer, p => p.Package, s => s.StoragePoint, s => s.Supplier, r => r.Recipient };
         List<Radionuclide>? _radionuclideList; //Список радионуклиидов

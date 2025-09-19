@@ -3,14 +3,14 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Isotop2.Services;
 using Isotop2.Forms;
-using Isotop2.Data.Models;
+using Isotop2.Data.Interfaces;
 using Isotop2.Data.Entities;
 
 namespace Isotop2.Data.Controllers
 {
     internal class RIController
     {        
-        static private RIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<RIModel>(); //Объект РИ
+        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>(); //Объект РИ
 
         //Метод установки заголовков DataGrid
         static private void SetColumnNameForDataGrid(DataGrid dgv)
