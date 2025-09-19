@@ -12,7 +12,6 @@ namespace Isotop2
             MainWindow = _mainForm;
             ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             //Пытаемся отобрать главное окно

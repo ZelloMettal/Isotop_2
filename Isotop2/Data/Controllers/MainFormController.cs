@@ -3,13 +3,15 @@ using Isotop2.Data.Entities;
 using Isotop2.Forms;
 using System.Windows.Controls;
 using System.Windows;
+using Isotop2.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Isotop2.Data.Controllers
 {
     internal class MainFormController
     {
         //Свойства контроллера
-        static private MainModel _model = new MainModel();  //Модель данных
+        static private MainModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<MainModel>(); //Модель данных
 
         ///////// Часть для Технеция /////////
 

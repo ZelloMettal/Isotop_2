@@ -45,6 +45,7 @@ namespace Isotop2
         //Настройка сервисов создание
         private static void Services(IServiceCollection services)
         {
+            services.AddSingleton<MainModel>();
             services.AddScoped<IDataStorage<Technetium>, DataStorage<Technetium>>();
             services.AddScoped<IDataStorage<Iodine>, DataStorage<Iodine>>();
             services.AddScoped<IDataStorage<Radium>, DataStorage<Radium>>();
@@ -53,6 +54,8 @@ namespace Isotop2
             services.AddScoped<IodineModel>();
             services.AddScoped<RadiumModel>();
             services.AddScoped<RIModel>();
+            services.AddScoped<AuthorizationModel>();
+            services.AddScoped<FormDataModel>();
         }
         //Проверка наличия базы
         private static bool CheckDateBase()

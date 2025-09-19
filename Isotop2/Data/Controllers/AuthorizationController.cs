@@ -1,11 +1,13 @@
 ﻿using Isotop2.Data.Models;
 using System.Security;
+using Microsoft.Extensions.DependencyInjection;
+using Isotop2.Services;
 
 namespace Isotop2.Data.Controllers
 {
     internal class AuthorizationController
     {
-        static private AuthorizationModel _model = new AuthorizationModel();
+        static private AuthorizationModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<AuthorizationModel>();
 
         //Метод получения роли пользователя
         static public bool GetUserRole()

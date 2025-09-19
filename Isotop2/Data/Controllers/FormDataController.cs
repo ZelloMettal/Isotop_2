@@ -4,13 +4,15 @@ using Isotop2.Data.Models;
 using Isotop2.Forms;
 using Isotop2.Data.Entities;
 using System.Security;
+using Microsoft.Extensions.DependencyInjection;
+using Isotop2.Services;
 
 namespace Isotop2.Data.Controllers
 {
     //Класс-контроллер FormData
     public static class FormDataController
     {
-        private static readonly FormDataModel _model = new FormDataModel(); //Модель данных
+        private static readonly FormDataModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<FormDataModel>(); //Модель данных
 
         //Метод добавления Рабочих объёмов
         private static bool AddVolume()
