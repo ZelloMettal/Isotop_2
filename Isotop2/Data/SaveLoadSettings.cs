@@ -16,7 +16,7 @@ namespace Isotop2.Data.Models
         {
             this.ProgramSettings = settings;
         }        
-        //Сохранение
+
         public void SaveToXML()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ProgramSettings));
@@ -24,7 +24,7 @@ namespace Isotop2.Data.Models
             serializer.Serialize(writer, ProgramSettings);
             writer.Close();
         }
-        //Загрузка
+  
         public void LoadFromXML()
         {
             if (File.Exists(ProgramSettings.FileName))
@@ -39,7 +39,7 @@ namespace Isotop2.Data.Models
                 MessageBox.Show("Файл с настройками не найден! Установлены настройки по умолчанию!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        //Получение сущности настроек
+     
         public ProgramSettings GetSettings()
         {
             return this.ProgramSettings;

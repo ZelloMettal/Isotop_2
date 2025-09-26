@@ -11,7 +11,7 @@ namespace Isotop2.Forms
             InitializeComponent();
             textBox_UserName.Focus();
         }
-        //Событие получение данных из формы
+   
         private void button_OK_Click(object sender, RoutedEventArgs e)
         {
             if ((textBox_UserName.Text != "" && textBox_Password.Text != "" && textBox_ConfirmPassword.Text != "") || (textBox_UserName.Text != "" && passworBox_Password.Password != "" && passworBox_ConfirmPassword.Password != ""))
@@ -24,12 +24,12 @@ namespace Isotop2.Forms
             else            
                 MessageBox.Show("Заполнены не все поля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
         }
-        //Событие закрытия формы
+  
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        //Событие нажатие Enter/Esc
+     
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -37,7 +37,7 @@ namespace Isotop2.Forms
             if (e.Key == Key.Escape)
                 button_Cancel_Click(sender, e);
         }
-        //Событие отображения пароля
+    
         private void checkBox_ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
             textBox_Password.Text = passworBox_Password.Password;
@@ -49,7 +49,7 @@ namespace Isotop2.Forms
             passworBox_Password.Visibility = Visibility.Hidden;
             passworBox_ConfirmPassword.Visibility = Visibility.Hidden;
         }
-        //Событие скрытия пароля
+    
         private void checkBox_ShowPassword_Unchecked(object sender, RoutedEventArgs e)
         {
             passworBox_Password.Password = textBox_Password.Text;
@@ -61,7 +61,7 @@ namespace Isotop2.Forms
             passworBox_Password.Visibility = Visibility.Visible;
             passworBox_ConfirmPassword.Visibility = Visibility.Visible;
         }
-        //Метод получения введённых данных
+    
         public (string, SecureString, bool) GetEnteredData()
         {
             return (textBox_UserName.Text, passworBox_Password.SecurePassword, checkBox_Administrator.IsChecked.Value);

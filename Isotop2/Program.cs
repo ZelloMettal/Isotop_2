@@ -15,36 +15,28 @@ namespace Isotop2
         [STAThreadAttribute]
         public static void Main()
         {   
-            //Создаём хост приложения
             IHost host = Host.CreateDefaultBuilder()
-            //Внедряем сервисы
             .ConfigureServices(service =>
             {
-                //Сервисы основной формы
                 service.AddSingleton<App>();
                 service.AddSingleton<MainForm>();
-                //Сервисы моделей
                 IServiceCollection services = new ServiceCollection();
                 Services(services);
                 ServiceProvider serviceProvider = services.BuildServiceProvider();
                 ServiceProviderHolder.ServiceProvider = serviceProvider;
             }).Build();
 
-            //Проверяем существование базы данных
             if(CheckDateBase())
                 MessageBox.Show("Не удалось загрузить базу данных. Была создана новаыя база данных!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            //Создаём необходимые ресурсы
             CreateResouses();
 
-            //Получем объект приложение
             App application = host.Services.GetService<App>();
-            //Запускаем приложение
             application?.Run();
         }
-        //Настройка сервисов создание
+
         private static void Services(IServiceCollection services)
-        {
+        {            
             services.AddSingleton<IMainModel, MainModel>();
             services.AddScoped<IDataStorage<Technetium>, DataStorage<Technetium>>();
             services.AddScoped<IDataStorage<Iodine>, DataStorage<Iodine>>();
@@ -57,7 +49,7 @@ namespace Isotop2
             services.AddScoped<IRIModel, RIModel>();
             services.AddScoped<IFormDataModel, FormDataModel>();
         }
-        //Проверка наличия базы
+
         private static bool CheckDateBase()
         {
             bool isСreate = false;
@@ -68,16 +60,14 @@ namespace Isotop2
             new Logger($"\nБаза данных существует: {(!isСreate).ToString()}; {DateTime.Now.ToString()}");
             return isСreate;
         }
-        //Создание необходимых ресурсов
+
         private static void CreateResouses()
         {
             string currentPath = Directory.GetCurrentDirectory();
             try 
             {
-                if (!Directory.Exists($"{currentPath}\\Temp"))
-                {
-                    Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp");
-                }
+                if (!Directory.Exists($"{currentPath}\\Temp"))                
+                    Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp");                
                 if(!Directory.Exists($"{currentPath}\\Temp\\PDF"))
                     Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Temp\\PDF");
                 if (!Directory.Exists($"{currentPath}\\Temp\\CSV"))

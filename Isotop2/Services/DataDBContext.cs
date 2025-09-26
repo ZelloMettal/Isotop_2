@@ -29,8 +29,6 @@ namespace Isotop2.Services
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder model)
         {
-            //Инициализация БД
-            //Настройка удаления зависемой таблицы
             model.Entity<RI>().HasOne(r => r.Radionuclide).WithMany().OnDelete(DeleteBehavior.SetNull);
             model.Entity<RI>().HasOne(r => r.RadionuclideCompound).WithMany().OnDelete(DeleteBehavior.SetNull);
             model.Entity<RI>().HasOne(m => m.Manufacturer).WithMany().OnDelete(DeleteBehavior.SetNull);
@@ -38,17 +36,7 @@ namespace Isotop2.Services
             model.Entity<RI>().HasOne(s => s.StoragePoint).WithMany().OnDelete(DeleteBehavior.SetNull);
             model.Entity<RI>().HasOne(s => s.Supplier).WithMany().OnDelete(DeleteBehavior.SetNull);
             model.Entity<RI>().HasOne(r => r.Recipient).WithMany().OnDelete(DeleteBehavior.SetNull);
-            //Маркеры
-            model.Entity<Marker>().HasData(
-                new Marker[]
-                {
-                    new Marker{ Id = 1, MarkerName = "Резоскан", MaxActivity = 600, MinActivity = 400, NewGenerator = true},
-                    new Marker{ Id = 2, MarkerName = "Нанотоп" , MaxActivity = 170, MinActivity = 120, NewGenerator = true},
-                    new Marker{ Id = 3, MarkerName = "Пентатех", MaxActivity = 370, MinActivity = 110, NewGenerator = false},
-                    new Marker{ Id = 4, MarkerName = "Технефит", MaxActivity = 300, MinActivity = 120, NewGenerator = false},
-                    new Marker{ Id = 5, MarkerName = "Технемек", MaxActivity = 150, MinActivity = 100, NewGenerator = false}
-                });
-            //Объёмы
+      
             model.Entity<Volume>().HasData(
                 new Volume[]
                 {
@@ -74,7 +62,7 @@ namespace Isotop2.Services
                     new Volume{ Id = 20, Value = 0.2 },
                     new Volume{ Id = 21, Value = 0.1 }
                 });
-            //Распад Молибдена
+    
             model.Entity<Molybdenum>().HasData(
                 new Molybdenum[]
                 {
@@ -95,7 +83,7 @@ namespace Isotop2.Services
                     new Molybdenum {Id = 15, Day = 14, DecayPrecent = 2.94 },
                     new Molybdenum {Id = 16, Day = 15, DecayPrecent = 2.28 }
                 });
-            //Распад Технеция
+        
             model.Entity<Technetium>().HasData(
                 new Technetium[]
                 {
@@ -125,7 +113,7 @@ namespace Isotop2.Services
                     new Technetium {Id = 24, Hour = 11.5, DecayPrecent = 26.49 },
                     new Technetium {Id = 25, Hour = 12, DecayPrecent = 25 }
                 });
-            //Распад Йода
+      
             model.Entity<Iodine>().HasData(
                 new Iodine[]
                 {
@@ -158,7 +146,7 @@ namespace Isotop2.Services
                     new Iodine {Id = 27, Day = 26, DecayPrecent = 10.8 },
                     new Iodine {Id = 28, Day = 27, DecayPrecent = 9.7 }
                 });
-            //Распад Радия
+   
             model.Entity<Radium>().HasData(
                new Radium[]
                {
@@ -185,6 +173,7 @@ namespace Isotop2.Services
                     new Radium {Id = 21, Day = 20, DecayCoefficent = 0.46 },
                     new Radium {Id = 22, Day = 21, DecayCoefficent = 0.43 }
                });
+
             model.Entity<Organ>().HasData(
                 new Organ[]
                 {
@@ -214,35 +203,7 @@ namespace Isotop2.Services
                     new Organ{ Id = 24, OrganName = "Щитовидная железа"},
                     new Organ{ Id = 25, OrganName = "Молочные железы"}
                 });
-            model.Entity<RadiationExposureToOrgan>().HasData(
-                new RadiationExposureToOrgan[]
-                {
-                    new RadiationExposureToOrgan{ Id = 1, MarkerId = 1, OrganId = 9, Coefficient = 0.007},
-                    new RadiationExposureToOrgan{ Id = 2, MarkerId = 1, OrganId = 4, Coefficient = 0.004},
-                    new RadiationExposureToOrgan{ Id = 3, MarkerId = 1, OrganId = 5, Coefficient = 0.005},
-                    new RadiationExposureToOrgan{ Id = 4, MarkerId = 1, OrganId = 16, Coefficient = 0.0025},
-                    new RadiationExposureToOrgan{ Id = 5, MarkerId = 2, OrganId = 24, Coefficient = 0.01},
-                    new RadiationExposureToOrgan{ Id = 6, MarkerId = 2, OrganId = 3, Coefficient = 0.005},
-                    new RadiationExposureToOrgan{ Id = 7, MarkerId = 2, OrganId = 9, Coefficient = 0.006},
-                    new RadiationExposureToOrgan{ Id = 8, MarkerId = 2, OrganId = 5, Coefficient = 0.003},
-                    new RadiationExposureToOrgan{ Id = 9, MarkerId = 2, OrganId = 4, Coefficient = 0.018},
-                    new RadiationExposureToOrgan{ Id = 10, MarkerId = 2, OrganId = 16, Coefficient = 0.009},
-                    new RadiationExposureToOrgan{ Id = 11, MarkerId = 3, OrganId = 12, Coefficient = 0.01},
-                    new RadiationExposureToOrgan{ Id = 12, MarkerId = 3, OrganId = 3, Coefficient = 0.002},
-                    new RadiationExposureToOrgan{ Id = 13, MarkerId = 3, OrganId = 4, Coefficient = 0.006},
-                    new RadiationExposureToOrgan{ Id = 14, MarkerId = 3, OrganId = 5, Coefficient = 0.003},
-                    new RadiationExposureToOrgan{ Id = 15, MarkerId = 3, OrganId = 16, Coefficient = 0.002},
-                    new RadiationExposureToOrgan{ Id = 16, MarkerId = 3, OrganId = 8, Coefficient = 0.06},
-                    new RadiationExposureToOrgan{ Id = 17, MarkerId = 4, OrganId = 16, Coefficient = 0.004},
-                    new RadiationExposureToOrgan{ Id = 18, MarkerId = 4, OrganId = 23, Coefficient = 0.08},
-                    new RadiationExposureToOrgan{ Id = 19, MarkerId = 4, OrganId = 15, Coefficient = 0.04},
-                    new RadiationExposureToOrgan{ Id = 20, MarkerId = 4, OrganId = 3, Coefficient = 0.015},
-                    new RadiationExposureToOrgan{ Id = 21, MarkerId = 5, OrganId = 16, Coefficient = 0.005},
-                    new RadiationExposureToOrgan{ Id = 22, MarkerId = 5, OrganId = 5, Coefficient = 0.0018},
-                    new RadiationExposureToOrgan{ Id = 23, MarkerId = 5, OrganId = 4, Coefficient = 0.0034},
-                    new RadiationExposureToOrgan{ Id = 34, MarkerId = 5, OrganId = 12, Coefficient = 0.23},
-                });
-            //Коэффиценты для детей
+         
             model.Entity<CoefficientsForChildren>().HasData(
                 new CoefficientsForChildren[]
                 {
@@ -252,126 +213,7 @@ namespace Isotop2.Services
                     new CoefficientsForChildren{ Id = 4, AgeRange = "1-2", Coefficient = 0.1},
                     new CoefficientsForChildren{ Id = 5, AgeRange = "<1", Coefficient = 0.03}
                 });
-            //Радионуклиид
-            model.Entity<Radionuclide>().HasData(
-                new Radionuclide[]
-                {
-                    new Radionuclide{ RadionuclideId = 1, RadionuclideName = "Технеций-99m"},
-                    new Radionuclide{ RadionuclideId = 2, RadionuclideName = "Йод-131"},
-                    new Radionuclide{ RadionuclideId = 3, RadionuclideName = "Радий-223"}
-                });
-            //Радионуклиидный состав
-            model.Entity<RadionuclideCompound>().HasData(
-                new RadionuclideCompound[]
-                {
-                    new RadionuclideCompound{ RadionuclideCompoundId = 1, Compound = "Пертехнет Натрия"},
-                    new RadionuclideCompound{ RadionuclideCompoundId = 2, Compound = "Натрий Йодит"},
-                    new RadionuclideCompound{ RadionuclideCompoundId = 3, Compound = "Радия Хлорид"}
-                });
-            //Изготовитель
-            model.Entity<Manufacturer>().HasData(
-                new Manufacturer[]
-                {
-                    new Manufacturer{ ManufacturerId = 1, ManufacturerName = "ФГАОУ ВО УФУ"},
-                    new Manufacturer{ ManufacturerId = 2, ManufacturerName = "АО НИФХИИ"}
-                });
-            //Поставщик
-            model.Entity<Supplier>().HasData(
-            new Supplier[]
-            {
-                    new Supplier{ SupplierId = 1, SupplierName = "ООО Фарматом"},
-                    new Supplier{ SupplierId = 2, SupplierName = "ООО Цистех"}
-                });
-            //Контейнер
-            model.Entity<Package>().HasData(
-                new Package[]
-                {
-                    new Package{ PackageId = 1, PackageName = "ГТ-4К"},
-                    new Package{ PackageId = 2, PackageName = "КТ-1-10"}
-                });
-            //Пункт хранения
-            model.Entity<StoragePoint>().HasData(
-                new StoragePoint[]
-                {
-                    new StoragePoint{ StoragePointId = 1, StoragePointName = "Сейф"},
-                    new StoragePoint{ StoragePointId = 2, StoragePointName = "Хранилище"},
-                    new StoragePoint{ StoragePointId = 3, StoragePointName = "Генераторная"}
-                });
-            //Получатель
-            model.Entity<Recipient>().HasData(
-                new Recipient[]
-                {
-                    new Recipient{ RecipientId = 1, RecipientName = "ГУЗ КОД"}
-                });
-            //РАО
-            model.Entity<RI>().HasData(
-                new RI[]
-                {
-                    new RI
-                    {
-                        Id = 1,
-                        RadionuclideId = 1,
-                        PassportNumber = "904",
-                        CreateDate = new DateTime(2025,02,25),
-                        Weight = 15,
-                        Volume = 200,
-                        GeneratorNumber = "4554",
-                        Activity = 19000,
-                        RadionuclideCompoundId = 1,
-                        ManufacturerId = 1,
-                        Operation = "В/В Введение",
-                        OperationDate = new DateTime(2025,02,25),
-                        PackageId = 1,
-                        StoragePointId = 3,
-                        SupplierId = 1,
-                        RecipientId = 1,
-                        AccompanyingDocument = "Т-Т Накладная",
-                        Sent = true
-                    },
-                    new RI
-                    {
-                        Id = 2,
-                        RadionuclideId = 2,
-                        PassportNumber = "03186",
-                        CreateDate = new DateTime(2024,12,02),
-                        Weight = 2,
-                        Volume = 6,
-                        GeneratorNumber = null,
-                        Activity = 200,
-                        RadionuclideCompoundId = 2,
-                        ManufacturerId = 1,
-                        Operation = "PerOs",
-                        OperationDate = new DateTime(2024,12,02),
-                        PackageId = 2,
-                        StoragePointId = 1,
-                        SupplierId = 2,
-                        RecipientId = 1,
-                        AccompanyingDocument = "Т-Т Накладная",
-                        Sent = false
-                    },
-                    new RI
-                    {
-                        Id = 3,
-                        RadionuclideId = 3,
-                        PassportNumber = "210225-1/59",
-                        CreateDate = new DateTime(2025,02,21),
-                        Weight = 2,
-                        Volume = 6.6,
-                        GeneratorNumber = null,
-                        Activity = 10.2,
-                        RadionuclideCompoundId = 3,
-                        ManufacturerId = 1,
-                        Operation = "В/В Введение",
-                        OperationDate = new DateTime(2025,02,21),
-                        PackageId = 2,
-                        StoragePointId = 1,
-                        SupplierId = 1,
-                        RecipientId = 1,
-                        AccompanyingDocument = "Т-Т Накладная",
-                        Sent = false
-                    }
-                });;
-            //User
+
             model.Entity<User>().HasData(
                 new User[]
                 {

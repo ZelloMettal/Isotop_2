@@ -13,7 +13,7 @@ namespace Isotop2.Forms
             InitializeComponent();
             comboBox_Marker.Focus();
         }
-        //Метод получаем данные из базы для заполнения ComboBox
+   
         private void EditRadiationExposureToOrganForm_Load(object sender, RoutedEventArgs e)
         {
             List<Marker>? markers = new DataStorage<Marker>().GetAll();
@@ -21,7 +21,7 @@ namespace Isotop2.Forms
             comboBox_Marker.ItemsSource = markers.Select(x => x.MarkerName);
             comboBox_Organ.ItemsSource = organs.Select(x => x.OrganName);
         }
-        //Событие созранения
+     
         private void button_OK_Click(object sender, RoutedEventArgs e)
         {
             if (comboBox_Marker.Text != "" && comboBox_Organ.Text != "" && textBox_Coefficient.Text != "")
@@ -39,17 +39,17 @@ namespace Isotop2.Forms
             else            
                 MessageBox.Show("Введите значение!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
         }
-        //Событие проверка на ввод цифр, запятой, удаления
+     
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9,]").IsMatch(e.Text);
         }
-        //Событие отмены
+    
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        //Событие нажатие Enter/Esc
+
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -57,7 +57,7 @@ namespace Isotop2.Forms
             if (e.Key == Key.Escape)
                 button_Cancel_Click(sender, e);
         }
-        //Метод получения введённых данных
+     
         public (string, string, string) GetEnteredData()
         {
             return (comboBox_Marker.Text, comboBox_Organ.Text, textBox_Coefficient.Text);

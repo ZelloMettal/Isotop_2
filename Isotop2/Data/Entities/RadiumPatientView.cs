@@ -5,7 +5,6 @@
         public string PatientName {  get; set; }
         public string Weight {  get; set; }
         public string Volume {  get; set; }
-        public string Activity {  get; set; }
-        
+        public string Activity {  get; set; }        
     }
 }

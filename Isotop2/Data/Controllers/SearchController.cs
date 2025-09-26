@@ -7,9 +7,8 @@ namespace Isotop2.Data.Controllers
 {
     internal class SearchController
     {
-        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>(); //Объект РИ
+        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>();
 
-        //Метод заполнения ComboBox
         static public void FillComboboxDatePerColumn(ComboBox cb, string columnsName)
         {
             cb.SelectedIndex = -1;
@@ -32,13 +31,13 @@ namespace Isotop2.Data.Controllers
                 break;
             }
         }
-        //Метод заполнения ComboBox
+  
         static public void FillComboboxColumnName(ComboBox cb)
         {
             string[] headerNameToSearch = _model.GetColumnNameToSearch();
             cb.ItemsSource = headerNameToSearch;
         }
-        //Метод установки настрое поиска
+    
         static public (string, string, string) SearchSettings(string findPlace, string dataSearch, string dataAdditionalSearch = "")
         {
             (string searchItem1, string searchItem2, string searchItem3) data = ("", "", "");

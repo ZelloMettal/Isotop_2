@@ -4,13 +4,13 @@ namespace Isotop2.Data.Controllers
 {
     internal class RadiumPrintController
     {
-        static private RadiumPrintModel _model; //Обект формирования данных для печати
-        //Метод задания источника данных
+        static private RadiumPrintModel _model;
+
         static public void SetPrintData(List<string> dataList, DateTime currentDate, string differenceDays, string currentCoefficent, string currentActivity)
         {
             _model = new RadiumPrintModel(dataList, currentDate, differenceDays, currentCoefficent, currentActivity);
         }
-        //Метод создание таблицы для печати
+    
         static public void ExportToPDF()
         {
             _model.ExportToPDFAsync();

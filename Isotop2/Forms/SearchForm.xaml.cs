@@ -11,13 +11,13 @@ namespace Isotop2.Forms
         {
             InitializeComponent();
         }
-        //Событие загрузки формы
+
         private void SearchForm_Load(object sender, RoutedEventArgs e)
         {
             SearchController.FillComboboxColumnName(comboBox_ColumnName);
             datePicker_StartDate.Text = datePicker_EndDate.Text = DateTime.Now.Date.ToShortDateString();
         }
-        //Событие выбора RadioButton
+    
         private void radioButton_ByColumns_CheckedChanged(object sender, RoutedEventArgs e)
         {
             if(comboBox_ColumnName == null) return;
@@ -31,7 +31,7 @@ namespace Isotop2.Forms
             comboBox_Search.SelectedIndex = -1;
             comboBox_ColumnName.SelectedIndex = -1;
         }
-        //Событие выбора RadioButton
+
         private void radioButton_ByGenerator_CheckedChanged(object sender, RoutedEventArgs e)
         {
             textBox_NumberGeneration.IsEnabled = true;
@@ -44,7 +44,7 @@ namespace Isotop2.Forms
             comboBox_Search.SelectedIndex = -1;
             comboBox_ColumnName.SelectedIndex = -1;
         }
-        //Событие выбора RadioButton
+   
         private void radioButton_ByPassport_CheckedChanged(object sender, RoutedEventArgs e)
         {
             textBox_PassportNumber.IsEnabled = true;
@@ -57,7 +57,7 @@ namespace Isotop2.Forms
             comboBox_Search.SelectedIndex = -1;
             comboBox_ColumnName.SelectedIndex = -1;
         }
-        //Событие выбора RadioButton
+    
         private void radioButton_ByDate_CheckedChanged(object sender, RoutedEventArgs e)
         {
             datePicker_StartDate.IsEnabled = true;
@@ -70,7 +70,7 @@ namespace Isotop2.Forms
             comboBox_Search.SelectedIndex = -1;
             comboBox_ColumnName.SelectedIndex = -1;
         }
-        //Событие выбора RadioButton
+
         private void radioButton_BySent_CheckedChanged(object sender, RoutedEventArgs e)
         {
             comboBox_ColumnName.IsEnabled = false;
@@ -83,23 +83,23 @@ namespace Isotop2.Forms
             comboBox_Search.SelectedIndex = -1;
             comboBox_ColumnName.SelectedIndex = -1;
         }
-        //Событие заполнения ComboBox для поиска
+ 
         private void comboBox_ColumnName_SelectedChanged(object sender, SelectionChangedEventArgs e)
         {            
             if(comboBox_ColumnName.SelectedItem != null) 
                 SearchController.FillComboboxDatePerColumn(comboBox_Search, comboBox_ColumnName.SelectedItem.ToString());
         }
-        //Событие нажатия кнопки отмены
+   
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        //Событие нажатия кнопки поиска
+     
         private void button_Search_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }
-        //Метод получения данных из формы
+  
         public (string, string, string) GetEnteredData()
         {
             (string searchItem1, string searchItem2, string searchItem3) _dataSearch = ("", "", "");
@@ -115,7 +115,7 @@ namespace Isotop2.Forms
                 return SearchController.SearchSettings(radioButton_BySent.Content.ToString(), checkBox_Sent.IsChecked.ToString());
             return _dataSearch;
         }
-        //Событие нажатие Enter/Esc
+    
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

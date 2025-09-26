@@ -10,22 +10,21 @@ namespace Isotop2.Data.Controllers
 {
     internal class RIController
     {        
-        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>(); //Объект РИ
+        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>();
 
-        //Метод установки заголовков DataGrid
         static private void SetColumnNameForDataGrid(DataGrid dgv)
         {
             string[] headerList = _model.GetHeaderList();
             AuxiliaryFuntions.SetHeaderDataGrid(dgv, headerList);
             dgv.Columns[0].MaxWidth = 0;
         }
-        //Метод заполенения DataGrid списком РИ
+   
         static public async Task FillRIAsync(DataGrid dgv)
         {
             dgv.ItemsSource = await Task.Run(()=>_model.GetAllRI());
             SetColumnNameForDataGrid(dgv);
         }
-        //Метод вызова формы для добавления РИ
+   
         static public void AddRI()
         {
             _model.SetCurrenRI(-1);
@@ -34,7 +33,7 @@ namespace Isotop2.Data.Controllers
             RIAE.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             RIAE.ShowDialog();
         }
-        //Метод вызова формы для редактирования РИ
+  
         static public void EditRI()
         {
             if (_model.GetCurrentRI() < 0)
@@ -48,7 +47,7 @@ namespace Isotop2.Data.Controllers
             RIAE.ShowDialog();
             _model.SetCurrenRI(-1);
         }
-        //Метод вызова формы поиска
+   
         static public bool SearchRI(DataGrid dgv)
         {
             SearchForm SF = new SearchForm();
@@ -68,10 +67,10 @@ namespace Isotop2.Data.Controllers
             SF.Close();           
             return true;
         }
-        //Метод удаления РИ
+ 
         static public void DeleteRI()
         {
-            //Если ни одной строки не выбрано
+      
             if (_model.GetCurrentRI() < 0)
             {
                 MessageBox.Show("Выберите строку", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -83,7 +82,7 @@ namespace Isotop2.Data.Controllers
                 _model.SetCurrenRI(-1);
             }
         }
-        //Метод установки выбранного РИ в DataGrid
+    
         static public void SetCurrenRI(string id)
         {
             if (id == "" || id == null)
@@ -91,7 +90,7 @@ namespace Isotop2.Data.Controllers
             else
                 _model.SetCurrenRI(Convert.ToInt32(id));
         }
-        //Метод экспорта данных из DataGrid в CSV
+  
         static public void ExportToCSV(DataGrid dataGrid)
         {         
             _model.ExportToCSVAsync((List<RIView>)dataGrid.ItemsSource);

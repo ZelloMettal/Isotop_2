@@ -9,9 +9,8 @@ namespace Isotop2.Data.Controllers
 {
     internal class RIAddEditController
     {
-        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>(); //Объект РИ
+        static private IRIModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IRIModel>();
 
-        //Метод заполнения Combobox в форме
         static public void FillComboboxes(ComboBox radionuclide, ComboBox compound, ComboBox manufacturer, ComboBox package, ComboBox storage, ComboBox supplier, ComboBox recipient)
         {
             _model.RefrashData();
@@ -24,12 +23,11 @@ namespace Isotop2.Data.Controllers
             recipient.ItemsSource = _model.GetRecipientList().Select(r => r.RecipientName);
         }
 
-        //Добавлени РИ
         static public void AddRI(string radionuclide, string passportNumber, string createDate, string weight, string volume, string generatorNumber,
                                   string activity, string compound, string manufacturer, string operation, string operationDate, string package,
                                   string storage, string supplier, string recipient, string document, bool sent)
         {
-            //Проверяем на заполенени необходимых полей
+        
             if (radionuclide == "" || passportNumber == "" || weight == "" || volume == "" || activity == "" || compound == "" ||
                 manufacturer == "" || operation == "" | package == "" || storage == "" || supplier == "" || recipient == "" || document == "")
             {
@@ -61,8 +59,7 @@ namespace Isotop2.Data.Controllers
                 MessageBox.Show("Не удалось создать РИ", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        //Редактирование РИ
+  
         static public void EditRI(string radionuclide, string passportNumber, string createDate, string weight, string volume, string generatorNumber,
                                   string activity, string compound, string manufacturer, string operation, string operation_date, string package,
                                   string storage, string supplier, string recipient, string document, bool sent)
@@ -94,25 +91,20 @@ namespace Isotop2.Data.Controllers
             }
         }
 
-        //Заполнение контролов в форме данными РИ
         static public void FillRIData(int riId, ComboBox radionuclide, TextBox passportNumber, DatePicker createDate, TextBox weight, TextBox volume,
                                         TextBox generatorNumber, TextBox activity, ComboBox compound, ComboBox manufacturer, TextBox operation, 
                                         DatePicker operationDate, ComboBox package, ComboBox storage, ComboBox supplier, ComboBox recipient, TextBox document, CheckBox sent)
-        {
-            //Если ID меньше нуля, значит РИ создаётся
+        {         
             if (riId < 0) return;
 
-            //Устанавлеваем id выбранного РИ
             _model.SetCurrenRI(riId);
 
-            //Получаем необходимый РИ
             RI? ri = _model.GetRIbyId(riId);
             if (ri == null)
             {
                 MessageBox.Show("Не удалось получить РИ", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            //Заполняем данными РИ соответствующие контролы
             radionuclide.Text = ri.Radionuclide.RadionuclideName;
             passportNumber.Text = ri.PassportNumber;
             createDate.Text = ri.CreateDate.ToString();
@@ -131,17 +123,17 @@ namespace Isotop2.Data.Controllers
             document.Text = ri.AccompanyingDocument;
             sent.IsChecked = ri.Sent;
         }
-        //Метод получения состояния создания РИ
+  
         public static bool IsRICreated()
         {
             return _model.IsRICreated();
         }
-        //Метод установки Id текущей сущности РИ
+   
         public static void SetCurretnId(int id)
         {
             _model.SetCurrenRI(id);
         }
-        //Метод получения Id текущей сущности РИ
+      
         public static int GetCurrenRI()
         {
             return _model.GetCurrentRI();

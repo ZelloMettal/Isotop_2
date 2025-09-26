@@ -12,7 +12,7 @@ namespace Isotop2.Forms
             InitializeComponent();
             textBox_Age.Focus();
         }
-        //Событие добавления
+
         private void button_OK_Click(object sender, RoutedEventArgs e)
         {
             if (textBox_Age.Text != "" && textBox_Coefficent.Text != "")
@@ -25,12 +25,12 @@ namespace Isotop2.Forms
             else
                 MessageBox.Show("Введите значение!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        //Событие отмены
+     
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        //Событие нажатие Enter/Esc
+   
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -38,12 +38,12 @@ namespace Isotop2.Forms
             if (e.Key == Key.Escape)
                 button_Cancel_Click(sender, e);
         }
-        //Событие проверка на ввод цифр, запятой, удаления
+    
         private void NumberWithDotValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9,]").IsMatch(e.Text);
         }
-        //Метод получения введённых данных из формы
+     
         public (string, string) GetEnteredData()
         {
             return (textBox_Age.Text, textBox_Coefficent.Text);

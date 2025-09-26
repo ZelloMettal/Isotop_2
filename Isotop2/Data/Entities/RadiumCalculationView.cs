@@ -7,6 +7,5 @@
         public string CurrentActivity { get; set; }
         public string Volume { get; set; }
         public string ActivityInVolume { get; set; }
-
     }
 }

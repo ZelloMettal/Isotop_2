@@ -11,7 +11,7 @@ namespace Isotop2.Forms
             InitializeComponent();
             textBox_Name.Focus();
         }
-        //Событие нажатия кнопки Ok
+    
         private void button_OK_Click(object sender, RoutedEventArgs e)
         {
             if (textBox_Name.Text != "" && textBox_MaxActivity.Text != "" && textBox_MinActivity.Text != "")
@@ -24,17 +24,17 @@ namespace Isotop2.Forms
             else            
                 MessageBox.Show("Введите значение!", "Ошибка!", MessageBoxButton.OK,  MessageBoxImage.Error);            
         }
-        //Событие закрытия формы
+    
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }        
-        //Событие проверки на ввод чисел для TextBox
+     
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
         }
-        //Событие нажатие Enter/Esc
+    
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -42,7 +42,7 @@ namespace Isotop2.Forms
             if (e.Key == Key.Escape)
                 button_Cancel_Click(sender, e);
         }
-        //Метод получения данных из формы
+   
         public (string, string, string, bool) GetEnteredData()
         {
             return (textBox_Name.Text, textBox_MaxActivity.Text, textBox_MinActivity.Text, checkBox_IsNewGenerator.IsChecked.Value);

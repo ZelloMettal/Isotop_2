@@ -2,7 +2,7 @@
 {
     internal class RadiumPrintModel
     {
-        private List<string> _dataListView = new List<string>(); //Список с данными для заполнения ячеек
+        private List<string> _dataListView = new List<string>();
         private DateTime _currentDate;
         private string _currentDay;
         private string _currentCoefficent;
@@ -16,7 +16,7 @@
             _currentActivity = currentActivity;
             _dataListView = data;
         }
-        //Метод формирования таблицы и передачи в PDF
+     
         private void CreateTable()
         {
             using (PdfDocCreater pdf = new PdfDocCreater())
@@ -32,7 +32,7 @@
                 pdf.RunDocument();
             }
         }
-        //Метод формирования таблици на печать
+   
         public async Task ExportToPDFAsync()
         {
             await Task.Run(() => CreateTable());

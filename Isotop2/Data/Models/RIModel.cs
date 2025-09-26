@@ -6,19 +6,19 @@ namespace Isotop2.Data.Models
 {
     internal class RIModel : IRIModel
     {
-        Expression<Func<RI, object>>[] _RIIncludes = { r => r.Radionuclide, c => c.RadionuclideCompound, m => m.Manufacturer, p => p.Package, s => s.StoragePoint, s => s.Supplier, r => r.Recipient };
-        List<Radionuclide>? _radionuclideList; //Список радионуклиидов
-        List<RadionuclideCompound>? _radionuclideCompoundList; //Список соеденений
-        List<Manufacturer>? _manufacturerList; //Список производителей
-        List<Package>? _packageList; //Список упаковок
-        List<StoragePoint>? _storagePointList; //Список хранилищ
-        List<Supplier>? _supplierList; //Спискок поставщиков
-        List<Recipient>? _recipientList; //Список получателей
+        Expression<Func<RI, object>>[] _RIPredicate = { r => r.Radionuclide, c => c.RadionuclideCompound, m => m.Manufacturer, p => p.Package, s => s.StoragePoint, s => s.Supplier, r => r.Recipient };
+        List<Radionuclide>? _radionuclideList;
+        List<RadionuclideCompound>? _radionuclideCompoundList;
+        List<Manufacturer>? _manufacturerList;
+        List<Package>? _packageList;
+        List<StoragePoint>? _storagePointList;
+        List<Supplier>? _supplierList;
+        List<Recipient>? _recipientList;
 
-        readonly IDataStorage<RI> _dataStorage; //Хранилище
+        readonly IDataStorage<RI> _dataStorage;
 
-        int _currentRI = -1; //Выбранное РИ
-        bool _isCreated = false; //Существование объекта РИ
+        int _currentRI = -1;
+        bool _isCreated = false;
 
         string[] _headerList =
         {
@@ -59,12 +59,12 @@ namespace Isotop2.Data.Models
             _supplierList = new DataStorage<Supplier>().GetAll();
             _recipientList = new DataStorage<Recipient>().GetAll();
         }
-        //Создаём обекта РИ по введённым данным
+
         private RI? CreateRI(int id, string radionuclide, string passportNumber, DateTime createDate, string weight, string volume, string generatorNumber, string activity,
                              string compound, string manufacturer, string operation, DateTime operationDate, string package, string storagePoint, string supplier,
                              string recipient, string document, bool sent)
         {
-            //Получаем соответствующие объекты для создания сущности РИ
+  
             Radionuclide? rad = _radionuclideList.FirstOrDefault(r => r.RadionuclideName == radionuclide);
             RadionuclideCompound? comp = _radionuclideCompoundList.FirstOrDefault(c => c.Compound == compound);
             Manufacturer? manuf = _manufacturerList.FirstOrDefault(m => m.ManufacturerName == manufacturer);
@@ -73,11 +73,9 @@ namespace Isotop2.Data.Models
             Supplier? supp = _supplierList.FirstOrDefault(s => s.SupplierName == supplier);
             Recipient? rec = _recipientList.FirstOrDefault(r => r.RecipientName == recipient);
 
-            //Создаём сущность для добавления БД
             RI ri;
             try
             {
-                //Если сущность добавляется
                 if (id < 0)
                     ri = new RI
                     {
@@ -99,7 +97,7 @@ namespace Isotop2.Data.Models
                         AccompanyingDocument = document,
                         Sent = sent
                     };
-                //Если редактируется
+      
                 else
                     ri = new RI
                     {
@@ -131,65 +129,65 @@ namespace Isotop2.Data.Models
             }
             return ri;
         }
-        //Метод создания CSV файла
+        
         private void CreateCSV(List<RIView> dataList)
         {
             CSVDocCreater csv = new CSVDocCreater();
             csv.CreateFile(dataList);
             csv.RunDocument();
         }
-        //Получаем состояние
+      
         public bool IsRICreated()
         {
             return _isCreated;
         }
-        //Получение выбранного РИ
+     
         public int GetCurrentRI()
         {
             return _currentRI;
         }
-        //Установка выбранного РИ
+    
         public void SetCurrenRI(int id)
         {
             _currentRI = id;
         }
-        //Метод получения всех РИ
+    
         public List<RIView> GetAllRI()
         {
-            List<RI>? list = _dataStorage.GetAllIcluded(_RIIncludes);
+            List<RI>? list = _dataStorage.GetAllIcluded(_RIPredicate);
             List<RIView> RIVList = AuxiliaryFuntions.ConvertRIToRIView(list);
             return RIVList;
         }
-        //Метод получения отфильтрованных данных
+   
         public List<RIView>? GetFilterRI(string filter, string search, string addionalSearch = "")
         {
             List<RI>? RIList = null;
             switch (filter)
             {
                 case "Наименование РИ":
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Radionuclide.RadionuclideName == search, _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Radionuclide.RadionuclideName == search, _RIPredicate);
                 break;
                 case "Номер паспорта":
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.PassportNumber == search, _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.PassportNumber == search, _RIPredicate);
                 break;
                 case "Дата изготовления":                    
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.CreateDate >= Convert.ToDateTime(search) && x.CreateDate <= Convert.ToDateTime(addionalSearch), _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.CreateDate >= Convert.ToDateTime(search) && x.CreateDate <= Convert.ToDateTime(addionalSearch), _RIPredicate);
                 break;
                 case "Номер генератора":
                     if (search == "") search = null;
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.GeneratorNumber == search, _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.GeneratorNumber == search, _RIPredicate);
                 break;
                 case "Производитель":
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Manufacturer.ManufacturerName == search, _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Manufacturer.ManufacturerName == search, _RIPredicate);
                 break;
                 case "Поставщик":
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Supplier.SupplierName == search, _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Supplier.SupplierName == search, _RIPredicate);
                 break;
                 case "Получатель":
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Recipient.RecipientName == search, _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Recipient.RecipientName == search, _RIPredicate);
                 break;
                 case "Отправлен":
-                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Sent == Convert.ToBoolean(search), _RIIncludes);
+                    RIList = _dataStorage.GetAllIcludedAndWhere(x => x.Sent == Convert.ToBoolean(search), _RIPredicate);
                 break;
             }
             if (RIList == null)
@@ -200,48 +198,48 @@ namespace Isotop2.Data.Models
             List<RIView> RIVList = AuxiliaryFuntions.ConvertRIToRIView(RIList);
             return RIVList;
         }
-        //Получаем списков радионуклиидов
+      
         public List<Radionuclide> GetRadionuclideList()
         {
             return _radionuclideList;
         }
-        //Получаем списков соеденений
+    
         public List<RadionuclideCompound> GetRadionuclideCompoundList()
         {
             return _radionuclideCompoundList;
         }
-        //Получаем списков изготовителей
+    
         public List<Manufacturer> GetManufacturerList()
         {
             return _manufacturerList;
         }
-        //Получаем списков упаковок
+      
         public List<Package> GetPackageList()
         {
             return _packageList;
         }
-        //Получаем списков хранилищ
+   
         public List<StoragePoint> GetStoragePointList()
         {
             return _storagePointList;
         }
-        //Получаем списков поставщиков
+   
         public List<Supplier> GetSupplierList()
         {
             return _supplierList;
         }
-        //Получаем списков получателей
+    
         public List<Recipient> GetRecipientList()
         {
             return _recipientList;
         }
-        //Получение РИ по id
+ 
         public RI? GetRIbyId(int id)
         {
-            RI? ri = _dataStorage.GetOneEntityIcludedAndWhere(x => x.Id == id, _RIIncludes);
+            RI? ri = _dataStorage.GetOneEntityIcludedAndWhere(x => x.Id == id, _RIPredicate);
             return ri;
         }        
-        //Добавление РИ
+    
         public bool AddRI(string radionuclide, string passportNumber, string createDate, string weight, string volume, string generatorNumber,
                           string activity, string compound, string manufacturer, string operation, string operationDate, string package,
                           string storage, string supplier, string recipient, string document, bool sent)
@@ -271,7 +269,7 @@ namespace Isotop2.Data.Models
                 return _dataStorage.Add(ri);
             return _isCreated;
         }
-        //Редактирование РИ
+   
         public bool EditRI(string radionuclide, string passportNumber, string createDate, string weight, string volume, string generatorNumber,
                           string activity, string compound, string manufacturer, string operation, string operationDate, string package,
                           string storage, string supplier, string recipient, string document, bool sent)
@@ -301,28 +299,26 @@ namespace Isotop2.Data.Models
                 return _dataStorage.Update(ri);
             return _isCreated;
         }
-        //Удаляем сущность из БД
+   
         public bool DeleteRI(int id)
-        {
-            //Получаем сущность из БД
-            RI? ri = _dataStorage.GetOneEntityIcludedAndWhere(x => x.Id == id, _RIIncludes);
+        {     
+            RI? ri = _dataStorage.GetOneEntityIcludedAndWhere(x => x.Id == id, _RIPredicate);
             if (ri == null)
                 return false;
-            //Если сущность существует, то удаляем
             _dataStorage.Delete(ri);
             return true;
         }
-        //Метод получения списка заголовков
+    
         public string[] GetHeaderList()
         {
             return _headerList;
         }
-        //Метод получения названий таблиц для поиска
+    
         public string[] GetColumnNameToSearch()
         { 
             return _columnNameToSearch; 
         }
-        //Метод экспорта данных в CSV
+     
         public async Task ExportToCSVAsync(List<RIView> dataList)
         {
             await Task.Run(()=> CreateCSV(dataList));

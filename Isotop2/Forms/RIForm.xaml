@@ -32,7 +32,7 @@
             <Button Style="{StaticResource ButtonSearchAndExpotr}" Name="button_DropSearch" Click="button_DropSearch_Click" Margin="50,10,0,0">
                 <Image Source="/Resources/drop_find.jpg"/>
             </Button>
-            <Button Style="{StaticResource ButtonSearchAndExpotr}" Name="button_ExportToExcel" Click="button_ExportToExcel_Click" Margin="90,10,0,0">
+            <Button Style="{StaticResource ButtonSearchAndExpotr}" Name="button_ExportToExcel" Click="button_ExportToCSV_Click" Margin="90,10,0,0">
                 <Image Source="/Resources/excel.jpg"/>
             </Button>
             <Button Name="button_Add" Click="button_Add_Click" Content="Добавить" Margin="0,20,150,0"/>

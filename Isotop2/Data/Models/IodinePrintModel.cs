@@ -2,7 +2,7 @@
 {
     internal class IodinePrintModel
     {
-        private List<string> _dataListView = new List<string>(); //Список с данными для заполнения ячеек
+        private List<string> _dataListView = new List<string>();
         private double _currentActivity;
 
         public IodinePrintModel(List<string> data, double currentActivity)
@@ -10,7 +10,7 @@
             _currentActivity = currentActivity;
             _dataListView = data;
         }
-        //Метод формирования таблицы данных и передачи в PDF
+      
         private void CreateTable()
         {
             using (PdfDocCreater pdf = new PdfDocCreater())
@@ -24,7 +24,7 @@
                 pdf.RunDocument();
             }
         }
-        //Метод формирования таблици на печать
+    
         public async Task ExpotrToPDFAsync()
         {
             await Task.Run(()=> CreateTable());

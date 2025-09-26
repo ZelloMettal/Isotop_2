@@ -5,7 +5,7 @@ namespace Isotop2.Data.Models
 {
     internal class IodineModel : IIodineModel
     {
-        private List<Iodine> _iodineList; //Список распада Йода
+        private List<Iodine> _iodineList;
 
         private readonly IDataStorage<Iodine> _dataStorage;
 
@@ -14,7 +14,7 @@ namespace Isotop2.Data.Models
             _dataStorage = dataStorage;
             _iodineList = _dataStorage.GetAll();
         }
-        //Метод расчёта активности и объёма Йода
+
         private ActivityByVolume CalculationActivityAndVolume(double decayPrecent, double startActivity)
         {
             int activity = (int)Math.Round(startActivity * decayPrecent / 100, 0);
@@ -22,7 +22,7 @@ namespace Isotop2.Data.Models
             ActivityByVolume activityByVolume = new ActivityByVolume() { Activity = activity, Volume = volume };
             return activityByVolume;
         }
-        //Формирование списка активности и объёма Йода
+     
         public Dictionary<Iodine, ActivityByVolume> CreateListActivityIodine(double activity)
         {
             Dictionary<Iodine, ActivityByVolume> dict = new Dictionary<Iodine, ActivityByVolume>();

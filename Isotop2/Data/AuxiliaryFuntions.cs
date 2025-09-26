@@ -7,13 +7,12 @@ namespace Isotop2.Data
 {
     internal class AuxiliaryFuntions
     {
-        //Метод установки заголовков в DataGrid
         public static void SetHeaderDataGrid(DataGrid dataGrid, params string[] headers)
         {             
             for (int i = 0; i < dataGrid.Columns.Count; i++)            
                 dataGrid.Columns[i].Header = headers[i];            
         }
-        //Метод конвертации List<object> в List<string>
+  
         static public List<string> ConvertListObjectToListString(IEnumerable<object> list)
         {
             List<string> dataList = new List<string>();
@@ -26,7 +25,7 @@ namespace Isotop2.Data
             }
             return dataList;
         }
-        //Метод конвертации списка отмеченных маркеров для печатив список строк
+    
         static public List<string> ConvertListItemsToList(List<CheckedMarkerForPrint> list)
         {
             List<string> _dataList = new List<string>();
@@ -44,7 +43,7 @@ namespace Isotop2.Data
             }
             return _dataList;
         }
-        //Метод конвертации словаря с Маркерами в список с отмеченными Маркерами
+    
         static public List<CheckedMarkerForPrint> ConvertDictionaryToListChecked(Dictionary<Marker, ActivityByVolume> list)
         { 
             List<CheckedMarkerForPrint> checkedList = new List<CheckedMarkerForPrint>();
@@ -61,7 +60,7 @@ namespace Isotop2.Data
             }
             return checkedList;
         }
-        //Метод конвертации RI в RIView
+    
         public static List<RIView> ConvertRIToRIView(List<RI> riList)
         {
             List<RIView> list = new List<RIView>();
@@ -92,7 +91,7 @@ namespace Isotop2.Data
             }
             return list;
         }
-        //Метод конвертации RadiationExposureToOrgan в RadiationExposureView
+     
         public static List<RadiationExposureView> ConvertRadiationExposureToRadiationExposureView(List<RadiationExposureToOrgan> reoList)
         {
             List<RadiationExposureView> reoView = new List<RadiationExposureView>();
@@ -109,7 +108,7 @@ namespace Isotop2.Data
             }
             return reoView;
         }
-        //Метод формирования защищенной строки
+
         public static SecureString StringToSecureString(string str)
         {
             SecureString secureString = new SecureString();
@@ -117,7 +116,7 @@ namespace Isotop2.Data
             secureString.MakeReadOnly();
             return secureString;
         }
-        //Метод конвертации ListString[] в ListMarkerView
+    
         public static List<MarkerView> ListArrStringToMarkerView(List<string[]> list)
         {
             List<MarkerView> iodineData = new List<MarkerView>();
@@ -132,7 +131,7 @@ namespace Isotop2.Data
             }
             return iodineData;
         }
-        //Метод конвертации ListString[] в ListIodineView
+   
         public static List<IodineView> ListArrStringToIodineView(List<string[]> list)
         { 
             List<IodineView> iodineData = new List<IodineView>();
@@ -148,7 +147,7 @@ namespace Isotop2.Data
             }
             return iodineData;
         }
-        //Метод конвертации ListString[] в ListRadiumView
+   
         public static List<RadiumView> ListArrStringToRadiumView(List<string[]> list)
         {
             List<RadiumView> radiumData = new List<RadiumView>();
@@ -163,7 +162,7 @@ namespace Isotop2.Data
             }
             return radiumData;
         }
-        //Метод конвертации ListString[] в ListRadiumPatient
+    
         public static List<RadiumCalculationView> ListArrStringToRadiumCalculationView(List<string[]> list)
         {
             List<RadiumCalculationView> radiumData = new List<RadiumCalculationView>();
@@ -180,7 +179,7 @@ namespace Isotop2.Data
             }
             return radiumData;
         }
-        //Метод валидации TextBox для дробных значений
+   
         public static bool ValidationTextBox(string text)
         {
             if (text != "" && text.Split(',').Length < 3 && text[0] != ',' && text[text.Length - 1] != ',')

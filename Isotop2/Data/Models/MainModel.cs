@@ -8,7 +8,6 @@ namespace Isotop2.Data.Models
 {
     internal class MainModel : IMainModel
     {
-        //Свойства модели
         private bool _isCurrentUserRoleAdmin = false;
         private string _currentUserName = "Unknown";
         static private ITechnetiumModel _technetium = ServiceProviderHolder.ServiceProvider.GetRequiredService<ITechnetiumModel>();
@@ -17,29 +16,28 @@ namespace Isotop2.Data.Models
         static private Dictionary<Marker, ActivityByVolume> _childrenPrintList = new Dictionary<Marker, ActivityByVolume>();
         static private Dictionary<Marker, ActivityByVolume> _adultPrintList = new Dictionary<Marker, ActivityByVolume>();
 
-        //Метод получения роли текущего пользователя
         public bool GetUserRole()
         {
             return _isCurrentUserRoleAdmin;
         }
-        //Метод установки роли текущего пользователя
+     
         public void SetUserRole(bool isAdmin)
         {
             _isCurrentUserRoleAdmin = isAdmin;
         }
-        //Метод получения текущего пользователя
+    
         public string GetUserName() 
         {
             return _currentUserName;
         }
-        //Метод установки текущего пользователя
+    
         public void SetUserName(string userName)
         { 
             _currentUserName = userName;
         }
+
         ///////// Часть для Технеция /////////
         
-        //Метод падсчёт данных для пациентов по маркерам
         private List<string[]> DataPatientList(Dictionary<Marker, ActivityByVolume> newGenerator, Dictionary<Marker, ActivityByVolume> oldGenerator, Dictionary<Marker, ActivityByVolume> printList)
         {
             List<string[]> dataListPatient = new List<string[]>();
@@ -68,37 +66,37 @@ namespace Isotop2.Data.Models
             }
             return dataListPatient;
         }
-        //Метод становку текущего распада для Технеция
+  
         public void SetTechnetiumCurrentDecay(double hour)
         {
             _technetium.SetCurrentDecay(hour);
         }
-        //Метод получения списка детских коэффицентов
+     
         public List<CoefficientsForChildren> GetСoefficentСhildrenList()
         {
             return _technetium.GetСoefficentСhildrenList().OrderByDescending(x => x.Coefficient).ToList();
         }
-        //Метод установки текущего детского коэффицента
+   
         public void SetChildrenCoefficent(string range)
         {
             _technetium.SetCurrentChildrenCoefficent(range);
         }
-        //Метод получения активности по объёмам
+   
         public List<ActivityByVolume> GetListActivityByVolume(double activity)
         {
             return _technetium.CreateListActivityByVolume(activity).OrderByDescending(x => x.Volume).ToList();
         }
-        //Метод получения списка печати для взрослых
+     
         public Dictionary<Marker, ActivityByVolume> GetAdultPrintList()
         {
             return _adultPrintList;
         }
-        //Метод получения списка печати для детей
+     
         public Dictionary<Marker, ActivityByVolume> GetChildrenPrintList()
         {
             return _childrenPrintList;
         }
-        //Метод получения списка расчётных данных для взрослых
+   
         public List<string[]> GetListTechnetiumAdultPatient(double newActivity, double oldActivity)
         {
             _adultPrintList.Clear();
@@ -106,7 +104,7 @@ namespace Isotop2.Data.Models
             Dictionary<Marker, ActivityByVolume> oldGenerator = _technetium.CreateListActivityForAdults(oldActivity);
             return DataPatientList(newGenerator, oldGenerator, _adultPrintList);
         }
-        //Метод получения списка расчётных данных для детей
+    
         public List<string[]> GetListTechnetiumChildPatient(double newActivity, double old_Activity)
         {
             _childrenPrintList.Clear();
@@ -114,7 +112,7 @@ namespace Isotop2.Data.Models
             Dictionary<Marker, ActivityByVolume> oldGenerator = _technetium.CreateListActivityForChildren(old_Activity);
             return DataPatientList(newGenerator, oldGenerator, _childrenPrintList);
         }       
-        //Метод обновления данных Технеция
+   
         public void RefrashDataTechnetium()
         {
             _technetium.LoadMarkerList();
@@ -126,7 +124,6 @@ namespace Isotop2.Data.Models
 
         ///////// Часть для Йода /////////
 
-        //Метод получения расчётных данных для Йода
         public List<string[]> GetListDataIodine(double activity, DateTime startDate)
         {
             List<string[]> dataList = new List<string[]>();
@@ -149,22 +146,21 @@ namespace Isotop2.Data.Models
 
         ///////// Часть для Радия /////////
 
-        //Проверка на срок годности Радия
         public bool IsExpiredRadium()
         {
             return _radium.GetDefferenceDay() <= _radium.GetRadiumLastDay();
         }
-        //Метод получпаения разности в днях Радия
+    
         public int GetDefferenceDay()
         { 
             return _radium.GetDefferenceDay();
         }
-        //Установка нового значения разности дней Радия
+    
         public void SetDifferenceDayRadium(DateTime createDate, DateTime currentDate)
         {
             _radium.SetDefferenceDay(createDate, currentDate);
         }
-        //Метод получения списка данных для Радия
+     
         public List<string[]> GetListDataRadium(double activity)
         {
             List<string[]> dataList = new List<string[]>();
@@ -181,7 +177,7 @@ namespace Isotop2.Data.Models
             }
             return dataList;
         }
-        //Получение данных для Радия на пациентов
+    
         public List<string[]> GetRadiumForPatient(double weightPatient, double activity)
         {
             (Radium radium, ActivityByVolume activity_volume, double current_activity) radium = _radium.CreateRadiumForPatient(weightPatient, activity);

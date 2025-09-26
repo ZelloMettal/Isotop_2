@@ -6,20 +6,19 @@ namespace Isotop2.Data.Models
 {
     internal class AuthorizationModel : IAuthorizationModel
     {
-        private bool _currentUserRole = false; //Роль текущего пользователя Администратор
-        private string _currentUserName = string.Empty; //Текущего пользователь
-        //Метод получения роли пользователя
+        private bool _currentUserRole = false;
+        private string _currentUserName = "Unknown";
+
         public bool GetUserRole()
         {
             return _currentUserRole;
         }
-        //Метод проверки данных пользователя
+    
         public bool IsVerifyPassword(string userName, SecureString userPassword)
         {
-            User? user = new DataStorage<User>().GetOneEntityWher(u => u.UserName == userName); //Получаем пользователя
+            User? user = new DataStorage<User>().GetOneEntityWher(u => u.UserName == userName);
             if (user != null)
-            {
-                //Если верификация удалась устанавливаем текщего пользователя и роль
+            {     
                 if (PasswordHasher.Verify(userPassword, user.HashPassword))
                 {
                     _currentUserName = user.UserName;
@@ -28,14 +27,12 @@ namespace Isotop2.Data.Models
                     return true;
                 }
             }
-            else
-            {
-                //Фиксируем неудачную попытку полоучения пользователя
+            else            
                 new Logger($"При попытке получения пользователя вернудся Null; {DateTime.Now.ToString()}");
-            }
+            
             return false;
         }
-        //Метод получения текущего пользователя
+ 
         public string GetUserName() 
         {
             return _currentUserName;

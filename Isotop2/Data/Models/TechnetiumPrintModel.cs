@@ -4,10 +4,10 @@ namespace Isotop2.Data.Models
 {
     internal class TechnetiumPrintModel
     {
-        private Dictionary<Marker, ActivityByVolume> _adultList; //Список взрослых
-        private Dictionary<Marker, ActivityByVolume> _childrenList; //Список детей
-        private double _newActivity = 0; //Активность нового генератора
-        private double _oldActivity = 0; //Активность старого генератора
+        private Dictionary<Marker, ActivityByVolume> _adultList;
+        private Dictionary<Marker, ActivityByVolume> _childrenList;
+        private double _newActivity = 0;
+        private double _oldActivity = 0;
         private Dictionary<string, string> _dayWeekRusName = new Dictionary<string, string>()
         {
             { "Monday", "Понидельник"},
@@ -26,27 +26,16 @@ namespace Isotop2.Data.Models
             _newActivity = new_activity;
             _oldActivity = old_activity;
         }
-        //Получение списка взрослых
         public Dictionary<Marker, ActivityByVolume> GetAdultList()
         {
             return _adultList;
         }
-        //Получение списка детей
+    
         public Dictionary<Marker, ActivityByVolume> GetChildrenList()
         {
             return _childrenList;
         }
-        //Получение полуение активности нового генератора
-        public double GetNewActivity()
-        {
-            return _newActivity;
-        }
-        //Получение получение активности старого генератора
-        public double GetOldActivity()
-        {
-            return _oldActivity;
-        }
-        //Методы методы отправки данных в PDF
+
         public async Task ExportToPDFAsync(List<string> dataList, string typePatient = "")
         {            
             await Task.Run(() => CreateOneTable(dataList, typePatient));
@@ -55,7 +44,7 @@ namespace Isotop2.Data.Models
         {
             await Task.Run(() => CreateTwoTable(dataAdult, dataChildren));
         }
-        //Метод формирование одной таблицы с данными 
+
         private void CreateOneTable(List<string> dataList, string typePatient = "")
         {
             using (PdfDocCreater pdf = new PdfDocCreater())
@@ -71,7 +60,7 @@ namespace Isotop2.Data.Models
                 pdf.RunDocument();
             }
         }
-        //Метод формирование двух таблиц с данными 
+  
         private void CreateTwoTable(List<string> dataAdult, List<string> dataChildren)
         {
             using (PdfDocCreater pdf = new PdfDocCreater())
@@ -92,7 +81,7 @@ namespace Isotop2.Data.Models
                 pdf.RunDocument();
             }
         }
-        //Метод получения дня недели 
+    
         public string GetRusNameDayWeek(string weekDay)
         {
             return _dayWeekRusName[weekDay];

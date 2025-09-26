@@ -14,7 +14,7 @@ namespace Isotop2.Forms
             this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             textBox_UserName.Focus();
         }
-        //Событие авторизации
+   
         private void button_OK_Click(object sender, RoutedEventArgs e)
         {
             if ((textBox_UserName.Text != "" && textBox_UserPassword.Text != "") || (textBox_UserName.Text != "" && passwordBox_UserPassword.Password != ""))
@@ -27,7 +27,7 @@ namespace Isotop2.Forms
                 }
                 else
                 { 
-                    securePass = AuxiliaryFuntions.StringToSecureString(textBox_UserPassword.Text); //Защищаем полученную строку
+                    securePass = AuxiliaryFuntions.StringToSecureString(textBox_UserPassword.Text);
                     securePass.MakeReadOnly();
                 }
 
@@ -42,12 +42,12 @@ namespace Isotop2.Forms
             else
                 MessageBox.Show("Все поля должны быть заполнены!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        //Событие отмены
+
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }        
-        //Событие отображения/скрытия пароля
+     
         private void checkBox_ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
             textBox_UserPassword.Text = passwordBox_UserPassword.Password;
@@ -63,7 +63,7 @@ namespace Isotop2.Forms
             passwordBox_UserPassword.Visibility = Visibility.Visible;
             passwordBox_UserPassword.TabIndex = 1;
         }
-        //Событие нажатие Enter/Esc
+   
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -71,12 +71,12 @@ namespace Isotop2.Forms
             if (e.Key == Key.Escape)
                 button_Cancel_Click(sender, e);
         }
-        //Метод получения роли текущего пользователя
+  
         public bool GetUserRole()
         {
             return AuthorizationController.GetUserRole();
         }
-        //Метод получения текущего пользователя
+     
         public string GetUserName()
         {
             return AuthorizationController.GetUserName();

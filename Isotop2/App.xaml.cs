@@ -3,7 +3,6 @@ using System.Windows;
 
 namespace Isotop2
 {
-    //Класс запуская приложения
     public partial class App : Application
     {
         readonly MainForm _mainForm = new MainForm();
@@ -14,7 +13,6 @@ namespace Isotop2
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            //Пытаемся отобрать главное окно
             try
             {
                 MainWindow.Show();
@@ -22,8 +20,7 @@ namespace Isotop2
             }
             catch(Exception ex)
             {
-                //Завершаем приложение при неудачи
-                new Logger($"App:Не удалось отобразить окно. {ex.Message}" + DateTime.Now.ToString());
+                new Logger($"App:Не удалось запустить приложение. {ex.Message}" + DateTime.Now.ToString());
                 App.Current.Shutdown(); 
             }
         }

@@ -9,12 +9,10 @@ using Isotop2.Services;
 
 namespace Isotop2.Data.Controllers
 {
-    //Класс-контроллер FormData
     public static class FormDataController
     {
-        private static readonly IFormDataModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IFormDataModel>(); //Модель данных
+        private static readonly IFormDataModel _model = ServiceProviderHolder.ServiceProvider.GetRequiredService<IFormDataModel>();
 
-        //Метод добавления Рабочих объёмов
         private static bool AddVolume()
         {
             bool isAdd = true;
@@ -31,7 +29,7 @@ namespace Isotop2.Data.Controllers
             AV.Close();
             return isAdd;
         }
-        //Метод добавления Маркеров
+
         private static bool AddMarker()
         {
             bool isAdd = true;
@@ -49,7 +47,7 @@ namespace Isotop2.Data.Controllers
             AMF.Close();
             return isAdd;
         }
-        //Метод добавления Нагрузок на органы
+ 
         private static bool AddExposureToOrgan()
         {
             bool isAdd = true;
@@ -67,7 +65,7 @@ namespace Isotop2.Data.Controllers
             AREO.Close();
             return isAdd;
         }
-        //Метод добавления Пользователей
+
         private static bool AddUser()
         {
             bool isAdd = true;
@@ -90,7 +88,7 @@ namespace Isotop2.Data.Controllers
             AU.Close();
             return isAdd;
         }
-        //Метод добавления Изотопов
+
         private static bool AddIsotop()
         {
             bool isAdd = true;
@@ -108,7 +106,7 @@ namespace Isotop2.Data.Controllers
             AIF.Close();
             return isAdd;
         }
-        //Метод добавления Детских коэффицентов
+
         private static bool AddChildrenAge()
         {
             bool isAdd = true;
@@ -126,7 +124,7 @@ namespace Isotop2.Data.Controllers
             ACAF.Close();
             return isAdd;
         }
-        //Метод добавления других остальных данных
+
         private static bool AddRemain()
         {
             bool isAdd = true;
@@ -144,17 +142,12 @@ namespace Isotop2.Data.Controllers
             AF.Close();
             return isAdd;
         }
-        //Метод установки роли пользователя
+
         static public void SetUserRole(bool value)
         {
             _model.SetUserRole(value);
         }
-        //Метод получение списка неизменяемых таблиц
-        static public string[] GetConstTable()
-        {
-            return _model.GetConstTables();
-        }
-        //Метод заполнения ListView названиями таблиц
+
         static public void FillListView(ListView lv)
         {
             List<string> tableNames = _model.GetTableNames();
@@ -164,7 +157,7 @@ namespace Isotop2.Data.Controllers
             else
                 lv.ItemsSource = tableNames;
         }
-        //Метод заполнения DataGridView
+
         static public void FillDataGridView(DataGrid dataGrid)
         {
             Dictionary<string, string[]> headerList = _model.GetHeaderList();
@@ -172,19 +165,19 @@ namespace Isotop2.Data.Controllers
             AuxiliaryFuntions.SetHeaderDataGrid(dataGrid, headerList[GetCurrentTable()]);
             if (dataGrid.ItemsSource == null)
             {
-                MessageBox.Show("Не удалось отобразить таблицу", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Не удалось загрузить данные", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }    
             if(GetCurrentTable() == "Пользователи")
-                dataGrid.Columns[2].MaxWidth = 0;
+                dataGrid.Columns[2].MaxWidth = 0; //Скрываем столбец с хешем пароля
             dataGrid.Columns[0].MaxWidth = 0;    //Скрываем столбец с id
         }
-        //Метод получения быбранной таблицы
+
         static public string GetCurrentTable()
         {
             return _model.GetCurrentTable();
         }
-        //Метод установки выбранной таблицы(с отключением кнопок: Добавить/Удалить)
+
         static public void SetCurrentTable(string currentTable, params Button[] buttons)
         {
             _model.SetCurrentTable(currentTable);
@@ -200,44 +193,34 @@ namespace Isotop2.Data.Controllers
                     button.IsEnabled = true;
             }
         }
-        //Метод получения выбранного элемента в таблицы
-        static public int GetCurrentItemTable()
-        {
-            return _model.GetCurrentItemTable();
-        }
-        //Метод установки выбранного элемента таблицы
-        ////////По данным из таблицы
+
         static public void SetCurrentItemTable(DataGrid dataGrid)
         {
             int id = -1;
-            //Получаем объект из DataGrid
+
             var dataItem = dataGrid.SelectedItem;
             if (dataItem != null)
             { 
-                //Если объёкт существует, то получаем его id из таблицы(первый скрытый столбец)
                 id = Convert.ToInt32(((TextBlock)dataGrid.SelectedCells[0].Column.GetCellContent(dataItem)).Text);
                 if (id > 0)
-                    //Если id получен, то сохраняем его
                     _model.SetCurrentItemTable(id);
                 else
                 { 
-                    //Если не получен, то с брасываем
                     id = -1;                    
                     _model.SetCurrentItemTable(id);
                 }
             }
-            //Если объект не найден, то сбрасываем id
             _model.SetCurrentItemTable(id);
         }
-        ////////Непосредственный установка id
+
         static public void SetCurrentItemTable(int id)
         {            
             _model.SetCurrentItemTable(id);
         }
-        //Метод добавления в таблицу
+
         static public void Add()
         {
-            string currentTable = _model.GetCurrentTable(); //Выбранная таблица
+            string currentTable = _model.GetCurrentTable();
             bool isAdd = false;
             switch (currentTable)
             {
@@ -270,7 +253,7 @@ namespace Isotop2.Data.Controllers
             if(!isAdd)
                 MessageBox.Show("Не удалось добавить", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        //Метод удаления из таблицы
+
         public static void Delete()
         {
             if (_model.GetCurrentItemTable() > 0)

@@ -12,7 +12,7 @@ namespace Isotop2.Forms
             InitializeComponent();
             textBox_Volume.Focus();
         }        
-        // Событие нажатия кнопки Ok/Save
+     
         private void button_OK_Click(object sender, RoutedEventArgs e)
         {
             if (textBox_Volume.Text != "")
@@ -30,17 +30,17 @@ namespace Isotop2.Forms
             else
                 MessageBox.Show("Введите значение!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);            
         }
-        // Событие закрытия формы
+   
         private void button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        //Событие на ввод цифр, запятой, удаление
+      
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9,]").IsMatch(e.Text);
         }
-        //Событие нажатие Enter/Esc
+    
         private void PressHotKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -48,7 +48,7 @@ namespace Isotop2.Forms
             if (e.Key == Key.Escape)
                 button_Cancel_Click(sender, e);
         }
-        //Метод получения введённых данных
+      
         public string GetEnteredData()
         { 
             return textBox_Volume.Text;

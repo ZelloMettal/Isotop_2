@@ -8,15 +8,20 @@ namespace Isotop2.Data
     internal class DataStorage<T> : IDataStorage<T> where T : class
     {
         private Logger _logger = new Logger();
-        private readonly DataDBContext _DB; //Контектс
-        private readonly DbSet<T> _DBSet; //Сущность
+        private readonly DataDBContext _DB;
+        private readonly DbSet<T> _DBSet;
         public DataStorage()
         {
             _DB = new DataDBContext();
             _DBSet = _DB.Set<T>();
         }
 
-        //Метод добавления сущности
+        private IQueryable<T> Include(params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _DBSet.AsNoTracking();
+            return includes.Aggregate(query, (current, includes) => current.Include(includes));
+        }
+
         public bool Add(T? entity)
         {
             _logger.WrittingLogs($"A:Попытка добавления сущности в БД; {DateTime.Now.ToString()}");            
@@ -34,7 +39,7 @@ namespace Isotop2.Data
             }
             return false;
         }
-        //Метод Удаления сущности
+
         public bool Delete(T? entity)
         {
             _logger.WrittingLogs($"D:Попытка удалить сущности из БД; {DateTime.Now.ToString()}");            
@@ -52,7 +57,7 @@ namespace Isotop2.Data
             }
             return false;
         }
-        //Метод изменения сущности
+ 
         public bool Update(T? entity)
         {
             _logger.WrittingLogs($"U:Попытка обновить сущности в БД; {DateTime.Now.ToString()}");            
@@ -70,7 +75,7 @@ namespace Isotop2.Data
             }
             return false;
         }
-        //Метод получение списка сущностей
+    
         public List<T>? GetAll()
         {
             _logger.WrittingLogs($"G:Попытка получить список всех сущностей из БД; {DateTime.Now.ToString()}");
@@ -87,7 +92,7 @@ namespace Isotop2.Data
             }
             return list;
         }
-        //Метод получение сущности по Id
+
         public T? GetById(int? id)
         {
             _logger.WrittingLogs($"G:Попытка получить сущность по ID из БД; {DateTime.Now.ToString()}");
@@ -104,7 +109,7 @@ namespace Isotop2.Data
             }
             return entity;
         }
-        //Метод плучения списка сущностей жадной загрузкой
+  
         public List<T>? GetAllIcluded(params Expression<Func<T, object>>[] includes)
         {
             _logger.WrittingLogs($"G:Попытка получения списка сущностей из БД жадно; {DateTime.Now.ToString()}");
@@ -121,7 +126,7 @@ namespace Isotop2.Data
             }
             return list;
         }
-        //Метод плучения одной сущности с условием
+  
         public T? GetOneEntityWher(Expression<Func<T, bool>> predicate)
         {
             _logger.WrittingLogs($"G:Попытка получения сущности с условием из БД; {DateTime.Now.ToString()}");
@@ -138,7 +143,7 @@ namespace Isotop2.Data
             }
             return entity;
         }
-        //Метод получения списка сущностей жадной загрузкой с условием
+      
         public List<T>? GetAllIcludedAndWhere(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
             _logger.WrittingLogs($"G:Попытка получения списка сущностей из БД жадно с условием; {DateTime.Now.ToString()}");
@@ -156,7 +161,7 @@ namespace Isotop2.Data
             }
             return list;
         }
-        //Метод получение одного элемента жадной загрузкой и условием
+  
         public T? GetOneEntityIcludedAndWhere(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
             _logger.WrittingLogs($"G:Попытка получения сущность из БД жадно с условием; {DateTime.Now.ToString()}");
@@ -173,12 +178,6 @@ namespace Isotop2.Data
                 _logger.WrittingLogs($"G:Не удалось получить сущность из БД жадно с условием; {ex.Message}; {DateTime.Now.ToString()}");
             }
             return entity;
-        }
-        //Метод формирования запроса для жадной загрузки
-        private IQueryable<T> Include(params Expression<Func<T, object>>[] includes)
-        {
-            IQueryable<T> query = _DBSet.AsNoTracking();
-            return includes.Aggregate(query, (current, includes) => current.Include(includes));
         }
     }
 }
