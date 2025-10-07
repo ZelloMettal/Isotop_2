@@ -18,7 +18,7 @@ namespace Isotop2.Data.Models
         private ActivityByVolume CalculationActivityAndVolume(double decayPrecent, double startActivity)
         {
             int activity = (int)Math.Round(startActivity * decayPrecent / 100, 0);
-            double volume = Math.Round((double)10 * 3 / activity, 1);
+            double volume = Math.Round((double)3 / activity, 2);
             ActivityByVolume activityByVolume = new ActivityByVolume() { Activity = activity, Volume = volume };
             return activityByVolume;
         }
